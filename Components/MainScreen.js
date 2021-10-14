@@ -52,7 +52,6 @@ const DATA = [
 function MainScreen() {
     return (
         <SafeAreaView style={styles.container}>
-            {/* <Text>Text</Text> */}
             <SliderBox
                 // ImageComponent={FastImage}
                 images={[
