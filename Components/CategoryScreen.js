@@ -43,7 +43,16 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
-        <Stack.Navigator /*screenOptions={{ headerShown: false }}*/>
+        <Stack.Navigator screenOptions={{ headerShown: true }}>
+            <Stack.Screen 
+                name="mm" 
+                component={CategoryScreen}
+                options={{
+                    headerStyle:{
+                        backgroundColor: '#f4511e',
+                        
+                    }
+                }} />
             <Stack.Screen name="Main" component={CategoryScreen} />
             <Stack.Screen name="Items" component={ItemsListScreen} />
             <Stack.Screen name="Detail" component={ItemDetailScreen} />
