@@ -4,7 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MainScreen from './Components/MainScreen';
 import CategoryScreen from './Components/CategoryScreen';
+import SearchScreen from './Components/SearchScreen';
 import MypageScreen from './Components/MypageScreen';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -24,9 +26,13 @@ export default function App() {
             else if (route.name === 'Category') {
               iconName = focused ? 'ios-list' : 'ios-list';
             }
+            else if (route.name === 'Search'){
+              iconName = focused ? 'search' : 'search';
+            }
             else if (route.name === 'Mypage') {
               iconName = focused ? 'person' : 'person';
             }
+            
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -38,6 +44,7 @@ export default function App() {
       >
         <Tab.Screen name="Home" component={MainScreen} />
         <Tab.Screen name="Category" component={CategoryScreen} />
+        <Tab.Screen name="Search" component={SearchScreen} />
         <Tab.Screen name="Mypage" component={MypageScreen} />
       </Tab.Navigator>
     </NavigationContainer>
