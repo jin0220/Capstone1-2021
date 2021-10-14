@@ -3,10 +3,10 @@ import { View, Text, Button, StyleSheet, TextInput, ScrollView } from 'react-nat
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-function MypageScreen() {
+function SearchScreen() {
     return (
         <SafeAreaView style={styles.container}>
-            <Text>Mypage Screen</Text>
+            <Text>Search Screen</Text>
         </SafeAreaView >
     );
 }
@@ -16,16 +16,16 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: true }}>
-        <Stack.Screen 
-            name="mm" 
-            component={MypageScreen}
-            options={{
-                headerStyle:{
-                    backgroundColor: '#f4511e',
-                    
-                }
-            }} />
-    </Stack.Navigator>
+            <Stack.Screen 
+                name="mm" 
+                component={SearchScreen}
+                options={{
+                    headerStyle:{
+                        backgroundColor: '#f4511e',
+                        
+                    }
+                }} />
+        </Stack.Navigator>
     );
 }
 
