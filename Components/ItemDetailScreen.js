@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TouchableHighlight, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
-import { Popup } from './Popup';
+import Popup from './Popup';
 
 export default function ItemDetailScreen() {
     const [modalVisible, setModalVisible] = useState(false); //첫번째 원소 -> 현재 상태, 두번째 원소 -> setter 함수
@@ -20,19 +20,6 @@ export default function ItemDetailScreen() {
         // </View>
     );
 
-
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         modalVisible: false
-    //     };
-    // }
-    // setModalVisible = value => {
-    //     this.setState({
-    //         modalVisible: value
-    //     })
-    // }
-
     const allergys = ["우유", "밀"];
     const allergysList = allergys.map(item =>
         <View style={styles.allergyBox} key={item}>
@@ -43,7 +30,7 @@ export default function ItemDetailScreen() {
 
     return (
         <ScrollView>
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
                 <View style={styles.box1}>
                     <View style={styles.image} />
                     <Text style={styles.itemManufacturing}>제조업체</Text>
@@ -52,20 +39,11 @@ export default function ItemDetailScreen() {
                 </View>
                 <View style={styles.divide} />
 
-                <View style={styles.box2}>
-                    <Text style={styles.title}>식품첨가물{modalVisible}</Text>
-                    {/* <Popup value={modalVisible} /> */}
 
-                    {/* <Modal animationType="slide" transparent={true} visible={modalVisible}>
-                        <View style={styles.modalBackground}>
-                            <View style={styles.modal}>
-                                <Text>This is Popup!</Text>
-                                <TouchableHighlight onPress={() => setModalVisible(!modalVisible)}>
-                                    <Text>Close</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                    </Modal> */}
+                <View style={styles.box2}>
+                    <Text style={styles.title}>식품첨가물</Text>
+
+                    <Popup visible={modalVisible} setModalVisible={() => setModalVisible}></Popup>
 
                     <View style={styles.listBox}>
                         {itemsList}
@@ -77,15 +55,18 @@ export default function ItemDetailScreen() {
                 </View>
                 <View style={styles.divide} />
 
+
                 <View style={styles.box2}>
                     <Text style={styles.title}>원재료</Text>
                 </View>
                 <View style={styles.divide} />
 
+
                 <View style={styles.box2}>
                     <Text style={styles.title}>영양정보</Text>
                 </View>
                 <View style={styles.divide} />
+
 
                 <View style={styles.box2}>
                     <Text style={styles.title}>알레르기</Text>
@@ -94,7 +75,7 @@ export default function ItemDetailScreen() {
                     </View>
                 </View>
 
-            </SafeAreaView>
+            </View>
         </ScrollView>
     );
 }

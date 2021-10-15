@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ItemsListScreen({ navigation }) {
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <FlatList
                 data={[
                     { key: '리스트1' },
@@ -33,7 +33,7 @@ export default function ItemsListScreen({ navigation }) {
                     </View>
                 }
             />
-        </SafeAreaView>
+        </View>
     );
 }
 
