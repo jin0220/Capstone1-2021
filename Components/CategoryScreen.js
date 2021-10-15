@@ -8,7 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 function CategoryScreen({ navigation }) {
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             {/*상태바 아래에 간격이 생기는 이유 - SafeAreaView 때문*/}
             <FlatList
                 data={[
@@ -35,7 +35,7 @@ function CategoryScreen({ navigation }) {
                     </View>
                 }
             />
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -44,13 +44,13 @@ const Stack = createNativeStackNavigator();
 export default function App() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: true }}>
-            <Stack.Screen 
-                name="mm" 
+            <Stack.Screen
+                name="mm"
                 component={CategoryScreen}
                 options={{
-                    headerStyle:{
+                    headerStyle: {
                         backgroundColor: '#f4511e',
-                        
+
                     }
                 }} />
             <Stack.Screen name="Main" component={CategoryScreen} />
