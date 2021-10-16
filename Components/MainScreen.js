@@ -3,10 +3,7 @@ import { View, Text, Button, StyleSheet, TextInput, ScrollView, Image, FlatList,
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SliderBox } from 'react-native-image-slider-box';
-import { Feather } from '@expo/vector-icons';
-//import { Entypo } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5, Entypo, Iconicons, Feather } from '@expo/vector-icons';
 
 function sliderTouch(index){
     alert(index);
@@ -219,9 +216,18 @@ export default function App() {
                         backgroundColor: '#f4511e',
                         
                     },
+                    headerLeft: () =>(
+                        <View>
+                            <Entypo.Button
+                                name="menu"
+                                backgroundColor="#f4511e"
+                                size={27}
+                                onPress={() => {}}>
+                            </Entypo.Button>
+                        </View>
+                    ),
                     headerRight: () =>(
                         <View>
-                        
                             <FontAwesome.Button 
                                 name="barcode" 
                                 backgroundColor="#f4511e" 
@@ -229,7 +235,6 @@ export default function App() {
                                 onPress={() => {}}>
                                 
                             </FontAwesome.Button>
-
                         </View>
                     ),
                 }} 
