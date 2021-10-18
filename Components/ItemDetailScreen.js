@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TouchableHighlight, Modal } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import Popup from './Popup';
+import NutritionTable from './NutritionTable';
 
 export default function ItemDetailScreen() {
     const [modalVisible, setModalVisible] = useState(false); //첫번째 원소 -> 현재 상태, 두번째 원소 -> setter 함수
+    const [item, setItem] = useState("");
+
+    function fuc(item) {
+        setModalVisible(true);
+        setItem(item); //모달창에 아이템 전달
+    }
 
     const items = ["식품첨가물1", "식품첨가물2", "식품첨가물3", "식품첨가물4", "식품첨가물5", "식품첨가물6"];
     const itemsList = items.map(item =>
         // <View style={styles.listItem} key={item}>
-        <TouchableOpacity style={styles.listItem} key={item} onPress={() => setModalVisible(true)}>
+        <TouchableOpacity style={styles.listItem} key={item} onPress={() => fuc(item)}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={styles.rate} />
                 <Text>{item}</Text>
@@ -43,7 +49,7 @@ export default function ItemDetailScreen() {
                 <View style={styles.box2}>
                     <Text style={styles.title}>식품첨가물</Text>
 
-                    <Popup visible={modalVisible} setModalVisible={() => setModalVisible}></Popup>
+                    <Popup visible={modalVisible} setModalVisible={() => setModalVisible} item={item}></Popup>
 
                     <View style={styles.listBox}>
                         {itemsList}
@@ -58,12 +64,32 @@ export default function ItemDetailScreen() {
 
                 <View style={styles.box2}>
                     <Text style={styles.title}>원재료</Text>
+                    <Text style={styles.materials}>
+                        정제수, 기타과당, 설탕, 이상화탄소, 혼합제제A(카라멜색소, 정제수, 합성향로(콜라향)),
+                        혼합제제B(인산,정제수,카페인(향미증진제))
+                    </Text>
                 </View>
                 <View style={styles.divide} />
 
 
                 <View style={styles.box2}>
                     <Text style={styles.title}>영양정보</Text>
+
+                    <View style={styles.nutritionBox}>
+                        <View style={styles.total}>
+                            <Text style={{ width: '30%' }}>총 내용량</Text>
+                            <Text style={{ width: '50%' }}>0g</Text>
+                            <Text style={{ width: '20%' }}>0kcal</Text>
+                        </View>
+                        <View style={{ width: '100%', height: 1, backgroundColor: '#eee' }} />
+                        <View style={styles.total}>
+                            <Text style={{ width: '30%' }}>1회 제공량</Text>
+                            <Text style={{ width: '50%' }}>0g</Text>
+                            <Text style={{ width: '20%' }}>0kcal</Text>
+                        </View>
+
+                        <NutritionTable />
+                    </View>
                 </View>
                 <View style={styles.divide} />
 
@@ -141,7 +167,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#ddd'
     },
     //원재료
+    materials: {
+        marginVertical: 15,
+        paddingHorizontal: 10,
+    },
     //영양정보
+    nutritionBox: {
+        marginVertical: 15,
+        paddingHorizontal: 10,
+    },
+    total: {
+        flexDirection: 'row',
+        paddingVertical: 10,
+    },
     //알레르기
     allergyListBox: {
         flexDirection: 'row',
