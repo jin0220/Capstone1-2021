@@ -5,54 +5,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { SliderBox } from 'react-native-image-slider-box';
 import { FontAwesome, FontAwesome5, Entypo, Iconicons, Feather } from '@expo/vector-icons';
 
+import { NavigationContainer } from '@react-navigation/native';
+import CardListScreen from './CardListScreen';
+import CardItemDetails from './CardItemDetails';
+
 function sliderTouch(index){
     alert(index);
 }
 
-// const subject = "추천 영양 컨텐츠";
-
-// const DATA = [
-//     {
-//       id: '1',
-//       title: '1 Item',
-//     },
-//     {
-//       id: '2',
-//       title: 'Second Item',
-//     },
-//     {
-//       id: '3',
-//       title: 'Third Item',
-//     },
-//     {
-//         id: '4',
-//         title: '4 Item',
-//       },
-//       {
-//         id: '5',
-//         title: '5 Item',
-//       },
-//       {
-//         id: '6',
-//         title: '6 Item',
-//       },
-//   ];
-  
-//   const Item = ({ title }) => (
-//     <View style={styles.item}>
-//       <Text style={styles.title}>{title}</Text>
-//     </View>
-//   );
-  
-//   const renderItem = ({ item }) => (
-//     <Item title={item.title} />
-//   );
-
-function MainScreen() {
+function MainScreen({navigation}) {
     return (
         <ScrollView style={styles.container}>
             <SliderBox
-                // ImageComponent={FastImage}
                 images={[
                     "https://source.unsplash.com/collection/190727/1024x768",
                     "https://source.unsplash.com/collection/190727/1024x768"
@@ -91,55 +55,46 @@ function MainScreen() {
                 imageLoadingColor="#2196F3"
 
             />
-            {/* <Text style={styles.sub}>{subject}</Text>
-            <ScrollView>
-                
-            <FlatList
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                // onCurrentImagePressed={id => console.warn(`image ${id} pressed`)}
-            />
-            </ScrollView> */}
+            
             <View style={styles.categoryContainer}>
-                <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+                <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('CardListScreen', {title: 'test1'})}>
                 <View style={styles.categoryIcon}>
                     <FontAwesome5 name="bread-slice" size={35} color="white" />
                 </View>
-                <Text style={styles.categoryBtnTxt}>test</Text>
+                <Text style={styles.categoryBtnTxt}>test1</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+                <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('CardListScreen', {title: 'test2'})}>
                 <View style={styles.categoryIcon}>
                     <FontAwesome5 name="candy-cane" size={24} color="white" />
                 </View>
-                <Text style={styles.categoryBtnTxt}>test</Text>
+                <Text style={styles.categoryBtnTxt}>test2</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+                <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('CardListScreen', {title: 'test3'})}>
                 <View style={styles.categoryIcon}>
                     <FontAwesome5 name="cheese" size={24} color="white" />
                 </View>
-                <Text style={styles.categoryBtnTxt}>test</Text>
+                <Text style={styles.categoryBtnTxt}>test3</Text>
                 </TouchableOpacity>
             </View>
 
             <View style={[styles.categoryContainer, {marginTop: 10}]}>
-                <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+                <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('CardListScreen', {title: 'test4'})}>
                 <View style={styles.categoryIcon}>
                     <FontAwesome5 name="coffee" size={35} color="white" />
                 </View>
-                <Text style={styles.categoryBtnTxt}>test</Text>
+                <Text style={styles.categoryBtnTxt}>test4</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+                <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('CardListScreen', {title: 'test5'})}>
                 <View style={styles.categoryIcon}>
                     <FontAwesome5 name="cookie-bite" size={24} color="white" />
                 </View>
-                <Text style={styles.categoryBtnTxt}>test</Text>
+                <Text style={styles.categoryBtnTxt}>test5</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.categoryBtn} onPress={() => {}}>
+                <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('CardListScreen', {title: 'test6'})}>
                 <View style={styles.categoryIcon}>
                     <FontAwesome5 name="lemon" size={24} color="white" />
                 </View>
-                <Text style={styles.categoryBtnTxt}>test</Text>
+                <Text style={styles.categoryBtnTxt}>test6</Text>
                 </TouchableOpacity>
             </View>
 
@@ -150,6 +105,23 @@ function MainScreen() {
                     fontWeight:'bold',
                     color: '#333',
                 }}>추천 영양 콘텐츠</Text>
+                {/* <TouchableOpacity onPress={() => navigation.navigate('CardItemDetails')}> */}
+                    <View style={styles.card}>
+                        <View style={styles.cardImgWrapper}>
+                            <Image 
+                                source={{uri: "https://source.unsplash.com/collection/190727/1024x768"}} 
+                                resizeMode="cover" 
+                                style={styles.cardImg}
+                            />
+                    </View>
+                        <View style={styles.cardInfo}>
+                            <Text style={styles.cardTitle}>test</Text>
+                            <Text style={styles.cardDetails}>test</Text>
+                        </View>
+                    </View>
+                {/* </TouchableOpacity> */}
+
+                {/* <TouchableOpacity onPress={() => navigation.navigate('details')}> */}
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
                         <Image 
@@ -163,19 +135,8 @@ function MainScreen() {
                         <Text style={styles.cardDetails}>test</Text>
                     </View>
                 </View>
-                <View style={styles.card}>
-                    <View style={styles.cardImgWrapper}>
-                        <Image 
-                            source={{uri: "https://source.unsplash.com/collection/190727/1024x768"}} 
-                            resizeMode="cover" 
-                            style={styles.cardImg}
-                        />
-                    </View>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>test</Text>
-                        <Text style={styles.cardDetails}>test</Text>
-                    </View>
-                </View>
+                {/* </TouchableOpacity> */}
+
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
                         <Image 
@@ -239,6 +200,22 @@ export default function App() {
                     ),
                 }} 
             />
+            <Stack.Screen 
+                name ="CardListScreen" 
+                component ={CardListScreen}
+                options={({route})=> ({
+                   title:route.params.title,
+                   headerBackTitleVisible: false,
+            })}
+            />
+            <Stack.Screen 
+                name="CardItemDetails"
+                component={CardItemDetails}
+                options={({route})=> ({
+                    // title:route.params.title,
+                    headerBackTitleVisible: false,
+             })}
+            />
         </Stack.Navigator>
     );
 }
@@ -249,27 +226,6 @@ const styles = StyleSheet.create({
         // alignItems: 'flex-start',
         // justifyContent: 'center',
     },
-    // item: {
-    //     backgroundColor: '#f4511e',
-    //     padding: 20,
-    //     marginVertical: 8,
-    //     marginHorizontal: 16,
-    //     height: 100,
-    //     borderRadius: 30,
-    //   },
-    // title:{
-    //     fontSize: 20,
-    // },
-    // sub: {
-    //     fontSize: 30,
-    //     fontWeight: 'bold',
-        
-    //     paddingBottom: 10,
-    //     alignItems: 'center',
-    //     alignSelf: "center",
-    //     justifyContent: "center",
-
-    // },
     categoryContainer:{
         flexDirection: 'row',
         width: '90%',
