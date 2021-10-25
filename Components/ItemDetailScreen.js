@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TouchableHighlight, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Popup from './Popup';
 import NutritionTable from './NutritionTable';
@@ -26,10 +26,13 @@ export default function ItemDetailScreen() {
         // </View>
     );
 
-    const allergys = ["우유", "밀"];
+    const allergys = ["우유", "밀", "알류", "메밀", "땅콩", "대두", "잣", "호두", "게", "새우",
+        "오징어", "고등어", "조개류", "복숭아", "토마토", "닭고기", "돼지고기", "쇠고기", "아황산류"];
     const allergysList = allergys.map(item =>
         <View style={styles.allergyBox} key={item}>
-            <View style={styles.allergyImage} />
+            <View style={styles.allergyImage} >
+                <Image style={{ width: 35, height: 35, }} source={require('../Img/milk.png')} />
+            </View>
             <Text>{item}</Text>
         </View>
     );
@@ -184,12 +187,14 @@ const styles = StyleSheet.create({
     allergyListBox: {
         flexDirection: 'row',
         flexWrap: 'wrap', //공간이 없으면 줄바꿈을 해줌
+        paddingLeft: 10
     },
     allergyBox: {
-        width: 60,
+        width: 70,
         padding: 10,
-        margin: 5,
+        // margin: 5,
         alignItems: 'center',
+
     },
     allergyImage: {
         width: 45,
@@ -197,7 +202,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 25,
         borderColor: '#ddd',
-        backgroundColor: '#ddd',
+        // backgroundColor: '#ddd',
         marginBottom: 10,
+        alignItems: 'center', justifyContent: 'center'
     },
 });

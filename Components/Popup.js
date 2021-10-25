@@ -13,12 +13,12 @@ import {
 export default function Popup(props) {
     const modalEl = useRef();
     // useOutsideAlerter(modalEl);
-    // const handleClickOutside = ({ target }) => {
-    //     if (props.visible) {
-    //         console.log(target);
-    //         props.setModalVisible(false);
-    //     }
-    // };
+    const handleClickOutside = ({ target }) => {
+        if (props.visible) {
+            console.log(!modalEl.current.contain(target));
+            props.setModalVisible(false);
+        }
+    };
     // function useOutsideAlerter(ref) {
     //     useEffect(() => {
     //         function handleClickOutside(e) {
@@ -52,10 +52,9 @@ export default function Popup(props) {
     // }, []);
 
     return (
-        props.visible &&
         <Modal /*animationType="slide"*/ transparent={true} visible={props.visible}>
-            <View style={styles.modalBackground} onTouchEnd={handleClickOutside} >
-                {/* <View style={styles.modalBackground}> */}
+            {/* <View style={styles.modalBackground} onTouchEnd={handleClickOutside} > */}
+            <View style={styles.modalBackground}>
                 <View style={styles.modal} ref={modalEl}>
                     <Text style={styles.itemName}>{props.item}</Text>
 
