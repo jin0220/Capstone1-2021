@@ -26,14 +26,35 @@ export default function ItemDetailScreen() {
         // </View>
     );
 
-    const allergys = ["우유", "밀", "알류", "메밀", "땅콩", "대두", "잣", "호두", "게", "새우",
-        "오징어", "고등어", "조개류", "복숭아", "토마토", "닭고기", "돼지고기", "쇠고기", "아황산류"];
+    // const allergys = ["우유", "밀", "알류", "메밀", "땅콩", "대두", "잣", "호두", "게", "새우",
+    //     "오징어", "고등어", "조개류", "복숭아", "토마토", "닭고기", "돼지고기", "쇠고기", "아황산류"];
+    const allergys = [
+        { name: "우유", img: require('../Img/milk.png') },
+        { name: "밀", img: require('../Img/grain.png') },
+        { name: "알류", img: require('../Img/egg.png') },
+        { name: "메밀", img: require('../Img/milk.png') },
+        { name: "땅콩", img: require('../Img/peanut.png') },
+        { name: "대두", img: require('../Img/edamame.png') },
+        { name: "잣", img: require('../Img/nuts.png') },
+        { name: "호두", img: require('../Img/walnut.png') },
+        { name: "게", img: require('../Img/crab.png') },
+        { name: "새우", img: require('../Img/shrimp.png') },
+        { name: "오징어", img: require('../Img/squid.png') },
+        { name: "고등어", img: require('../Img/milk.png') },
+        { name: "조개류", img: require('../Img/milk.png') },
+        { name: "복숭아", img: require('../Img/milk.png') },
+        { name: "토마토", img: require('../Img/milk.png') },
+        { name: "닭고기", img: require('../Img/milk.png') },
+        { name: "돼지고기", img: require('../Img/milk.png') },
+        { name: "쇠고기", img: require('../Img/milk.png') },
+        { name: "아황산류", img: require('../Img/milk.png') },
+    ]
     const allergysList = allergys.map(item =>
-        <View style={styles.allergyBox} key={item}>
+        <View style={styles.allergyBox} key={item.name}>
             <View style={styles.allergyImage} >
-                <Image style={{ width: 35, height: 35, }} source={require('../Img/milk.png')} />
+                <Image style={{ width: 35, height: 35, borderRadius: 15 }} source={item.img} />
             </View>
-            <Text>{item}</Text>
+            <Text>{item.name}</Text>
         </View>
     );
 
