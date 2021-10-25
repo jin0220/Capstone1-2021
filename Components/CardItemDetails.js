@@ -2,31 +2,35 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Text, View, Button, StyleSheet, Image, Dimensions, Platform} from 'react-native';
 import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
-import test from '../Img/lily-banse--YHSwy6uqvk-unsplash.jpg';
+import test from "../Img/lily-banse--YHSwy6uqvk-unsplash.jpg"
 
 const MIN_HEIGHT = Platform.OS == 'ios' ? 90 : 55; 
 const MAX_HEIGHT = 350; 
 
-const CardItemDetails=() => {
+const CardItemDetails=({route}) => {
+  // const itemData = route.params.itemData;
   
   return (
     <View style={styles.container}>
-        <HeaderImageScrollView
-          maxHeight={MAX_HEIGHT}
-          minHeight={MIN_HEIGHT}
-          renderHeader={() => (
-            <Image source={test.image} style={styles.image}/>
+      <HeaderImageScrollView
+        maxHeight={MAX_HEIGHT}
+        minHeight={MIN_HEIGHT}
+        renderHeader={() => (
+          <Image source={test.image} style={styles.image} />
+        )}
+        renderForeground={() => (
+          <View style={styles.container}>
+            <Text style={styles.imageTitle}>test</Text>
+          </View>
+        )}
+      >
             
-          )}
-          //  headerImage={require("../Img/lily-banse--YHSwy6uqvk-unsplash.jpg")}
-          >
-            
-            <TriggeringView>
-              <View>
-                <Text style={styles.title}>OVERVIEW</Text>
-              </View>
-            </TriggeringView>
-        </HeaderImageScrollView>
+      <TriggeringView>
+        <View>           
+          <Text style={styles.title}>OVERVIEW</Text>
+        </View>
+      </TriggeringView>
+      </HeaderImageScrollView>
     </View>
   );
 };

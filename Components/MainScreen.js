@@ -104,7 +104,7 @@ function MainScreen({navigation}) {
                     fontSize: 18,
                     fontWeight:'bold',
                     color: '#333',
-                }}>추천 영양 콘텐츠</Text>
+                }}>인기 많은 영양 콘텐츠</Text>
                 {/* <TouchableOpacity onPress={() => navigation.navigate('CardItemDetails')}> */}
                     <View style={styles.card}>
                         <View style={styles.cardImgWrapper}>
