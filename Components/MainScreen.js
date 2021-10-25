@@ -212,8 +212,11 @@ export default function App() {
                 name="CardItemDetails"
                 component={CardItemDetails}
                 options={({ route }) => ({
-                    // title:route.params.title,
                     headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerTransparent: true,
+                    headerTintColor: '#fff',
+                    headerShown: false,
                 })}
             />
         </Stack.Navigator>

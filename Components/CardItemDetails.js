@@ -1,79 +1,85 @@
 import React from 'react';
 import { render } from 'react-dom';
-<<<<<<< HEAD
-import { Text, View, Button, StyleSheet, Image, Dimensions, Platform} from 'react-native';
-import HeaderImageScrollView, { TriggeringView } from 'react-native-image-header-scroll-view';
-import test from "../Img/lily-banse--YHSwy6uqvk-unsplash.jpg"
-=======
-import { Text, View, Button, StyleSheet, Image, Dimensions, Platform, TouchableOpacity } from 'react-native';
+import { Text, View, Button, StyleSheet, Image, Dimensions, Platform, TouchableOpacity, StatusBar } from 'react-native';
 import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
-import test from '../Img/lily-banse--YHSwy6uqvk-unsplash.jpg';
->>>>>>> 981346d05c8441ef10958ab364ec541882d83429
+import { FontAwesome, FontAwesome5, Entypo, Iconicons, Feather } from '@expo/vector-icons';
 
 const MIN_HEIGHT = Platform.OS == 'ios' ? 90 : 55;
 const MAX_HEIGHT = 350;
 
 const CardItemDetails = () => {
-
-<<<<<<< HEAD
-const CardItemDetails=({route}) => {
-  // const itemData = route.params.itemData;
-  
   return (
-    <View style={styles.container}>
-      <HeaderImageScrollView
-        maxHeight={MAX_HEIGHT}
-        minHeight={MIN_HEIGHT}
-        renderHeader={() => (
-          <Image source={test.image} style={styles.image} />
-        )}
-        renderForeground={() => (
-          <View style={styles.container}>
-            <Text style={styles.imageTitle}>test</Text>
-          </View>
-        )}
-      >
-            
-      <TriggeringView>
-        <View>           
-          <Text style={styles.title}>OVERVIEW</Text>
-        </View>
-      </TriggeringView>
-      </HeaderImageScrollView>
-    </View>
-=======
-  return (
-    // <View style={styles.container}>
-    // <ImageHeaderScrollView
-    //   maxHeight={200}
-    //   minHeight={MIN_HEIGHT}
-    //   headerImage={require("../Img/lily-banse--YHSwy6uqvk-unsplash.jpg")}
-    //   renderForeground={() => (
-    //     <View style={{ height: 150, justifyContent: "center", alignItems: "center" }} >
-    //       <TouchableOpacity onPress={() => console.log("tap!!")}>
-    //         <Text style={{ backgroundColor: "transparent" }}>Tap Me!</Text>
-    //       </TouchableOpacity>
-    //     </View>
-    //   )}
-    // >
+  <View style={styles.container}>
+    <StatusBar barStyle='light-content' />
     <ImageHeaderScrollView
       maxHeight={MAX_HEIGHT}
       minHeight={MIN_HEIGHT}
+      maxOverlayOpacity={0.6}
+      minOverlayOpacity={0.3}
       renderHeader={() => (
         <Image source={require("../Img/lily-banse--YHSwy6uqvk-unsplash.jpg")} style={styles.image} />
 
       )}
+      renderForeground={() => (
+        <View style={styles.titleContainer}>
+          <Text style={styles.imageTitle}>title</Text>
+        </View>
+      )}
     //  headerImage={require("../Img/lily-banse--YHSwy6uqvk-unsplash.jpg")}
     >
 
-      <TriggeringView>
-        <View>
+      <TriggeringView
+        style={styles.section}
+      >
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text style={styles.title}>OVERVIEW</Text>
+          <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+            
+            <FontAwesome name='thumbs-up' size={16}/>
+            <Text style={{marginHorizontal: 2}}>10</Text>
+            <Text>(30)</Text>
+          </View>
         </View>
       </TriggeringView>
+      <View style={[styles.section, styles.sectionLarge]}>
+        <Text style={styles.sectionContent}>
+          Contrary to popular belief, Lorem Ipsum is not simply random text. 
+          It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. 
+          Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, 
+          consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. 
+          
+          Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. 
+          This book is a treatise on the theory of ethics, very popular during the Renaissance. 
+          The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+        </Text>
+      </View>
+      
+      <View style={styles.section}>
+        <View style={styles.categories}>
+          <View style={styles.categoryContainer}>
+            <FontAwesome name='tag' size={16} color='#fff'/>
+            <Text style={{color: '#fff', marginLeft: 5}}>test1</Text>
+          </View>
+
+          <View style={styles.categoryContainer}>
+            <FontAwesome name='tag' size={16} color='#fff'/>
+            <Text style={{color: '#fff', marginLeft: 5}}>test2</Text>
+            
+          </View>
+        </View>
+        {/* <View style={styles.categories}>
+          <View style={styles.categoryContainer}>
+            <FontAwesome name='tag' size={16} color='#fff'/>
+            <Text style={{color: '#fff', marginLeft: 5}}>test</Text>
+          </View>
+        </View> */}
+      </View>
+
+      <View style={[styles.section, {height: 250}]}>
+
+      </View>
     </ImageHeaderScrollView>
-    // </View >
->>>>>>> 981346d05c8441ef10958ab364ec541882d83429
+    </View >
   );
 };
 
