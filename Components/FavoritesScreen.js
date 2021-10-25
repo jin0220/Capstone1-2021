@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 
-export default function ItemsListScreen({ navigation, route }) {
-    const { title } = route.params;
-
+export default function ItemsListScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <FlatList
@@ -11,17 +9,10 @@ export default function ItemsListScreen({ navigation, route }) {
                     { key: '리스트1' },
                     { key: '리스트2' },
                     { key: '리스트3' },
-                    { key: '리스트4' },
-                    { key: '리스트5' },
-                    { key: '리스트6' },
-                    { key: '리스트7' },
-                    { key: '리스트8' },
-                    { key: '리스트9' },
-                    { key: '리스트10' },
                 ]}
                 renderItem={({ item }) =>
                     <View style={styles.ItemsListBox}>
-                        <TouchableOpacity style={styles.ItemsList} onPress={() => navigation.navigate('Detail')}>
+                        <TouchableOpacity style={styles.ItemsList} onPress={() => navigation.navigate('ItemDetail')}>
                             {/* <View style={styles.categoryicon}/> */}
                             <View style={styles.imageBox}>
                                 {/* <Image style={styles.item}/> */}

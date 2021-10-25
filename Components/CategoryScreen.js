@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet, TextInput, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ItemsListScreen from './ItemsListScreen';
 import ItemDetailScreen from './ItemDetailScreen';
 import { AntDesign } from '@expo/vector-icons';
@@ -9,23 +8,25 @@ import { AntDesign } from '@expo/vector-icons';
 function CategoryScreen({ navigation }) {
     return (
         <View style={styles.container}>
-            {/*상태바 아래에 간격이 생기는 이유 - SafeAreaView 때문*/}
             <FlatList
                 data={[
-                    { key: '리스트1' },
-                    { key: '리스트2' },
-                    { key: '리스트3' },
-                    { key: '리스트4' },
-                    { key: '리스트5' },
-                    { key: '리스트6' },
-                    { key: '리스트7' },
-                    { key: '리스트8' },
-                    { key: '리스트9' },
-                    { key: '리스트10' },
+                    { key: '과자/간식' },
+                    { key: '유제품' },
+                    { key: '음료/커피/차' },
+                    { key: '주류' },
+                    { key: '냉장/냉동/반찬' },
+                    { key: '통조림/간편식' },
+                    { key: '소스/오일/분말' },
+                    { key: '건강식품' },
+                    { key: '유아식품' },
+                    { key: '친환경 전문점' },
+                    { key: '프랜차이즈' },
+                    { key: '편의점' },
+                    { key: '펫푸드' },
                 ]}
                 renderItem={({ item }) =>
                     <View style={styles.categoryListBox}>
-                        <TouchableOpacity style={styles.categoryList} onPress={() => navigation.navigate('Items')}>
+                        <TouchableOpacity style={styles.categoryList} onPress={() => navigation.navigate('Items', { title: item.key })}>
                             <View style={styles.box}>
                                 <View style={styles.categoryicon} />
                                 <Text style={styles.categoryName}>{item.key}</Text>
@@ -43,19 +44,45 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: true }}>
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: '#f4511e'
+                },
+                headerTitleStyle: {
+                    color: 'white'
+                },
+                headerTintColor: 'white',
+                // headerBackImage: () => {
+                //     const style = {
+                //         marginRight: 5,
+                //         marginLeft: Platform.OS === 'ios' ? 11 : 0,
+                //     };
+                //     return (
+                //         <AntDesign name="left" size={20} color="white" style={style} />
+                //     );
+                // },
+            }}
+        >
+            <Stack.Screen name="카테고리" component={CategoryScreen} />
             <Stack.Screen
-                name="mm"
-                component={CategoryScreen}
+                name="Items"
+                component={ItemsListScreen}
+                options={({ route }) => ({
+                    title: route.params.title,
+                    headerTitleAlign: 'center'
+                })}
+            />
+            <Stack.Screen
+                name="Detail"
+                component={ItemDetailScreen}
                 options={{
-                    headerStyle: {
-                        backgroundColor: '#f4511e',
-
-                    }
+                    headerRight: () => (
+                        <TouchableOpacity onPress={() => { }}>
+                            <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
+                        </TouchableOpacity>
+                    ),
                 }} />
-            <Stack.Screen name="Main" component={CategoryScreen} />
-            <Stack.Screen name="Items" component={ItemsListScreen} />
-            <Stack.Screen name="Detail" component={ItemDetailScreen} />
         </Stack.Navigator>
     );
 }
@@ -70,8 +97,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         marginHorizontal: 15,
         marginVertical: 5,
-        // borderBottomColor: '#ddd',
-        // borderBottomWidth: 1,
         justifyContent: 'center',
         height: 55,
         backgroundColor: '#fff',
