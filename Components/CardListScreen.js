@@ -3,6 +3,7 @@ import { Text, View, Button, TouchableOpacity, StyleSheet, Image } from 'react-n
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { NavigationContainer } from '@react-navigation/native';
+import CardListScreen from './CardListScreen';
 import CardItemDetails from './CardItemDetails';
 
 const Card = ({navigation}) => {

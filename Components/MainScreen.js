@@ -104,7 +104,7 @@ function MainScreen({ navigation }) {
                     fontSize: 18,
                     fontWeight: 'bold',
                     color: '#333',
-                }}>추천 영양 콘텐츠</Text>
+                }}>인기 많은 영양 콘텐츠</Text>
                 {/* <TouchableOpacity onPress={() => navigation.navigate('CardItemDetails')}> */}
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
@@ -212,8 +212,11 @@ export default function App() {
                 name="CardItemDetails"
                 component={CardItemDetails}
                 options={({ route }) => ({
-                    // title:route.params.title,
                     headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerTransparent: true,
+                    headerTintColor: '#fff',
+                    headerShown: false,
                 })}
             />
         </Stack.Navigator>
