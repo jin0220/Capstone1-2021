@@ -3,11 +3,13 @@ import { View, Text, Button, StyleSheet, TextInput, ScrollView, Image, FlatList,
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SliderBox } from 'react-native-image-slider-box';
-import { FontAwesome, FontAwesome5, Entypo, Iconicons, Feather } from '@expo/vector-icons';
-
+import { FontAwesome, FontAwesome5, Entypo, Iconicons, Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { createDrawerNavigation, DrawerConentScrollView, DraweItemList, DrawerItem } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import CardListScreen from './CardListScreen';
 import CardItemDetails from './CardItemDetails';
+import SplashScreen from './SplashScreen';
+
 
 function sliderTouch(index) {
     alert(index);
@@ -159,7 +161,7 @@ function MainScreen({ navigation }) {
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+export default function App({navigation}) {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -179,27 +181,41 @@ export default function App() {
                     },
                     headerLeft: () => (
                         <View>
+                            
                             <Entypo.Button
                                 name="menu"
                                 backgroundColor="#f4511e"
                                 size={27}
-                                onPress={() => { }}>
+                                onPress={() => navigation.navigate('SplashScreen')}>
                             </Entypo.Button>
+                           
                         </View>
+                       
+                       
                     ),
                     headerRight: () => (
                         <View>
-                            <FontAwesome.Button
-                                name="barcode"
+                            <MaterialCommunityIcons.Button
+                                name="barcode-scan"
                                 backgroundColor="#f4511e"
                                 size={27}
-                                onPress={() => { }}>
+                                onPress={() => {}}>
 
-                            </FontAwesome.Button>
+                            </MaterialCommunityIcons.Button>
                         </View>
                     ),
                 }}
             />
+            <Stack.Screen
+                name="SplashScreen"
+                component={SplashScreen}
+                options={({route}) => ({
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerShown: false,
+                })}
+            />
+        
             <Stack.Screen
                 name="CardListScreen"
                 component={CardListScreen}
