@@ -1,14 +1,34 @@
 import React from "react";
-import {View, Text, StyleSheet, Button, Dimensions} from 'react-native';
-
+import {View, Text, StyleSheet, Button, Dimensions, Image, TouchableOpacity} from 'react-native';
+import LinearGradient from "react-native-linear-gradient";
+import MatterialIcons from "react-native-vector-icons/MaterialIcons"
 const SplashScreen = () => {
     return(
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text>header</Text>
+                <Image
+                source={require('../Img/ingredients.png')}
+                style={styles.logo}
+                resizeMode='stretch'
+                />
             </View>
             <View style={styles.footer}>
-                <Text>footer</Text>
+                <Text style={styles.title}>footer</Text>
+                <Text style={styles.text}>footer</Text>
+                <View style={styles.button}>
+                    <TouchableOpacity onPress={() => {}}>
+                        <View style={styles.signIn}>
+                            <Text style={styles.textSign}>시작하기</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.button} marginTop={30}>
+                    <TouchableOpacity onPress={() => {}} >
+                        <View style={styles.signIn}>
+                            <Text style={styles.textSign}>시작하기</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -52,10 +72,14 @@ const styles = StyleSheet.create({
     },
     button:{
         alignItems:'flex-end',
-        marginTop: 30,
+        marginTop: 50,
+        backgroundColor: 'tomato',
+        width: 120,
+        height: 40,
+        borderRadius: 50,
     },
     signIn:{
-        width: 150,
+        width: 120,
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
