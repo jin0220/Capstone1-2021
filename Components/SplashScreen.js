@@ -2,7 +2,10 @@ import React from "react";
 import {View, Text, StyleSheet, Button, Dimensions, Image, TouchableOpacity} from 'react-native';
 import LinearGradient from "react-native-linear-gradient";
 import MatterialIcons from "react-native-vector-icons/MaterialIcons"
-const SplashScreen = () => {
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SignInScreen from './SignInScreen';
+
+const SplashScreen = ({navigation}) => {
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -16,23 +19,28 @@ const SplashScreen = () => {
                 <Text style={styles.title}>footer</Text>
                 <Text style={styles.text}>footer</Text>
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={() => {}}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
+
                         <View style={styles.signIn}>
                             <Text style={styles.textSign}>시작하기</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.button} marginTop={30}>
-                    <TouchableOpacity onPress={() => {}} >
+                <View style={styles.button} marginTop={20}>
+                    <TouchableOpacity onPress={() => navigation.navigate('LogInScreen')} >
                         <View style={styles.signIn}>
-                            <Text style={styles.textSign}>시작하기</Text>
+                            <Text style={styles.textSign}>로그인하기</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
+                
             </View>
+            
         </View>
     );
 }
+
+const Stack = createNativeStackNavigator();
 
 export default SplashScreen;
 
@@ -42,7 +50,7 @@ const height_logo = height * 0.28;
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: '#f4511e',   
+        backgroundColor: 'tomato',   
     },
     header:{
         flex: 2,
@@ -74,12 +82,12 @@ const styles = StyleSheet.create({
         alignItems:'flex-end',
         marginTop: 50,
         backgroundColor: 'tomato',
-        width: 120,
+        width: 300,
         height: 40,
         borderRadius: 50,
     },
     signIn:{
-        width: 120,
+        width: 300,
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
