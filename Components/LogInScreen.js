@@ -60,9 +60,9 @@ const LogInScreen = () => {
                         placeholder="아이디를 입력해주세요"
                         style={styles.textInput}
                         autoCapitalize="none"
-                        onChangeText={(val) => textInputChange2(val)}
+                        onChangeText={(val) => textInputChange(val)}
                     />
-                    {data.check_textInputChange2 ? 
+                    {data.check_textInputChange ? 
                     <Feather
                         name="check-circle"
                         color="gray"
