@@ -9,6 +9,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import CardListScreen from './CardListScreen';
 import CardItemDetails from './CardItemDetails';
 import SplashScreen from './SplashScreen';
+import SignInScreen from './SignInScreen';
+import LogInScreen from './LogInScreen';
 
 
 function sliderTouch(index) {
@@ -168,7 +170,6 @@ export default function App({navigation}) {
                 headerShown: true,
                 headerStyle: {
                     backgroundColor: '#f4511e',
-
                 },
             }}>
             <Stack.Screen
@@ -177,21 +178,16 @@ export default function App({navigation}) {
                 options={{
                     headerStyle: {
                         backgroundColor: '#f4511e',
-
                     },
                     headerLeft: () => (
                         <View>
-                            
                             <Entypo.Button
                                 name="menu"
                                 backgroundColor="#f4511e"
                                 size={27}
                                 onPress={() => navigation.navigate('SplashScreen')}>
                             </Entypo.Button>
-                           
                         </View>
-                       
-                       
                     ),
                     headerRight: () => (
                         <View>
@@ -200,22 +196,11 @@ export default function App({navigation}) {
                                 backgroundColor="#f4511e"
                                 size={27}
                                 onPress={() => {}}>
-
                             </MaterialCommunityIcons.Button>
                         </View>
                     ),
                 }}
             />
-            <Stack.Screen
-                name="SplashScreen"
-                component={SplashScreen}
-                options={({route}) => ({
-                    headerBackTitleVisible: false,
-                    headerTitle: false,
-                    headerShown: false,
-                })}
-            />
-        
             <Stack.Screen
                 name="CardListScreen"
                 component={CardListScreen}
@@ -233,6 +218,35 @@ export default function App({navigation}) {
                     headerTransparent: true,
                     headerTintColor: '#fff',
                     headerShown: false,
+                })}
+            />
+            <Stack.Screen
+                name="SplashScreen"
+                component={SplashScreen}
+                options={({route}) => ({
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerShown: false,
+                })}
+            />
+            <Stack.Screen 
+                name="SignInScreen" 
+                component={SignInScreen}
+                options={({route}) => ({
+                        backgroundColor: '#f4511e',
+                        headerBackTitleVisible: false,
+                        headerTitle: false,
+                        headerShown: false,
+                })}
+            />
+            <Stack.Screen 
+                name="LogInScreen" 
+                component={LogInScreen}
+                options={({route}) => ({
+                        backgroundColor: '#f4511e',
+                        headerBackTitleVisible: false,
+                        headerTitle: false,
+                        headerShown: false,
                 })}
             />
         </Stack.Navigator>
