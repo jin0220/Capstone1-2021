@@ -12,7 +12,7 @@ const SignInScreen = () => {
         check_textInputChange1: false,
         check_textInputChange2: false,
         secureTextEntry: true,
-        confirm_secureTextEntry: true,
+        // confirm_secureTextEntry: true,
     });
 
     const textInputChange1 = (val) => {
@@ -31,21 +31,21 @@ const SignInScreen = () => {
         }
     }
 
-    const textInputChange2 = (val) => {
-        if(val.length != 0){
-            setData({
-                ...data,
-                id: val,
-                check_textInputChange2: true
-            });
-        } else{
-            setData({
-                ...data,
-                id: val,
-                check_textInputChange2: false
-            });
-        }
-    }
+    // const textInputChange2 = (val) => {
+    //     if(val.length != 0){
+    //         setData({
+    //             ...data,
+    //             id: val,
+    //             check_textInputChange2: true
+    //         });
+    //     } else{
+    //         setData({
+    //             ...data,
+    //             id: val,
+    //             check_textInputChange2: false
+    //         });
+    //     }
+    // }
 
     const handlePasswordChange = (val) => {
         setData({
@@ -54,12 +54,12 @@ const SignInScreen = () => {
         });
     }
 
-    const handleConfirmPasswordChange = (val) => {
-        setData({
-            ...data,
-            confirm_password: val
-        });
-    }
+    // const handleConfirmPasswordChange = (val) => {
+    //     setData({
+    //         ...data,
+    //         confirm_password: val
+    //     });
+    // }
 
     const updateSecureTextEntry = () => {
         setData({
@@ -68,12 +68,12 @@ const SignInScreen = () => {
         });
     }
 
-    const updateConfirmSecureTextEntry = () => {
-        setData({
-            ...data,
-            confirm_secureTextEntry: !data.confirm_secureTextEntry
-        });
-    }
+    // const updateConfirmSecureTextEntry = () => {
+    //     setData({
+    //         ...data,
+    //         confirm_secureTextEntry: !data.confirm_secureTextEntry
+    //     });
+    // }
 
     return(
         <View style={styles.container}>
@@ -85,7 +85,7 @@ const SignInScreen = () => {
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -108,7 +108,7 @@ const SignInScreen = () => {
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -130,7 +130,7 @@ const SignInScreen = () => {
                 <View style={styles.action}>
                     <FontAwesome
                         name="lock"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -152,18 +152,18 @@ const SignInScreen = () => {
                         :
                         <Feather
                             name="eye"
-                            color="gray"
+                            color="#D9B650"
                             size={20}
                         />
                         }
                     </TouchableOpacity>
                 </View>
 
-                <Text style={[styles.text_footer, {marginTop: 35}]}>비밀번호 확인</Text>
+                {/* <Text style={[styles.text_footer, {marginTop: 35}]}>비밀번호 확인</Text>
                 <View style={styles.action}>
                     <FontAwesome
                         name="lock"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -185,12 +185,12 @@ const SignInScreen = () => {
                         :
                         <Feather
                             name="eye"
-                            color="gray"
+                            color="#D9B650"
                             size={20}
                         />
                         }
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 <View style={styles.button}>
                     <TouchableOpacity onPress={() => {}}>
                         <Text style={styles.textSign}>가입하기</Text>
@@ -206,7 +206,7 @@ export default SignInScreen;
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: 'tomato',
+        backgroundColor: '#D9B650',
     },
     header:{
         flex: 1,
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     button:{
         alignItems:'center',
         marginTop: 20,
-        backgroundColor: 'tomato',
+        backgroundColor: '#D9B650',
         width: 330,
         height: 40,
         borderRadius: 50,

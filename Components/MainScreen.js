@@ -27,7 +27,7 @@ function MainScreen({ navigation }) {
                 ]}
                 sliderBoxHeight={180}
                 // onCurrentImagePressed={index => console.warn(`image ${index} pressed`)}
-                dotColor="#FFEE58"
+                dotColor="#D9B650"
                 inactiveDotColor="#90A4AE"
                 paginationBoxVerticalPadding={20}
                 autoplay
@@ -56,7 +56,7 @@ function MainScreen({ navigation }) {
                 }}
 
                 ImageComponentStyle={{ borderRadius: 15, width: '97%', marginTop: 0 }}
-                imageLoadingColor="#2196F3"
+                imageLoadingColor="#D9B650"
 
             />
 
@@ -169,7 +169,8 @@ export default function App({navigation}) {
             screenOptions={{
                 headerShown: true,
                 headerStyle: {
-                    backgroundColor: '#f4511e',
+                    backgroundColor: '#D9B650',
+                    color: 'white',
                 },
             }}>
             <Stack.Screen
@@ -177,13 +178,14 @@ export default function App({navigation}) {
                 component={MainScreen}
                 options={{
                     headerStyle: {
-                        backgroundColor: '#f4511e',
+                        backgroundColor: '#D9B650',
+                        color: 'white',
                     },
                     headerLeft: () => (
                         <View>
                             <Entypo.Button
                                 name="menu"
-                                backgroundColor="#f4511e"
+                                backgroundColor="#D9B650"
                                 size={27}
                                 onPress={() => navigation.navigate('SplashScreen')}>
                             </Entypo.Button>
@@ -193,7 +195,7 @@ export default function App({navigation}) {
                         <View>
                             <MaterialCommunityIcons.Button
                                 name="barcode-scan"
-                                backgroundColor="#f4511e"
+                                backgroundColor="#D9B650"
                                 size={27}
                                 onPress={() => {}}>
                             </MaterialCommunityIcons.Button>
@@ -207,6 +209,7 @@ export default function App({navigation}) {
                 options={({ route }) => ({
                     title: route.params.title,
                     headerBackTitleVisible: false,
+                    headerTransparent: true,
                 })}
             />
             <Stack.Screen
@@ -233,7 +236,7 @@ export default function App({navigation}) {
                 name="SignInScreen" 
                 component={SignInScreen}
                 options={({route}) => ({
-                        backgroundColor: '#f4511e',
+                        backgroundColor: '#D9B650',
                         headerBackTitleVisible: false,
                         headerTitle: false,
                         headerShown: false,
@@ -243,7 +246,7 @@ export default function App({navigation}) {
                 name="LogInScreen" 
                 component={LogInScreen}
                 options={({route}) => ({
-                        backgroundColor: '#f4511e',
+                        backgroundColor: '#D9B650',
                         headerBackTitleVisible: false,
                         headerTitle: false,
                         headerShown: false,
@@ -279,13 +282,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: 70,
         height: 70,
-        backgroundColor: '#f4511e',
+        backgroundColor: '#D9B650',
         borderRadius: 50,
     },
     categoryBtnTxt: {
         alignSelf: 'center',
         marginTop: 5,
-        color: '#de4f35'
+        color: 'grey'
     },
     cardsWrapper: {
         marginTop: 20,

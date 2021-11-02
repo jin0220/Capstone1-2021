@@ -37,7 +37,7 @@ export default function App() {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'tomato',
+          tabBarActiveTintColor: '#D9B650',
           tabBarInactiveTintColor: 'gray',
           headerShown: false,
         })}
