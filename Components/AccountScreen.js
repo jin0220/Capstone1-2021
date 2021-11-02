@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Button, TextInput, Platform, ScrollView } from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
-const SplashScreen = ({ navigation }) => {
+const AccountScreen = () => {
 
     return (
         <ScrollView style={styles.container}>
@@ -19,7 +19,7 @@ const SplashScreen = ({ navigation }) => {
                     <View style={styles.action}>
                         <FontAwesome
                             name="user-o"
-                            color="tomato"
+                            color="#D9B650"
                             size={20}
                         />
                         <TextInput
@@ -33,7 +33,7 @@ const SplashScreen = ({ navigation }) => {
                     <View style={styles.action}>
                         <FontAwesome
                             name="user-o"
-                            color="tomato"
+                            color="#D9B650"
                             size={20}
                         />
                         <Text style={[styles.textInput, { paddingTop: 10, color: '#777' }]}>
@@ -46,7 +46,7 @@ const SplashScreen = ({ navigation }) => {
                     <View style={styles.action}>
                         <FontAwesome
                             name="lock"
-                            color="tomato"
+                            color="#D9B650"
                             size={20}
                         />
                         <TextInput
@@ -60,7 +60,7 @@ const SplashScreen = ({ navigation }) => {
                     <View style={styles.action}>
                         <FontAwesome
                             name="lock"
-                            color="tomato"
+                            color="#D9B650"
                             size={20}
                         />
                         <TextInput
@@ -75,7 +75,7 @@ const SplashScreen = ({ navigation }) => {
     );
 }
 
-export default SplashScreen;
+export default AccountScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -83,13 +83,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     header: {
-        // flex: 0.8,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'tomato',
+        backgroundColor: '#F5DD7B',
     },
     footer: {
-        // flex: 1.5,
         width: '100%',
         backgroundColor: '#fff',
         borderTopRightRadius: 30,

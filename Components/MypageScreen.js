@@ -88,7 +88,7 @@ function MypageScreen({ navigation }) {
                     <Text style={{ fontSize: 17, fontWeight: 'bold' }}>아이디</Text>
                     {/* <Text style={{ color: '#888' }}>20대</Text> */}
                     <Text style={{ color: '#888' }}>
-                        알레르기 <Text style={{ color: '#f4511e' }}>{checkedInputs.length}</Text>개 선택
+                        알레르기 <Text style={{ color: '#83580B' }}>{checkedInputs.length}</Text>개 선택
                     </Text>
                 </View>
             </View>
@@ -124,7 +124,7 @@ function MypageScreen({ navigation }) {
                                     width: '100%', flexDirection: 'row', height: 50, marginTop: 10
                                 }}>
                                     <TouchableOpacity style={styles.cancel} onPress={() => cancel()}>
-                                        <Text style={{ color: 'tomato' }}>취소</Text>
+                                        <Text style={{ color: '#D9B650' }}>취소</Text>
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={styles.store} onPress={() => store()}>
@@ -156,7 +156,7 @@ export default function App({ navigation }) {
     return (
         <Stack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#f4511e'
+                backgroundColor: '#D9B650'
             },
             headerTitleStyle: {
                 color: 'white'
@@ -269,13 +269,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        borderColor: 'tomato',
+        borderColor: '#D9B650',
         borderWidth: 1
     },
     store: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'tomato',
+        backgroundColor: '#D9B650',
     }
 });
