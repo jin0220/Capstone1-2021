@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Dimensions, FlatList, CheckBox } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Dimensions, CheckBox } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -7,11 +7,13 @@ import FavoritesScreen from './FavoritesScreen';
 import ItemDetailScreen from './ItemDetailScreen';
 import SettingScreen from './SettingScreen';
 import AllergysList from './AllergysList';
+import AccountScreen from './AccountScreen';
+
+var myAllergys = ["우유", "복숭아", "잣"];
 
 function MypageScreen({ navigation }) {
-    var myAllergys = ["우유", "복숭아", "잣"];
 
-    const [checkedInputs, setCheckedInputs] = useState([]);
+    const [checkedInputs, setCheckedInputs] = useState(myAllergys); //저장된 알레르기로 초기화
 
     const changeHandler = (checked, id) => {
         if (checked) {
@@ -22,17 +24,15 @@ function MypageScreen({ navigation }) {
         }
     };
 
-    //즉시 실행 함수
-    (() => {
-        for (var i = 0; i < myAllergys.length; i++) {
-            if (!checkedInputs.includes(myAllergys[i])) {
-                changeHandler(true, myAllergys[i]);
-                // console.log(myAllergys[i]);
-            }
-        }
-    })()
+    const store = () => {
+        setModalVisible(!modalVisible);
+        myAllergys = checkedInputs; //저장되면 저장된 값으로 변경
+    }
 
-    const [count, setCount] = useState(0); //알레르기 개수
+    const cancel = () => {
+        setModalVisible(!modalVisible);
+        setCheckedInputs(myAllergys); //취소하면 이전에 저장된 값이 들어감
+    }
 
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -66,12 +66,6 @@ function MypageScreen({ navigation }) {
         { key: "아황산류", check: false },
     ];
 
-
-    function all() {
-        myAllergys = checkedInputs;
-        console.log(myAllergys);
-    }
-
     const dataList = data.map(item =>
         <TouchableOpacity style={styles.ItemsListBox} key={item.key}
             onPress={(e) => changeHandler(checkedInputs.includes(item.key) ? false : true, item.key)}
@@ -92,15 +86,15 @@ function MypageScreen({ navigation }) {
                 </View>
                 <View style={{ marginLeft: 20 }}>
                     <Text style={{ fontSize: 17, fontWeight: 'bold' }}>아이디</Text>
-                    <Text style={{ color: '#888' }}>20대</Text>
+                    {/* <Text style={{ color: '#888' }}>20대</Text> */}
                     <Text style={{ color: '#888' }}>
-                        알레르기 <Text style={{ color: '#f4511e' }}>{checkedInputs.length}</Text>개 선택
+                        알레르기 <Text style={{ color: '#83580B' }}>{checkedInputs.length}</Text>개 선택
                     </Text>
                 </View>
             </View>
 
             <View style={styles.btnBox}>
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('Account')}>
                     <Text>내 정보 수정</Text>
                 </TouchableOpacity>
 
@@ -129,11 +123,11 @@ function MypageScreen({ navigation }) {
                                 <View style={{
                                     width: '100%', flexDirection: 'row', height: 50, marginTop: 10
                                 }}>
-                                    <TouchableOpacity style={styles.cancel} onPress={() => setModalVisible(!modalVisible)}>
-                                        <Text style={{ color: 'tomato' }}>취소</Text>
+                                    <TouchableOpacity style={styles.cancel} onPress={() => cancel()}>
+                                        <Text style={{ color: '#D9B650' }}>취소</Text>
                                     </TouchableOpacity>
 
-                                    <TouchableOpacity style={styles.store} onPress={() => all()}>
+                                    <TouchableOpacity style={styles.store} onPress={() => store()}>
                                         <Text style={{ color: 'white' }}>저장</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -147,7 +141,7 @@ function MypageScreen({ navigation }) {
 
                 </View>
                 <View style={{ paddingLeft: 15 }}>
-                    <AllergysList data={myAllergys} getCount={setCount} />
+                    <AllergysList data={checkedInputs} />
                 </View>
 
             </View>
@@ -162,7 +156,7 @@ export default function App({ navigation }) {
     return (
         <Stack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#f4511e'
+                backgroundColor: '#D9B650'
             },
             headerTitleStyle: {
                 color: 'white'
@@ -191,6 +185,17 @@ export default function App({ navigation }) {
                     ),
                 }} />
             <Stack.Screen name="Setting" component={SettingScreen} options={{ title: '설정' }} />
+            <Stack.Screen
+                name="Account"
+                component={AccountScreen}
+                options={{
+                    title: '내 정보 수정',
+                    headerRight: () => (
+                        <TouchableOpacity onPress={() => { }}>
+                            <Text style={{ fontSize: 17, color: 'white', marginRight: 10 }}>저장</Text>
+                        </TouchableOpacity>
+                    ),
+                }} />
         </Stack.Navigator>
     );
 }
@@ -264,13 +269,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        borderColor: 'tomato',
+        borderColor: '#D9B650',
         borderWidth: 1
     },
     store: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'tomato',
+        backgroundColor: '#D9B650',
     }
 });

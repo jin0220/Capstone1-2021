@@ -26,17 +26,18 @@ export default function App() {
             else if (route.name === 'Category') {
               iconName = focused ? 'ios-list' : 'ios-list';
             }
-            else if (route.name === 'Search'){
+            else if (route.name === 'Search') {
               iconName = focused ? 'search' : 'search';
             }
             else if (route.name === 'Mypage') {
               iconName = focused ? 'person' : 'person';
             }
-            
+
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
+          
           tabBarActiveTintColor: '#D9B650',
           tabBarInactiveTintColor: 'gray',
           headerShown: false,

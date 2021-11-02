@@ -8,11 +8,11 @@ const SignInScreen = () => {
         name: '',
         id: '',
         password: '',
-        confirm_password: '',
-        check_textInputChange1: false,
-        check_textInputChange2: false,
+        // confirm_password: '', 비밀번호 확인
+        check_textInputChange1: false, //이름
+        check_textInputChange2: false, //아이디
         secureTextEntry: true,
-        // confirm_secureTextEntry: true,
+        // confirm_secureTextEntry: true, 비밀번호 확인
     });
 
     const textInputChange1 = (val) => {
@@ -104,7 +104,7 @@ const SignInScreen = () => {
                     }
                 </View>
 
-                <Text style={[styles.text_footer, {marginTop: 35}]}>아이디</Text>
+                <Text style={[styles.text_footer, {marginTop: 30}]}>아이디</Text>
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
@@ -126,7 +126,7 @@ const SignInScreen = () => {
                     : null}
                 </View>
 
-                <Text style={[styles.text_footer, {marginTop: 35}]}>비밀번호</Text>
+                <Text style={[styles.text_footer, {marginTop: 30}]}>비밀번호</Text>
                 <View style={styles.action}>
                     <FontAwesome
                         name="lock"
