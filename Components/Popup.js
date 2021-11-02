@@ -6,7 +6,6 @@ import {
     StyleSheet,
     Dimensions,
     TouchableOpacity,
-    useWindowDimensions
 } from "react-native";
 
 

@@ -33,14 +33,12 @@ export default function AllergysList(props) {
     /**
      * 검색 조건에 따른 배열 필터링(쿼리)
      */
-    var count = 0;
 
     const data = props.data; //다른 페이지에서 넘어온 알레르기 리스트
 
     function filterByID(item) {
         for (var i = 0; i < data.length; i++) {
             if (item.name == data[i]) {
-                count++; //개수 구하기
                 return true;
             }
         }
@@ -48,8 +46,6 @@ export default function AllergysList(props) {
     }
 
     var arrByID = allergys.filter(filterByID);
-    // console.log(count);
-    // props.getCount(count); //warning 발생, 영양 정보 페이지 들어가면 오류
 
     const allergysList = arrByID.map(item =>
         <View style={styles.allergyBox} key={item.name}>
