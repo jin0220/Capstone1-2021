@@ -156,8 +156,19 @@ const styles = StyleSheet.create({
         marginRight: 10,
         borderWidth: 1,
         borderRadius: 10,
-        borderColor: '#ddd',
-        backgroundColor: '#ddd'
+        //성분 미표기
+        borderColor: '#9A989B',
+        backgroundColor: '#9A989B',
+        //유의하세요
+        // borderColor: '#65141B',
+        // backgroundColor: '#65141B',
+        // borderColor: '#AE041D',
+        // backgroundColor: '#AE041D',
+        // borderColor: '#F0A91A',
+        // backgroundColor: '#F0A91A',
+        //안전해요
+        // borderColor: '#99CC63',
+        // backgroundColor: '#99CC63',
     },
     //원재료
     materials: {
