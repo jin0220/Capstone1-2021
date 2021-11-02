@@ -31,21 +31,21 @@ const SignInScreen = () => {
         }
     }
 
-    const textInputChange2 = (val) => { 
-        if(val.length != 0){
-            setData({
-                ...data,
-                id: val,
-                check_textInputChange2: true
-            });
-        } else{
-            setData({
-                ...data,
-                id: val,
-                check_textInputChange2: false
-            });
-        }
-    }
+    // const textInputChange2 = (val) => {
+    //     if(val.length != 0){
+    //         setData({
+    //             ...data,
+    //             id: val,
+    //             check_textInputChange2: true
+    //         });
+    //     } else{
+    //         setData({
+    //             ...data,
+    //             id: val,
+    //             check_textInputChange2: false
+    //         });
+    //     }
+    // }
 
     const handlePasswordChange = (val) => {
         setData({
@@ -85,7 +85,7 @@ const SignInScreen = () => {
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -108,7 +108,7 @@ const SignInScreen = () => {
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -130,7 +130,7 @@ const SignInScreen = () => {
                 <View style={styles.action}>
                     <FontAwesome
                         name="lock"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -152,7 +152,7 @@ const SignInScreen = () => {
                         :
                         <Feather
                             name="eye"
-                            color="gray"
+                            color="#D9B650"
                             size={20}
                         />
                         }
@@ -163,7 +163,7 @@ const SignInScreen = () => {
                 <View style={styles.action}>
                     <FontAwesome
                         name="lock"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -185,7 +185,7 @@ const SignInScreen = () => {
                         :
                         <Feather
                             name="eye"
-                            color="gray"
+                            color="#D9B650"
                             size={20}
                         />
                         }
@@ -206,7 +206,7 @@ export default SignInScreen;
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: 'tomato',
+        backgroundColor: '#D9B650',
     },
     header:{
         flex: 1,
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     button:{
         alignItems:'center',
         marginTop: 20,
-        backgroundColor: 'tomato',
+        backgroundColor: '#D9B650',
         width: 330,
         height: 40,
         borderRadius: 50,

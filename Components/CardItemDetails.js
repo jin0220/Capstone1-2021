@@ -35,7 +35,7 @@ const CardItemDetails = () => {
           <Text style={styles.title}>OVERVIEW</Text>
           <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
             
-            <FontAwesome name='thumbs-up' size={16}/>
+            <FontAwesome name='thumbs-up' size={16} color='#D9B650'/>
             <Text style={{marginHorizontal: 2}}>10</Text>
             <Text>(30)</Text>
           </View>
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     flexDirection: 'row',
-    backgroundColor: '#f4511e',
+    backgroundColor: '#D9B650',
     borderRadius: 20,
     margin: 10,
     padding: 10,

@@ -53,7 +53,7 @@ const LogInScreen = () => {
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -75,7 +75,7 @@ const LogInScreen = () => {
                 <View style={styles.action}>
                     <FontAwesome
                         name="lock"
-                        color="tomato"
+                        color="#D9B650"
                         size={20}
                     />
                     <TextInput
@@ -97,7 +97,7 @@ const LogInScreen = () => {
                         :
                         <Feather
                             name="eye"
-                            color="gray"
+                            color="#D9B650"
                             size={20}
                         />
                         }
@@ -118,7 +118,7 @@ export default LogInScreen;
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: 'tomato',
+        backgroundColor: '#D9B650',
     },
     header:{
         flex: 1,
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     button:{
         alignItems:'center',
         marginTop: 20,
-        backgroundColor: 'tomato',
+        backgroundColor: '#D9B650',
         width: 330,
         height: 40,
         borderRadius: 50,

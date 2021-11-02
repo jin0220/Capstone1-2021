@@ -50,7 +50,7 @@ const height_logo = height * 0.28;
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: 'tomato',   
+        backgroundColor: '#D9B650',   
     },
     header:{
         flex: 2,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     button:{
         alignItems:'flex-end',
         marginTop: 50,
-        backgroundColor: 'tomato',
+        backgroundColor: '#D9B650',
         width: 300,
         height: 40,
         borderRadius: 50,

@@ -3,15 +3,29 @@ import { View, Text, Button, StyleSheet, TextInput, ScrollView } from 'react-nat
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome5, Ionicons, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function SearchScreen() {
-    const searchFilter = ['POPULAR', 'RECENT'];
+    const searchFilter = ['지금 가장 많이 검색하는', ' 최근에 검색한'];
+
+    const [searchIndex, setSearchIndex] = React.useState(0)
 
     const SearchList = () => {
         return( 
             <View style={styles.searchResult}>
                 {searchFilter.map((item, index) => (
-                    <Text key={index} style={[styles.searchResult]}>{item}</Text>
+                    <TouchableOpacity 
+                        key={index} 
+                        activeOpacity={0.8}
+                        onPress={() => setSearchIndex(index)}>
+                        <Text 
+                            style={[
+                                styles.searchText, 
+                                searchIndex == index && styles.searchTextSelected,
+                                ]}>
+                                {item}
+                        </Text>
+                    </TouchableOpacity>
                 ))}
             </View>
         );
@@ -22,7 +36,7 @@ function SearchScreen() {
                 <View>
                     <Text style={{fontSize: 20, fontWeight: 'bold'}}>궁금한 제품을 검색해보세요!</Text>
                 </View>
-                <FontAwesome5 name="heart" size={24} />
+                <FontAwesome5 name="heart" size={24} color='#D9B650'/>
             </View>
             <View style={{marginTop: 30, flexDirection: 'row'}}>
                 <View style={styles.searchContainer}>
@@ -33,6 +47,8 @@ function SearchScreen() {
                     <MaterialIcons name="sort" size={30} color={'white'}/>
                 </View>
             </View>
+            <SearchList/>
+            {/* flatlist */}
         </View >
     );
 }
@@ -47,7 +63,7 @@ export default function App() {
                 component={SearchScreen}
                 options={{
                     headerStyle:{
-                        backgroundColor: '#f4511e',
+                        backgroundColor: '#D9B650',
                         
                     }
                 }} />
@@ -85,15 +101,27 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         height: 50,
         width: 50,
-        backgroundColor: '#f4511e',
+        backgroundColor: '#D9B650',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
     },
     searchResult:{
         flexDirection: 'row',
-        marginTop: 30,
+        marginTop: 20,
         marginBottom: 20,
-        justifyContent: 'space-between',
+
+        justifyContent: 'space-around',
+    },
+    searchText:{
+        fontSize: 16,
+        color: 'grey',
+        fontWeight: 'bold',
+    },
+    searchTextSelected:{
+        color: '#D9B650',
+        paddingBottom: 5,
+        borderBottomWidth: 2,
+        borderColor: 'tomato',
     }
 });
