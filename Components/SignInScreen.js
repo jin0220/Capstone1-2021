@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet, TextInput, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
+import { auth } from '../firebase';
 
 const SignInScreen = () => {
 
@@ -31,21 +32,21 @@ const SignInScreen = () => {
         }
     }
 
-    // const textInputChange2 = (val) => {
-    //     if(val.length != 0){
-    //         setData({
-    //             ...data,
-    //             id: val,
-    //             check_textInputChange2: true
-    //         });
-    //     } else{
-    //         setData({
-    //             ...data,
-    //             id: val,
-    //             check_textInputChange2: false
-    //         });
-    //     }
-    // }
+    const textInputChange2 = (val) => {
+        if(val.length != 0){
+            setData({
+                ...data,
+                id: val,
+                check_textInputChange2: true
+            });
+        } else{
+            setData({
+                ...data,
+                id: val,
+                check_textInputChange2: false
+            });
+        }
+    }
 
     const handlePasswordChange = (val) => {
         setData({
@@ -75,6 +76,23 @@ const SignInScreen = () => {
     //     });
     // }
 
+    const handleSignUp = () => {
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then(userCredential => {
+                // const currentUser = {
+                //     id: userCredential.user,
+                //     email: email,
+                //     name: userName,
+                //     nickname: nickName
+                // }
+                const user = userCredential.user;
+            })
+            .catch(error => alert(error.message))
+        }
+
+
+
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -91,6 +109,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="이름을 입력해주세요"
                         style={styles.textInput}
+                        value={data.name}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange1(val)}
                     />
@@ -114,6 +133,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="아이디를 입력해주세요"
                         style={styles.textInput}
+                        value={data.id}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange2(val)}
                     />
@@ -136,7 +156,8 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="비밀번호를 입력해주세요"
                         secureTextEntry={data.secureTextEntry ? true : false}
-                        style={styles.textInput} 
+                        style={styles.textInput}
+                        value={data.password} 
                         autoCapitalize="none"
                         onChangeText={(val) => handlePasswordChange(val)}
                     />
@@ -192,7 +213,7 @@ const SignInScreen = () => {
                     </TouchableOpacity>
                 </View> */}
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={() => {}}>
+                    <TouchableOpacity onPress={() => {handleSignUp}}>
                         <Text style={styles.textSign}>가입하기</Text>
                     </TouchableOpacity>
                 </View>

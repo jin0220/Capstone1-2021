@@ -7,6 +7,22 @@ import CategoryScreen from './Components/CategoryScreen';
 import SearchScreen from './Components/SearchScreen';
 import MypageScreen from './Components/MypageScreen';
 
+import * as firebase from 'firebase';
+
+// const analytics = getAnalytics(app);
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB_LXYdFtcpCDsupM_bCXuj4DOFJY5hkSU",
+  authDomain: "reactnativeapp-f5f89.firebaseapp.com",
+  projectId: "reactnativeapp-f5f89",
+  storageBucket: "reactnativeapp-f5f89.appspot.com",
+  messagingSenderId: "832058202775",
+  appId: "1:832058202775:web:32ebc73939767252a827d2",
+  measurementId: "G-M29HWFLHDG"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
 const Tab = createBottomTabNavigator();
 
