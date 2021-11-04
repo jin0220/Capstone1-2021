@@ -2,6 +2,11 @@ import * as React from 'react';
 import { View, Text, Button, StyleSheet, TextInput, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
+import { getDatabase, ref, set } from "firebase/database"; //9버전
+
 const SignInScreen = () => {
 
     const [data, setData] = React.useState({
@@ -16,13 +21,13 @@ const SignInScreen = () => {
     });
 
     const textInputChange1 = (val) => {
-        if(val.length != 0){
+        if (val.length != 0) {
             setData({
                 ...data,
                 name: val,
                 check_textInputChange1: true
             });
-        } else{
+        } else {
             setData({
                 ...data,
                 name: val,
@@ -31,21 +36,21 @@ const SignInScreen = () => {
         }
     }
 
-    // const textInputChange2 = (val) => {
-    //     if(val.length != 0){
-    //         setData({
-    //             ...data,
-    //             id: val,
-    //             check_textInputChange2: true
-    //         });
-    //     } else{
-    //         setData({
-    //             ...data,
-    //             id: val,
-    //             check_textInputChange2: false
-    //         });
-    //     }
-    // }
+    const textInputChange2 = (val) => {
+        if (val.length != 0) {
+            setData({
+                ...data,
+                id: val,
+                check_textInputChange2: true
+            });
+        } else {
+            setData({
+                ...data,
+                id: val,
+                check_textInputChange2: false
+            });
+        }
+    }
 
     const handlePasswordChange = (val) => {
         setData({
@@ -75,7 +80,20 @@ const SignInScreen = () => {
     //     });
     // }
 
-    return(
+    function signIn() {
+        //9버전
+        const db = getDatabase();
+        set(ref(db, 'users/' + data.id), {
+            name: data.name,
+            password: data.password
+        }).then(
+            console.log("전송 성공")
+        ).catch(
+            console.log("전송 실패")
+        );
+    }
+
+    return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.text_header}>환영합니다!</Text>
@@ -95,16 +113,16 @@ const SignInScreen = () => {
                         onChangeText={(val) => textInputChange1(val)}
                     />
                     {data.check_textInputChange1 ?
-                    <Feather
-                        name="check-circle"
-                        color="gray"
-                        size={20}
-                    />
-                    : null
+                        <Feather
+                            name="check-circle"
+                            color="gray"
+                            size={20}
+                        />
+                        : null
                     }
                 </View>
 
-                <Text style={[styles.text_footer, {marginTop: 30}]}>아이디</Text>
+                <Text style={[styles.text_footer, { marginTop: 30 }]}>아이디</Text>
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
@@ -117,16 +135,16 @@ const SignInScreen = () => {
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange2(val)}
                     />
-                    {data.check_textInputChange2 ? 
-                    <Feather
-                        name="check-circle"
-                        color="gray"
-                        size={20}
-                    />
-                    : null}
+                    {data.check_textInputChange2 ?
+                        <Feather
+                            name="check-circle"
+                            color="gray"
+                            size={20}
+                        />
+                        : null}
                 </View>
 
-                <Text style={[styles.text_footer, {marginTop: 30}]}>비밀번호</Text>
+                <Text style={[styles.text_footer, { marginTop: 30 }]}>비밀번호</Text>
                 <View style={styles.action}>
                     <FontAwesome
                         name="lock"
@@ -136,7 +154,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="비밀번호를 입력해주세요"
                         secureTextEntry={data.secureTextEntry ? true : false}
-                        style={styles.textInput} 
+                        style={styles.textInput}
                         autoCapitalize="none"
                         onChangeText={(val) => handlePasswordChange(val)}
                     />
@@ -144,17 +162,17 @@ const SignInScreen = () => {
                         onPress={updateSecureTextEntry}
                     >
                         {data.secureTextEntry ?
-                        <Feather
-                            name="eye-off"
-                            color="gray"
-                            size={20}
-                        />
-                        :
-                        <Feather
-                            name="eye"
-                            color="#D9B650"
-                            size={20}
-                        />
+                            <Feather
+                                name="eye-off"
+                                color="gray"
+                                size={20}
+                            />
+                            :
+                            <Feather
+                                name="eye"
+                                color="#D9B650"
+                                size={20}
+                            />
                         }
                     </TouchableOpacity>
                 </View>
@@ -192,7 +210,7 @@ const SignInScreen = () => {
                     </TouchableOpacity>
                 </View> */}
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={() => {}}>
+                    <TouchableOpacity onPress={() => signIn()}>
                         <Text style={styles.textSign}>가입하기</Text>
                     </TouchableOpacity>
                 </View>
@@ -204,17 +222,17 @@ const SignInScreen = () => {
 export default SignInScreen;
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
         backgroundColor: '#D9B650',
     },
-    header:{
+    header: {
         flex: 1,
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         paddingBottom: 50,
     },
-    footer:{
+    footer: {
         flex: 3,
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,
@@ -222,38 +240,38 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 50,
     },
-    text_header:{
+    text_header: {
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 30,
     },
-    text_footer:{
+    text_footer: {
         color: 'gray',
         fontSize: 17
     },
-    action:{
+    action: {
         flexDirection: 'row',
         marginTop: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#f2f2f2',
         paddingBottom: 5,
     },
-    textInput:{
+    textInput: {
         flex: 1,
         marginTop: Platform.OS == 'ios' ? 0 : -12,
         paddingLeft: 10,
         color: 'black',
     },
-    button:{
-        alignItems:'center',
+    button: {
+        alignItems: 'center',
         marginTop: 20,
         backgroundColor: '#D9B650',
         width: 330,
         height: 40,
         borderRadius: 50,
-        
+
     },
-    signIn:{
+    signIn: {
         width: 300,
         height: 40,
         justifyContent: 'center',
@@ -261,7 +279,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         flexDirection: 'row',
     },
-    textSign:{
+    textSign: {
         paddingTop: 10,
         alignItems: 'center',
         color: 'white',
