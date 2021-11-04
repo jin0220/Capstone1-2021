@@ -7,9 +7,9 @@ import CategoryScreen from './Components/CategoryScreen';
 import SearchScreen from './Components/SearchScreen';
 import MypageScreen from './Components/MypageScreen';
 
-import * as firebase from 'firebase';
-
-// const analytics = getAnalytics(app);
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB_LXYdFtcpCDsupM_bCXuj4DOFJY5hkSU",
@@ -21,8 +21,11 @@ const firebaseConfig = {
   measurementId: "G-M29HWFLHDG"
 };
 
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+
+firebase.initializeApp(firebaseConfig);
+
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 
 const Tab = createBottomTabNavigator();
 
@@ -53,7 +56,7 @@ export default function App() {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          
+
           tabBarActiveTintColor: '#D9B650',
           tabBarInactiveTintColor: 'gray',
           headerShown: false,
