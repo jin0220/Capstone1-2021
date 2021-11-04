@@ -7,6 +7,26 @@ import CategoryScreen from './Components/CategoryScreen';
 import SearchScreen from './Components/SearchScreen';
 import MypageScreen from './Components/MypageScreen';
 
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB_LXYdFtcpCDsupM_bCXuj4DOFJY5hkSU",
+  authDomain: "reactnativeapp-f5f89.firebaseapp.com",
+  projectId: "reactnativeapp-f5f89",
+  storageBucket: "reactnativeapp-f5f89.appspot.com",
+  messagingSenderId: "832058202775",
+  appId: "1:832058202775:web:32ebc73939767252a827d2",
+  measurementId: "G-M29HWFLHDG"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +57,7 @@ export default function App() {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          
+
           tabBarActiveTintColor: '#D9B650',
           tabBarInactiveTintColor: 'gray',
           headerShown: false,
