@@ -11,6 +11,7 @@ import CardItemDetails from './CardItemDetails';
 import SplashScreen from './SplashScreen';
 import SignInScreen from './SignInScreen';
 import LogInScreen from './LogInScreen';
+import BarCodeScanner from './BarCodeScanner';
 
 
 function sliderTouch(index) {
@@ -197,7 +198,7 @@ export default function App({navigation}) {
                                 name="barcode-scan"
                                 backgroundColor="#D9B650"
                                 size={27}
-                                onPress={() => {}}>
+                                onPress={() => navigation.navigate('BarCodeScanner')}>
                             </MaterialCommunityIcons.Button>
                         </View>
                     ),
@@ -251,6 +252,16 @@ export default function App({navigation}) {
                         headerTitle: false,
                         headerShown: false,
                 })}
+            />
+            <Stack.Screen
+                name="BarCodeScanner"
+                component={BarCodeScanner}
+                options={({route}) => ({
+                    backgroundColor: '#D9B650',
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerShown: false,
+            })}
             />
         </Stack.Navigator>
     );
