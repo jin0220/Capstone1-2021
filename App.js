@@ -11,7 +11,6 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyB_LXYdFtcpCDsupM_bCXuj4DOFJY5hkSU",
   authDomain: "reactnativeapp-f5f89.firebaseapp.com",
@@ -22,11 +21,11 @@ const firebaseConfig = {
   measurementId: "G-M29HWFLHDG"
 };
 
+
 firebase.initializeApp(firebaseConfig);
 
 // const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
-
 
 const Tab = createBottomTabNavigator();
 

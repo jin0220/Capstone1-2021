@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet, TextInput, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
+import { auth } from '../firebase';
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -37,13 +38,14 @@ const SignInScreen = () => {
     }
 
     const textInputChange2 = (val) => {
-        if (val.length != 0) {
+        if(val.length != 0){
             setData({
                 ...data,
                 id: val,
                 check_textInputChange2: true
             });
-        } else {
+
+        } else{
             setData({
                 ...data,
                 id: val,
@@ -109,6 +111,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="이름을 입력해주세요"
                         style={styles.textInput}
+                        value={data.name}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange1(val)}
                     />
@@ -132,6 +135,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="아이디를 입력해주세요"
                         style={styles.textInput}
+                        value={data.id}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange2(val)}
                     />
@@ -154,8 +158,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="비밀번호를 입력해주세요"
                         secureTextEntry={data.secureTextEntry ? true : false}
-                        style={styles.textInput}
-                        autoCapitalize="none"
+                        style={styles.textInput}value={data.password}autoCapitalize="none"
                         onChangeText={(val) => handlePasswordChange(val)}
                     />
                     <TouchableOpacity
