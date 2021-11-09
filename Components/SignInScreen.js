@@ -43,6 +43,7 @@ const SignInScreen = () => {
                 id: val,
                 check_textInputChange2: true
             });
+
         } else {
             setData({
                 ...data,
@@ -109,6 +110,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="이름을 입력해주세요"
                         style={styles.textInput}
+                        value={data.name}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange1(val)}
                     />
@@ -132,6 +134,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="아이디를 입력해주세요"
                         style={styles.textInput}
+                        value={data.id}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChange2(val)}
                     />
@@ -154,8 +157,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="비밀번호를 입력해주세요"
                         secureTextEntry={data.secureTextEntry ? true : false}
-                        style={styles.textInput}
-                        autoCapitalize="none"
+                        style={styles.textInput} value={data.password} autoCapitalize="none"
                         onChangeText={(val) => handlePasswordChange(val)}
                     />
                     <TouchableOpacity
@@ -209,11 +211,11 @@ const SignInScreen = () => {
                         }
                     </TouchableOpacity>
                 </View> */}
-                <View style={styles.button}>
-                    <TouchableOpacity onPress={() => signIn()}>
+                <TouchableOpacity onPress={() => signIn()}>
+                    <View style={styles.button}>
                         <Text style={styles.textSign}>가입하기</Text>
-                    </TouchableOpacity>
-                </View>
+                    </View>
+                </TouchableOpacity>
             </View>
         </View>
     );
