@@ -35,7 +35,6 @@ export default function App() {
 
     const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
-    var xhr = new XMLHttpRequest();
     var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; /*URL*/
     var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
     queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent('201704760012'); /**/
@@ -43,35 +42,23 @@ export default function App() {
     queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /**/
     queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
     queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /**/
-    xhr.open('GET', url + queryParams);
-    xhr.onreadystatechange = function () {
-      if (this.readyState == 4) {
-        alert('Status: ' + this.status + 'nHeaders: ' + JSON.stringify(this.getAllResponseHeaders()) + 'nBody: ' + this.responseText);
-      }
-    };
 
-    xhr.send('');
+    const response = await fetch(
+      url + queryParams,
+      {
+        method: 'GET',
+      },
+    );
 
-    console.log(this.responseText.totalCount);
-    // const response = await fetch(
-    //   'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService?' +
-    //   key +
-    //   '/C002/json/1/5/PRDLST_REPORT_NO=' +
-    //   reportnum,
-    //   {
-    //     method: 'GET',
-    //   },
-    // );
-
-    // if (response.status === 200) {
-    //   const responseJson = await response.json();
-    //   console.log('==원재료 정보==');
-    //   console.log(responseJson.C002.row[0].RAWMTRL_NM);
-    //   return responseJson.C002.row[0].RAWMTRL_NM;
-    // } else {
-    //   return 0;
-    //   // throw new Error('unable to get');
-    // }
+    if (response.status === 200) {
+      const responseJson = await response.json();
+      console.log('==원재료 정보==');
+      console.log(responseJson.list[0]['allergy']);
+      // return responseJson.C002.row[0].RAWMTRL_NM;
+    } else {
+      return 0;
+      // throw new Error('unable to get');
+    }
   };
 
   return (
