@@ -37,14 +37,14 @@ const SignInScreen = () => {
     }
 
     const textInputChange2 = (val) => {
-        if(val.length != 0){
+        if (val.length != 0) {
             setData({
                 ...data,
                 id: val,
                 check_textInputChange2: true
             });
 
-        } else{
+        } else {
             setData({
                 ...data,
                 id: val,
@@ -157,7 +157,7 @@ const SignInScreen = () => {
                     <TextInput
                         placeholder="비밀번호를 입력해주세요"
                         secureTextEntry={data.secureTextEntry ? true : false}
-                        style={styles.textInput}value={data.password}autoCapitalize="none"
+                        style={styles.textInput} value={data.password} autoCapitalize="none"
                         onChangeText={(val) => handlePasswordChange(val)}
                     />
                     <TouchableOpacity
@@ -212,11 +212,9 @@ const SignInScreen = () => {
                     </TouchableOpacity>
                 </View> */}
                 <TouchableOpacity onPress={() => signIn()}>
-                <View style={styles.button}>
-                
+                    <View style={styles.button}>
                         <Text style={styles.textSign}>가입하기</Text>
-                    
-                </View>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>
