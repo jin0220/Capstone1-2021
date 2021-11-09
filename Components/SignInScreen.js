@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet, TextInput, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
-import { auth } from '../firebase';
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -212,11 +211,13 @@ const SignInScreen = () => {
                         }
                     </TouchableOpacity>
                 </View> */}
+                <TouchableOpacity onPress={() => signIn()}>
                 <View style={styles.button}>
-                    <TouchableOpacity onPress={() => signIn()}>
+                
                         <Text style={styles.textSign}>가입하기</Text>
-                    </TouchableOpacity>
+                    
                 </View>
+                </TouchableOpacity>
             </View>
         </View>
     );
