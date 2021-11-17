@@ -9,7 +9,7 @@ export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   var PrdlstNum;
-  var PrdlsName;
+  var PrdlstName;
 
   useEffect(() => {
     (async () => {
@@ -37,6 +37,7 @@ export default function App() {
     // console.log(data);
     const response = await fetch(
       'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/C005/json/1/5/BAR_CD='
+      // 'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/C005/json/1/5/BRCD_NO='
         +
       data,
       {
@@ -46,11 +47,12 @@ export default function App() {
     if(response.status === 200){
       const responseJson = await response.json();
       PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
-      PrdlsName = responseJson.C005.row[0]['PRDLST_NM'];
-      getRawmt(PrdlsName);
+      console.log(responseJson);
+      // PrdlsName = responseJson//.C005.row[0]['PRDLST_NM'];
+      console.log(responseJson.C005.row[0]);
+      getRawmt(PrdlstNum);
         return responseJson.C005.row[0];
-        //console.log(responseJson.C005.row[0]['PRDLST_REPORT_NO']);
-        
+        // console.log(responseJson.C005.row[0]['PRDLST_REPORT_NO']);
     } else {
       return 0;
     }
@@ -61,13 +63,50 @@ export default function App() {
 
     var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; //URL
     var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; //Service Key
-    //queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent(PrdlstNum); 
-    queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent(PrdlsName); 
+    queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent(PrdlstNum); 
+    // queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent(PrdlsName); 
     queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); 
     // queryParams += '&' + encodeURIComponent('pageNo'); 
     // queryParams += '&' + encodeURIComponent('numOfRows'); 
-      console.log(PrdlsName);
-    // console.log(PrdlstNum);
+      // console.log(PrdlsName);
+    console.log(PrdlstNum);
+    const response = await fetch(
+      url + queryParams,
+      {
+        method: 'GET',
+      },
+    );
+
+    if (response.status === 200) {
+      console.log('==check1=aaaar=');
+      const responseJson = await response.json();
+      console.log(responseJson.list[0]['prdlstNm']);
+      PrdlstName = responseJson.list[0]['prdlstNm'];
+      console.log('==check1==');
+      
+      console.log(PrdlstName);
+      getIngredient(PrdlstName);
+      // return responseJson.C002.row[0].RAWMTRL_NM;
+    } else {
+      return 0;
+      // throw new Error('unable to get');
+    }
+  };
+
+const getIngredient = async(reportnum) => {
+
+  const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
+
+  var url = 'http://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1';
+  var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /* Service Key*/
+  queryParams += '&' + encodeURIComponent('desc_kor') + '=' + encodeURIComponent(PrdlstName); /* */
+  // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* */
+  // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3'); /* */
+  // queryParams += '&' + encodeURIComponent('bgn_year') + '=' + encodeURIComponent('2017'); /* */
+  // queryParams += '&' + encodeURIComponent('animal_plant') + '=' + encodeURIComponent('(유)돌코리아'); /* */
+  queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
+
+  console.log(PrdlstName);
     const response = await fetch(
       url + queryParams,
       {
@@ -77,15 +116,13 @@ export default function App() {
 
     if (response.status === 200) {
       const responseJson = await response.json();
-      console.log('==check==');
+      console.log('==check2==');
       console.log(responseJson);
       // return responseJson.C002.row[0].RAWMTRL_NM;
     } else {
       return 0;
       // throw new Error('unable to get');
     }
-    
-    
   };
 
   return (
