@@ -6,6 +6,7 @@ import { FontAwesome5, Ionicons, Entypo, Feather, MaterialIcons } from '@expo/ve
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function SearchScreen() {
+    // 지금 가장 많이 검색하는? 
     const searchFilter = ['지금 가장 많이 검색하는', ' 최근에 검색한'];
 
     const [searchIndex, setSearchIndex] = React.useState(0)
