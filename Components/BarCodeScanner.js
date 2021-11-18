@@ -37,7 +37,9 @@ export default function App() {
     // console.log(data);
     const response = await fetch(
       'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/C005/json/1/5/BAR_CD='
+
       // 'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/C005/json/1/5/BRCD_NO='
+
         +
       data,
       {
@@ -47,12 +49,14 @@ export default function App() {
     if(response.status === 200){
       const responseJson = await response.json();
       PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
+
       console.log(responseJson);
       // PrdlsName = responseJson//.C005.row[0]['PRDLST_NM'];
       console.log(responseJson.C005.row[0]);
       getRawmt(PrdlstNum);
         return responseJson.C005.row[0];
         // console.log(responseJson.C005.row[0]['PRDLST_REPORT_NO']);
+
     } else {
       return 0;
     }
@@ -63,6 +67,7 @@ export default function App() {
 
     var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; //URL
     var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; //Service Key
+
     queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent(PrdlstNum); 
     // queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent(PrdlsName); 
     queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); 
@@ -107,6 +112,7 @@ const getIngredient = async(reportnum) => {
   queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
 
   console.log(PrdlstName);
+  
     const response = await fetch(
       url + queryParams,
       {
@@ -116,13 +122,17 @@ const getIngredient = async(reportnum) => {
 
     if (response.status === 200) {
       const responseJson = await response.json();
+
       console.log('==check2==');
+
       console.log(responseJson);
       // return responseJson.C002.row[0].RAWMTRL_NM;
     } else {
       return 0;
       // throw new Error('unable to get');
     }
+    
+    
   };
 
   return (
