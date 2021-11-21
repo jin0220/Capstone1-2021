@@ -14,6 +14,7 @@ export default function App({navigation}) {
   var PrdlstNum;
   var PrdlstName;
   var Flag;
+  
 
   useEffect(() => {
     (async () => {
@@ -53,18 +54,13 @@ export default function App({navigation}) {
     );
     if(response.status === 200){
       const responseJson = await response.json();
-<<<<<<< HEAD
       // PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
       Flag = responseJson.C005['total_count'];
       // Code = responseJson.C005.RESULT['CODE'];
       console.log('===barcode===');
       // console.log(responseJson);
       // console.log(Code);
-=======
-      PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
 
-      console.log(responseJson);
->>>>>>> 3cb5328ea753a6f4f4e2e30beaca99fc9a9a4ba9
       // PrdlsName = responseJson//.C005.row[0]['PRDLST_NM'];
       // console.log(responseJson.C005.row[0]);
       // console.log(responseJson.C005['total_count']);
@@ -72,19 +68,13 @@ export default function App({navigation}) {
         PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
         getRawmt(PrdlstNum);
 
-      }
-      else{
+      } else{
         console.log('missing');
-        navigation.navigate('NoSearch')
-      }
+        navigation.navigate('NoSearch');}
         // return responseJson.C005.row[0];
         // console.log(responseJson.C005.row[0]['PRDLST_REPORT_NO']);
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> 3cb5328ea753a6f4f4e2e30beaca99fc9a9a4ba9
-    } else {
+      } 
+      else {
       return 0;
     }
   };
@@ -121,7 +111,7 @@ export default function App({navigation}) {
       getIngredient(PrdlstName);
       // return responseJson.C002.row[0].RAWMTRL_NM;
 
-      navigation.navigate('ItemDetailScreen', {prdlstReportNo: PrdlstNum});
+      navigation.navigate('ItemDetailScreen', {prdlstReportNo: PrdlstNum, name: PrdlstName});
       
     } else {
       return 0;
@@ -154,13 +144,13 @@ const getIngredient = async(reportnum) => {
     if (response.status === 200) {
       console.log('==ingredient==');
       const responseJson = await response.json();
-<<<<<<< HEAD
-=======
+      
+      if(PrdlstName === responseJson.body.items[0]['DESC_KOR']){
+        console.log(responseJson);
+        console.log('sucess');
+      }
 
-      console.log('==check2==');
-
->>>>>>> 3cb5328ea753a6f4f4e2e30beaca99fc9a9a4ba9
-      console.log(responseJson);
+      // console.log(responseJson);
       // return responseJson.C002.row[0].RAWMTRL_NM;
     } else {
       return 0;
