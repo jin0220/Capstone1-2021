@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button, Dimensions } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { FontAwesome5, Ionicons, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 // import Constants from 'expo-constants';
+import NoSearch from './NoSearch';
+import ItemDetailScreen from './ItemDetailScreen';
 
 const { width } = Dimensions.get('window')
 
-export default function App() {
+export default function App({navigation}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   var PrdlstNum;
   var PrdlstName;
+  var Flag;
 
   useEffect(() => {
     (async () => {
@@ -33,6 +37,7 @@ export default function App() {
     return <Text>카메라에 접근할 수가 없습니다</Text>;
   }
 
+
   const getRepotNo = async (data) => {
     // console.log(data);
     const response = await fetch(
@@ -46,17 +51,32 @@ export default function App() {
     );
     if(response.status === 200){
       const responseJson = await response.json();
-      PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
-      console.log(responseJson);
+      // PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
+      Flag = responseJson.C005['total_count'];
+      // Code = responseJson.C005.RESULT['CODE'];
+      console.log('===barcode===');
+      // console.log(responseJson);
+      // console.log(Code);
       // PrdlsName = responseJson//.C005.row[0]['PRDLST_NM'];
-      console.log(responseJson.C005.row[0]);
-      getRawmt(PrdlstNum);
-        return responseJson.C005.row[0];
+      // console.log(responseJson.C005.row[0]);
+      // console.log(responseJson.C005['total_count']);
+      if(Flag !== '0'){
+        PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
+        getRawmt(PrdlstNum);
+
+      }
+      else{
+        console.log('missing');
+        navigation.navigate('NoSearch')
+      }
+        // return responseJson.C005.row[0];
         // console.log(responseJson.C005.row[0]['PRDLST_REPORT_NO']);
+        
     } else {
       return 0;
     }
   };
+
 
   const getRawmt = async (reportnum) => {
     const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
@@ -64,11 +84,11 @@ export default function App() {
     var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; //URL
     var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; //Service Key
     queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent(PrdlstNum); 
-    // queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent(PrdlsName); 
+    // queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent(PrdlstName); 
     queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); 
     // queryParams += '&' + encodeURIComponent('pageNo'); 
     // queryParams += '&' + encodeURIComponent('numOfRows'); 
-      // console.log(PrdlsName);
+      // console.log(PrdlstName);
     console.log(PrdlstNum);
     const response = await fetch(
       url + queryParams,
@@ -78,23 +98,26 @@ export default function App() {
     );
 
     if (response.status === 200) {
-      console.log('==check1=aaaar=');
+      console.log('===haccp===');
       const responseJson = await response.json();
-      console.log(responseJson.list[0]['prdlstNm']);
+      // console.log(responseJson.list[0]['prdlstNm']);
       PrdlstName = responseJson.list[0]['prdlstNm'];
-      console.log('==check1==');
+      // console.log('==check1==');
       
-      console.log(PrdlstName);
+      // console.log(PrdlstName);
       getIngredient(PrdlstName);
       // return responseJson.C002.row[0].RAWMTRL_NM;
+
+      navigation.navigate('ItemDetailScreen', {prdlstReportNo: PrdlstNum});
+      
     } else {
       return 0;
       // throw new Error('unable to get');
     }
   };
 
-const getIngredient = async(reportnum) => {
 
+const getIngredient = async(reportnum) => {
   const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
   var url = 'http://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1';
@@ -115,8 +138,8 @@ const getIngredient = async(reportnum) => {
     );
 
     if (response.status === 200) {
+      console.log('==ingredient==');
       const responseJson = await response.json();
-      console.log('==check2==');
       console.log(responseJson);
       // return responseJson.C002.row[0].RAWMTRL_NM;
     } else {
@@ -148,6 +171,8 @@ const getIngredient = async(reportnum) => {
     </BarCodeScanner>
   );
 }
+
+
 
 const opacity = 'rgba(0, 0, 0, .6)';
 const styles = StyleSheet.create({
@@ -191,4 +216,15 @@ const styles = StyleSheet.create({
     flex: 2,
     backgroundColor: opacity
   },
+  recontainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    // alignItems: 'flex-start',
+    // justifyContent: 'center',
+},
+  header:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 30, 
+},
 });
