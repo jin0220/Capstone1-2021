@@ -1,11 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Popup from './Popup';
 import NutritionTable from './NutritionTable';
 import AllergysList from './AllergysList';
 
-export default function ItemDetailScreen() {
+export default function ItemDetailScreen({ route }) {
+    //api 연결
+    const { prdlstReportNo } = route.params; //품목보고번호
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        let isComponentMounted = true
+        if (isComponentMounted) {
+            getRawmt();
+        }
+        return () => {
+            isComponentMounted = false
+        }
+    }, []);
+
+    const getRawmt = async () => {
+        const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
+
+        var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; /*URL*/
+        var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
+        queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent(prdlstReportNo); /**/
+        // queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent('초코에 몽'); /**/
+        queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /**/
+        // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent(page); /*데이터 페이지*/
+        // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('20'); /*데이터 받아오는 개수*/
+
+        const response = await fetch(
+            url + queryParams,
+            {
+                method: 'GET',
+            },
+        );
+
+        if (response.status === 200) {
+            const responseJson = await response.json();
+            setData(responseJson.list[0]);
+            console.log('==check1==');
+            console.log(responseJson.list[0]);
+            getIngredient();
+        } else {
+            return 0;
+            // throw new Error('unable to get');
+        }
+
+
+        return true;
+    };
+
+    const getIngredient = async () => {
+        const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
+
+        var url = 'http://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1';
+        var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /* Service Key*/
+        queryParams += '&' + encodeURIComponent('desc_kor') + '=' + encodeURIComponent(data.prdlstNm); /*식품이름*/
+        // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* */
+        // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3'); /* */
+        // queryParams += '&' + encodeURIComponent('bgn_year') + '=' + encodeURIComponent('2017'); /* */
+        // queryParams += '&' + encodeURIComponent('animal_plant') + '=' + encodeURIComponent(data.manufacture); /*가공업체*/
+        queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
+
+        const response = await fetch(
+            url + queryParams,
+            {
+                method: 'GET',
+            },
+        );
+
+        if (response.status === 200) {
+            const responseJson = await response.json();
+            console.log('==check2==');
+            console.log(responseJson.body);
+            // return responseJson.C002.row[0].RAWMTRL_NM;
+        } else {
+            return 0;
+            // throw new Error('unable to get');
+        }
+    };
+
+    //모달창
     const [modalVisible, setModalVisible] = useState(false); //첫번째 원소 -> 현재 상태, 두번째 원소 -> setter 함수
     const [item, setItem] = useState("");
 
@@ -27,16 +106,17 @@ export default function ItemDetailScreen() {
         // </View>
     );
 
-    const allergys = ["아황산류", "고등어", "대두"];
+    const allergys = [data.allergy]; //알레르기 리스트
 
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.box1}>
-                    <View style={styles.image} />
-                    <Text style={styles.itemManufacturing}>제조업체</Text>
-                    <Text style={styles.itemName}>제품명</Text>
-                    <Text style={styles.itemPrice}>0원</Text>
+                    {/* <View style={styles.image} /> */}
+                    <Image style={styles.image} source={{ uri: data.imgurl1 }} />
+                    <Text style={styles.itemManufacturing}>{data.manufacture}</Text>
+                    <Text style={styles.itemName}>{data.prdlstNm}</Text>
+                    {/* <Text style={styles.itemPrice}>0원</Text> */}
                 </View>
                 <View style={styles.divide} />
 
@@ -60,8 +140,7 @@ export default function ItemDetailScreen() {
                 <View style={styles.box2}>
                     <Text style={styles.title}>원재료</Text>
                     <Text style={styles.materials}>
-                        정제수, 기타과당, 설탕, 이상화탄소, 혼합제제A(카라멜색소, 정제수, 합성향로(콜라향)),
-                        혼합제제B(인산,정제수,카페인(향미증진제))
+                        {data.rawmtrl}
                     </Text>
                 </View>
                 <View style={styles.divide} />

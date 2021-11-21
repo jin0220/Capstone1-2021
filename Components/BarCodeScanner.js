@@ -42,7 +42,9 @@ export default function App({navigation}) {
     // console.log(data);
     const response = await fetch(
       'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/C005/json/1/5/BAR_CD='
+
       // 'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/C005/json/1/5/BRCD_NO='
+
         +
       data,
       {
@@ -51,12 +53,18 @@ export default function App({navigation}) {
     );
     if(response.status === 200){
       const responseJson = await response.json();
+<<<<<<< HEAD
       // PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
       Flag = responseJson.C005['total_count'];
       // Code = responseJson.C005.RESULT['CODE'];
       console.log('===barcode===');
       // console.log(responseJson);
       // console.log(Code);
+=======
+      PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
+
+      console.log(responseJson);
+>>>>>>> 3cb5328ea753a6f4f4e2e30beaca99fc9a9a4ba9
       // PrdlsName = responseJson//.C005.row[0]['PRDLST_NM'];
       // console.log(responseJson.C005.row[0]);
       // console.log(responseJson.C005['total_count']);
@@ -71,7 +79,11 @@ export default function App({navigation}) {
       }
         // return responseJson.C005.row[0];
         // console.log(responseJson.C005.row[0]['PRDLST_REPORT_NO']);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 3cb5328ea753a6f4f4e2e30beaca99fc9a9a4ba9
     } else {
       return 0;
     }
@@ -83,6 +95,7 @@ export default function App({navigation}) {
 
     var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; //URL
     var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; //Service Key
+
     queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent(PrdlstNum); 
     // queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent(PrdlstName); 
     queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); 
@@ -130,6 +143,7 @@ const getIngredient = async(reportnum) => {
   queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
 
   console.log(PrdlstName);
+  
     const response = await fetch(
       url + queryParams,
       {
@@ -140,12 +154,20 @@ const getIngredient = async(reportnum) => {
     if (response.status === 200) {
       console.log('==ingredient==');
       const responseJson = await response.json();
+<<<<<<< HEAD
+=======
+
+      console.log('==check2==');
+
+>>>>>>> 3cb5328ea753a6f4f4e2e30beaca99fc9a9a4ba9
       console.log(responseJson);
       // return responseJson.C002.row[0].RAWMTRL_NM;
     } else {
       return 0;
       // throw new Error('unable to get');
     }
+    
+    
   };
 
   return (

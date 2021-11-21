@@ -1,34 +1,65 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 
 export default function ItemsListScreen({ navigation, route }) {
     const { title } = route.params;
 
+    const [dataInput, setDataInput] = useState([]);
+    const [page, setPage] = useState(1);
+
+    useEffect(() => {
+        getRawmt();
+    }, [page]);
+
+    const getRawmt = async () => {
+
+        const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
+
+        var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; /*URL*/
+        var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
+        // queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent('19790532001117'); /**/
+        // queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent('초코에 몽'); /**/
+        queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /**/
+        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent(page); /*데이터 페이지*/
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('20'); /*데이터 받아오는 개수*/
+
+        const response = await fetch(
+            url + queryParams,
+            {
+                method: 'GET',
+            },
+        );
+
+        if (response.status === 200) {
+            const responseJson = await response.json();
+
+            setDataInput([...dataInput, ...responseJson.list]);
+
+            return true;
+        } else {
+            return 0;
+            // throw new Error('unable to get');
+        }
+    };
+
     return (
         <View style={styles.container}>
             <FlatList
-                data={[
-                    { key: '리스트1' },
-                    { key: '리스트2' },
-                    { key: '리스트3' },
-                    { key: '리스트4' },
-                    { key: '리스트5' },
-                    { key: '리스트6' },
-                    { key: '리스트7' },
-                    { key: '리스트8' },
-                    { key: '리스트9' },
-                    { key: '리스트10' },
-                ]}
+                data={dataInput}
+                keyExtractor={(item, index) => 'key' + index}
+                onEndReached={() => setPage(page + 1)}
                 renderItem={({ item }) =>
                     <View style={styles.ItemsListBox}>
-                        <TouchableOpacity style={styles.ItemsList} onPress={() => navigation.navigate('Detail')}>
-                            {/* <View style={styles.categoryicon}/> */}
+                        <TouchableOpacity
+                            style={styles.ItemsList}
+                            onPress={() => navigation.navigate('Detail', { prdlstReportNo: item.prdlstReportNo })}
+                        >
                             <View style={styles.imageBox}>
-                                {/* <Image style={styles.item}/> */}
+                                <Image style={{ width: 40, height: 40 }} source={{ uri: item.imgurl1 }} />
                             </View>
                             <View style={styles.box}>
-                                <Text style={styles.itemManufacturing}>제조업체</Text>
-                                <Text style={styles.itemName}>{item.key}</Text>
+                                <Text style={styles.itemManufacturing}>{item.manufacture}</Text>
+                                <Text style={styles.itemName}>{item.prdlstNm}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -67,6 +98,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         borderColor: '#ddd',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     box: {
         marginLeft: 10,
