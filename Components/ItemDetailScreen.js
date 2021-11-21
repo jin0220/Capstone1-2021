@@ -15,15 +15,13 @@ export default function ItemDetailScreen({ route }) {
         let isComponentMounted = true
         if (isComponentMounted) {
             getRawmt();
-            // getIngredient();
         }
         return () => {
             isComponentMounted = false
         }
-    });
+    }, []);
 
     const getRawmt = async () => {
-
         const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
         var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; /*URL*/
@@ -44,27 +42,30 @@ export default function ItemDetailScreen({ route }) {
         if (response.status === 200) {
             const responseJson = await response.json();
             setData(responseJson.list[0]);
+            console.log('==check1==');
+            console.log(responseJson.list[0]);
+            getIngredient();
         } else {
             return 0;
             // throw new Error('unable to get');
         }
+
+
         return true;
     };
 
-    const getIngredient = async (reportnum) => {
-
+    const getIngredient = async () => {
         const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
         var url = 'http://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1';
         var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /* Service Key*/
-        queryParams += '&' + encodeURIComponent('desc_kor') + '=' + encodeURIComponent(data.prdlstNm); /* */
+        queryParams += '&' + encodeURIComponent('desc_kor') + '=' + encodeURIComponent(data.prdlstNm); /*식품이름*/
         // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* */
         // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3'); /* */
         // queryParams += '&' + encodeURIComponent('bgn_year') + '=' + encodeURIComponent('2017'); /* */
-        // queryParams += '&' + encodeURIComponent('animal_plant') + '=' + encodeURIComponent('(유)돌코리아'); /* */
+        // queryParams += '&' + encodeURIComponent('animal_plant') + '=' + encodeURIComponent(data.manufacture); /*가공업체*/
         queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
 
-        console.log(PrdlstName);
         const response = await fetch(
             url + queryParams,
             {
@@ -75,7 +76,7 @@ export default function ItemDetailScreen({ route }) {
         if (response.status === 200) {
             const responseJson = await response.json();
             console.log('==check2==');
-            console.log(responseJson);
+            console.log(responseJson.body);
             // return responseJson.C002.row[0].RAWMTRL_NM;
         } else {
             return 0;
@@ -105,7 +106,7 @@ export default function ItemDetailScreen({ route }) {
         // </View>
     );
 
-    const allergys = ["아황산류", "고등어", "대두"];
+    const allergys = [data.allergy]; //알레르기 리스트
 
     return (
         <ScrollView>
@@ -115,7 +116,7 @@ export default function ItemDetailScreen({ route }) {
                     <Image style={styles.image} source={{ uri: data.imgurl1 }} />
                     <Text style={styles.itemManufacturing}>{data.manufacture}</Text>
                     <Text style={styles.itemName}>{data.prdlstNm}</Text>
-                    <Text style={styles.itemPrice}>0원</Text>
+                    {/* <Text style={styles.itemPrice}>0원</Text> */}
                 </View>
                 <View style={styles.divide} />
 
