@@ -271,17 +271,18 @@ export default function App({navigation}) {
                     backgroundColor: '#D9B650',
                     headerBackTitleVisible: false,
                     headerTitle: false,
-                    headerShown: false,
+                    headerShown: true,
             })}
             />
             <Stack.Screen
                 name="ItemDetailScreen"
                 component={ItemDetailScreen}
                 options={({route}) => ({
+                    title: route.params.name,
                     backgroundColor: '#D9B650',
                     headerBackTitleVisible: false,
                     headerTitle: false,
-                    headerShown: false,
+                    headerShown: true,
             })}
             />
         </Stack.Navigator>
