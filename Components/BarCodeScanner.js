@@ -67,7 +67,6 @@ export default function App({navigation}) {
       if(Flag !== '0'){
         PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
         getRawmt(PrdlstNum);
-
       } else{
         console.log('missing');
         navigation.navigate('NoSearch');}
@@ -109,10 +108,25 @@ export default function App({navigation}) {
       
       // console.log(PrdlstName);
       getIngredient(PrdlstName);
+      const raw_mt = responseJson.list[0]['rawmtrl'];
+      var mt = raw_mt.split(',');
+      var mta = [];
+
+      for(var i =0; i<mt.length; i++){
+        mta.push(mt[i]);
+      }
+      console.log('######');
+      console.log(mta);
+      console.log('#####');
+
+
+
       // return responseJson.C002.row[0].RAWMTRL_NM;
 
       navigation.navigate('ItemDetailScreen', {prdlstReportNo: PrdlstNum, name: PrdlstName});
       
+
+
     } else {
       return 0;
       // throw new Error('unable to get');
@@ -144,7 +158,7 @@ const getIngredient = async(reportnum) => {
     if (response.status === 200) {
       console.log('==ingredient==');
       const responseJson = await response.json();
-      
+
       if(PrdlstName === responseJson.body.items[0]['DESC_KOR']){
         console.log(responseJson);
         console.log('sucess');
@@ -155,11 +169,9 @@ const getIngredient = async(reportnum) => {
     } else {
       return 0;
       // throw new Error('unable to get');
-    }
-    
-    
+    } 
   };
-
+  
   return (
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -183,8 +195,6 @@ const getIngredient = async(reportnum) => {
     </BarCodeScanner>
   );
 }
-
-
 
 const opacity = 'rgba(0, 0, 0, .6)';
 const styles = StyleSheet.create({

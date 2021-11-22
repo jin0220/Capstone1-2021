@@ -14,6 +14,7 @@ import LogInScreen from './LogInScreen';
 import BarCodeScanner from './BarCodeScanner';
 import NoSearch from './NoSearch';
 import ItemDetailScreen from './ItemDetailScreen';
+import CommentMessage from './CommentMessage';
 
 function sliderTouch(index) {
     alert(index);
@@ -271,7 +272,7 @@ export default function App({navigation}) {
                     backgroundColor: '#D9B650',
                     headerBackTitleVisible: false,
                     headerTitle: false,
-                    headerShown: true,
+                    headerShown: false,
             })}
             />
             <Stack.Screen
@@ -284,6 +285,17 @@ export default function App({navigation}) {
                     headerTitle: false,
                     headerShown: true,
             })}
+            />
+            <Stack.Screen
+                name="CommentMessage"
+                component={CommentMessage}
+                options={({route})=>({
+                    backgroundColor: '#D9B650',
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerShown: false,
+                })}
+
             />
         </Stack.Navigator>
     );

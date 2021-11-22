@@ -13,11 +13,10 @@ const SignInScreen = () => {
         name: '',
         id: '',
         password: '',
-        // confirm_password: '', 비밀번호 확인
+
         check_textInputChange1: false, //이름
         check_textInputChange2: false, //아이디
         secureTextEntry: true,
-        // confirm_secureTextEntry: true, 비밀번호 확인
     });
 
     const textInputChange1 = (val) => {
@@ -60,26 +59,12 @@ const SignInScreen = () => {
         });
     }
 
-    // const handleConfirmPasswordChange = (val) => {
-    //     setData({
-    //         ...data,
-    //         confirm_password: val
-    //     });
-    // }
-
     const updateSecureTextEntry = () => {
         setData({
             ...data,
             secureTextEntry: !data.secureTextEntry
         });
     }
-
-    // const updateConfirmSecureTextEntry = () => {
-    //     setData({
-    //         ...data,
-    //         confirm_secureTextEntry: !data.confirm_secureTextEntry
-    //     });
-    // }
 
     function signIn() {
         //9버전
@@ -100,6 +85,7 @@ const SignInScreen = () => {
                 <Text style={styles.text_header}>환영합니다!</Text>
             </View>
             <View style={styles.footer}>
+                <ScrollView>
                 <Text style={styles.text_footer}>이름</Text>
                 <View style={styles.action}>
                     <FontAwesome
@@ -178,44 +164,13 @@ const SignInScreen = () => {
                         }
                     </TouchableOpacity>
                 </View>
-
-                {/* <Text style={[styles.text_footer, {marginTop: 35}]}>비밀번호 확인</Text>
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="lock"
-                        color="#D9B650"
-                        size={20}
-                    />
-                    <TextInput
-                        placeholder="비밀번호를 한번 더 입력해주세요"
-                        secureTextEntry={data.confirm_secureTextEntry ? true : false}
-                        style={styles.textInput} 
-                        autoCapitalize="none"
-                        onChangeText={(val) => handleConfirmPasswordChange(val)}
-                    />
-                    <TouchableOpacity
-                        onPress={updateConfirmSecureTextEntry}
-                    >
-                        {data.secureTextEntry ?
-                        <Feather
-                            name="eye-off"
-                            color="gray"
-                            size={20}
-                        />
-                        :
-                        <Feather
-                            name="eye"
-                            color="#D9B650"
-                            size={20}
-                        />
-                        }
-                    </TouchableOpacity>
-                </View> */}
+                
                 <TouchableOpacity onPress={() => signIn()}>
                     <View style={styles.button}>
                         <Text style={styles.textSign}>가입하기</Text>
                     </View>
                 </TouchableOpacity>
+                </ScrollView>
             </View>
         </View>
     );

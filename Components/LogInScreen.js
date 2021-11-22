@@ -1,6 +1,14 @@
 import * as React from 'react';
-import { View, Text, Button, StyleSheet, TextInput, ScrollView, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, TextInput, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
+
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
+//import {EmailAuthProvider} from 'firebase/auth';
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+
+import { getDatabase, ref, onValue } from "firebase/database"; //9버전
 
 const LogInScreen = () => {
 
@@ -10,7 +18,6 @@ const LogInScreen = () => {
         check_textInputChange: false,
         secureTextEntry: true,
     });
-
 
     const textInputChange = (val) => {
         if(val.length != 0){
@@ -42,13 +49,58 @@ const LogInScreen = () => {
         });
     }
 
+    /*
+    function signUp() {
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, id, password)
+        .then((userCredential)=>{
+            //
+            const user = userCredential.user;
+            const id = user.id;
+            const password = user.password;
+        
+            // const password = userCredential.password;
+            //
+        })
+        .catch((error)=>{
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        })    
+    }
+    */
+
+    function signUp(){
+        const db = getDatabase();
+        const SignUpRef = ref(db, 'users/' + data.id);
+        onValue(SignUpRef, (id) => {
+            const data = id.val();
+            console.log(data);
+            if(data === null){
+                Alert.alert(
+                    "로그인 오류!",
+                    "아이디 또는 비밀번호를 다시 확인해주세요.",
+                    [
+                        {
+                            text: "알겠습니다",
+                            style: 'default'
+                        }
+                    ]
+                )
+            }
+            else{
+
+            }
+        })
+    }
+
+
     return(
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.text_header}>환영합니다!</Text>
+                <Text style={styles.text_header}>다시 만나 반갑습니다!</Text>
             </View>
             <View style={styles.footer}>
-
+            <ScrollView>
                 <Text style={styles.text_footer}>아이디</Text>
                 <View style={styles.action}>
                     <FontAwesome
@@ -103,11 +155,12 @@ const LogInScreen = () => {
                         }
                     </TouchableOpacity>
                 </View>
-                <View style={styles.button}>
-                    <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => signUp()}>
+                    <View style={styles.button}>
                         <Text style={styles.textSign}>로그인하기</Text>
-                    </TouchableOpacity>
-                </View>
+                    </View>
+                </TouchableOpacity>
+                </ScrollView>
             </View>
         </View>
     );

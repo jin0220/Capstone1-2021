@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Text, View, Button, TouchableOpacity, StyleSheet, Image, SafeAreaView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import CardItemDetails from './CardItemDetails';
 
 const Card = ({ navigation }) => {
     return (
+        <SafeAreaView>
         <View style={styles.container}>
             <TouchableOpacity onPress={() => navigation.navigate('CardItemDetails')}>
                 <View style={styles.card}>
@@ -40,6 +41,7 @@ const Card = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
         </View>
+        </SafeAreaView>
     );
 }
 
