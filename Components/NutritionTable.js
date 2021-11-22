@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TouchableHighlight, Modal } from 'react-native';
 
-export default function nutritionTable() {
+export default function nutritionTable(props) {
+    const data = props.nutrient;
+    console.log('data');
+    console.log(data);
     return (
         <View style={styles.nutritionTable}>
             <View style={styles.nutritionRows}>
@@ -9,7 +12,7 @@ export default function nutritionTable() {
                     <Text style={{}}>나트륨</Text>
                 </View>
                 <View style={styles.col2}>
-                    <Text style={{}}>0mg</Text>
+                    <Text style={{}}>{data.NUTR_CONT6}mg</Text>
                 </View>
                 <View style={styles.col3}>
                     <View style={{ backgroundColor: '#ddd', width: '15%', height: 17, borderRadius: 7 }} />
@@ -26,7 +29,7 @@ export default function nutritionTable() {
                         <Text style={{}}>탄수화물</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>0g</Text>
+                        <Text style={{}}>{data.NUTR_CONT2}g</Text>
                     </View>
                     <View style={styles.col3}>
                         <View style={{ backgroundColor: '#ddd', width: '100%', height: 17, borderRadius: 7 }} />
@@ -40,7 +43,7 @@ export default function nutritionTable() {
                         <Text style={{}}>당류</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>0g</Text>
+                        <Text style={{}}>{data.NUTR_CONT5}g</Text>
                     </View>
                     <View style={styles.col3}>
                         <View style={{ backgroundColor: '#ddd', width: '70%', height: 17, borderRadius: 7 }} />
@@ -58,7 +61,7 @@ export default function nutritionTable() {
                         <Text style={{}}>지방</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>0g</Text>
+                        <Text style={{}}>{data.NUTR_CONT4}g</Text>
                     </View>
                     <View style={styles.col3}>
                         <View style={{ backgroundColor: '#ddd', width: '30%', height: 17, borderRadius: 7 }} />
@@ -72,7 +75,7 @@ export default function nutritionTable() {
                         <Text style={{}}>트랜스지방</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>0g</Text>
+                        <Text style={{}}>{data.NUTR_CONT9}g</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
@@ -80,7 +83,7 @@ export default function nutritionTable() {
                         <Text style={{}}>포화지방</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>0g</Text>
+                        <Text style={{}}>{data.NUTR_CONT8}g</Text>
                     </View>
                     <View style={styles.col3}>
                         <View style={{ backgroundColor: '#ddd', width: '10%', height: 17, borderRadius: 7 }} />
@@ -96,7 +99,7 @@ export default function nutritionTable() {
                     <Text style={{}}>콜레스테롤</Text>
                 </View>
                 <View style={styles.col2}>
-                    <Text style={{}}>0mg</Text>
+                    <Text style={{}}>{data.NUTR_CONT7}mg</Text>
                 </View>
                 <View style={styles.col3}>
                     <View style={{ backgroundColor: '#ddd', width: '20%', height: 17, borderRadius: 7 }} />
@@ -111,7 +114,7 @@ export default function nutritionTable() {
                     <Text style={{}}>단백질</Text>
                 </View>
                 <View style={styles.col2}>
-                    <Text style={{}}>0g</Text>
+                    <Text style={{}}>{data.NUTR_CONT3}g</Text>
                 </View>
                 <View style={styles.col3}>
                     <View style={{ backgroundColor: '#ddd', width: '50%', height: 17, borderRadius: 7 }} />

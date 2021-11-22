@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, TextInput, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ItemsListScreen from './ItemsListScreen';
@@ -42,7 +42,12 @@ function CategoryScreen({ navigation }) {
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+export default function App({ navigation }) {
+    const [isChecked, setIsChecked] = useState(false);
+    function a() {
+        setIsChecked(!isChecked);
+        // navigation.navigate('Detail');
+    }
     return (
         <Stack.Navigator
             screenOptions={{
@@ -78,8 +83,12 @@ export default function App() {
                 component={ItemDetailScreen}
                 options={{
                     headerRight: () => (
-                        <TouchableOpacity onPress={() => { }}>
-                            <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
+                        <TouchableOpacity onPress={() => a()}>
+                            {isChecked ? (
+                                <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
+                            ) : (
+                                <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
+                            )}
                         </TouchableOpacity>
                     ),
                 }} />
