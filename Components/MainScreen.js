@@ -12,7 +12,8 @@ import SplashScreen from './SplashScreen';
 import SignInScreen from './SignInScreen';
 import LogInScreen from './LogInScreen';
 import BarCodeScanner from './BarCodeScanner';
-
+import NoSearch from './NoSearch';
+import ItemDetailScreen from './ItemDetailScreen';
 
 function sliderTouch(index) {
     alert(index);
@@ -261,6 +262,27 @@ export default function App({navigation}) {
                     headerBackTitleVisible: false,
                     headerTitle: false,
                     headerShown: false,
+            })}
+            />
+            <Stack.Screen
+                name="NoSearch"
+                component={NoSearch}
+                options={({route}) => ({
+                    backgroundColor: '#D9B650',
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerShown: true,
+            })}
+            />
+            <Stack.Screen
+                name="ItemDetailScreen"
+                component={ItemDetailScreen}
+                options={({route}) => ({
+                    title: route.params.name,
+                    backgroundColor: '#D9B650',
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerShown: true,
             })}
             />
         </Stack.Navigator>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Dimensions, CheckBox } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,11 +9,34 @@ import SettingScreen from './SettingScreen';
 import AllergysList from './AllergysList';
 import AccountScreen from './AccountScreen';
 
-var myAllergys = ["우유", "복숭아", "잣"];
+import { getDatabase, ref, set, child, get } from "firebase/database"; //9버전
+
+var myAllergys = [];
 
 function MypageScreen({ navigation }) {
+    useEffect(() => {
+        dataLoad();
+    }, []);
 
-    const [checkedInputs, setCheckedInputs] = useState(myAllergys); //저장된 알레르기로 초기화
+    function dataLoad() { // 파이어베이스에 저장된 알레르기 데이터 가져오기
+        const userId = 'me';
+        const dbRef = ref(getDatabase());
+        get(child(dbRef, `allergys/${userId}`)).then((snapshot) => {
+            if (snapshot.exists()) {
+                myAllergys = snapshot.val().myAllergys;
+                load(myAllergys);
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+
+    const [checkedInputs, setCheckedInputs] = useState([]);
+    function load(data) { //저장된 알레르기로 초기화
+        setCheckedInputs(data);
+    }
 
     const changeHandler = (checked, id) => {
         if (checked) {
@@ -27,6 +50,19 @@ function MypageScreen({ navigation }) {
     const store = () => {
         setModalVisible(!modalVisible);
         myAllergys = checkedInputs; //저장되면 저장된 값으로 변경
+        allergyCreate();
+    }
+
+    function allergyCreate() { //사용자에 대한 알레르기 추가
+        //9버전
+        const db = getDatabase();
+        set(ref(db, 'allergys/' + 'me'), { //임시 아이디
+            myAllergys: myAllergys
+        }).then(
+            console.log("전송 성공")
+        ).catch((error) => {
+            console.log("전송 실패")
+        });
     }
 
     const cancel = () => {
@@ -153,6 +189,7 @@ function MypageScreen({ navigation }) {
 const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
+    const [isChecked, setIsChecked] = useState(false);
     return (
         <Stack.Navigator screenOptions={{
             headerStyle: {
@@ -179,8 +216,12 @@ export default function App({ navigation }) {
                 component={ItemDetailScreen}
                 options={{
                     headerRight: () => (
-                        <TouchableOpacity onPress={() => { }}>
-                            <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
+                        <TouchableOpacity onPress={() => setIsChecked(!isChecked)}>
+                            {isChecked ? (
+                                <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
+                            ) : (
+                                <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
+                            )}
                         </TouchableOpacity>
                     ),
                 }} />
