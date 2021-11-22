@@ -44,15 +44,72 @@ export default function ItemDetailScreen({ route }) {
             setData(responseJson.list[0]);
             console.log('==check1==');
             console.log(responseJson.list[0]);
+            if (responseJson.list[0]['nutrient']) {
+                var afterStr = responseJson.list[0]['nutrient'].split(',|(');
+                for (var i = 0; i < afterStr.length; i++) {
+                    // console.log(afterStr[i]);
+                }
+            } else {
+                console.log("없음");
+            }
+            getFoodAdtvInfoList();
             getIngredient();
         } else {
             return 0;
             // throw new Error('unable to get');
         }
 
-
+        console.log(data.rawmtrl);
         return true;
     };
+
+    const getFoodAdtvInfoList = async () => {
+        console.log(data.rawmtrl);
+        var rawmtrl = data.rawmtrl.split(",");
+        for (var i = 0; i < rawmtrl.length; i++) {
+            // const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
+
+            // var url = 'http://apis.data.go.kr/1471000/FoodAdtvInfoService01/getFoodAdtvInfoList01'; /*URL*/
+            // var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
+            // // queryParams += '&' + encodeURIComponent('prdlst_cd') + '=' + encodeURIComponent(prdlstReportNo); /**/
+            // queryParams += '&' + encodeURIComponent('pc_kor_nm') + '=' + encodeURIComponent(rawmtrl[i]); /**/
+            // // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+            // // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3'); /**/
+            // queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /**/
+            // // console.log(data.prdlstNm);
+            // // console.log(data.manufacture);
+
+            const response = await fetch(
+                'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/I2838/json/1/5/WORD='
+
+                +
+                rawmtrl[i],
+                {
+                    method: 'GET',
+                },
+            );
+            // const response = await fetch(
+            //     url + queryParams,
+            //     {
+            //         method: 'GET',
+            //     },
+            // );
+
+            if (response.status === 200) {
+                const responseJson = await response.json();
+                console.log(rawmtrl[i]);
+                console.log(responseJson);
+                // setNutrient(responseJson.body.items[0]); //카테고리에서 오류남
+                // console.log(nutrient);
+                // return responseJson.C002.row[0].RAWMTRL_NM;s
+            } else {
+                return 0;
+                // throw new Error('unable to get');
+            }
+        }
+    };
+
+    const [nutrient, setNutrient] = useState([]);
 
     const getIngredient = async () => {
         const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
@@ -65,7 +122,8 @@ export default function ItemDetailScreen({ route }) {
         // queryParams += '&' + encodeURIComponent('bgn_year') + '=' + encodeURIComponent('2017'); /* */
         // queryParams += '&' + encodeURIComponent('animal_plant') + '=' + encodeURIComponent(data.manufacture); /*가공업체*/
         queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
-
+        // console.log(data.prdlstNm);
+        // console.log(data.manufacture);
         const response = await fetch(
             url + queryParams,
             {
@@ -75,9 +133,11 @@ export default function ItemDetailScreen({ route }) {
 
         if (response.status === 200) {
             const responseJson = await response.json();
-            console.log('==check2==');
-            console.log(responseJson.body);
-            // return responseJson.C002.row[0].RAWMTRL_NM;
+            // console.log('==check2==');
+            // console.log(responseJson.body);
+            // setNutrient(responseJson.body.items[0]); //카테고리에서 오류남
+            // console.log(nutrient);
+            // return responseJson.C002.row[0].RAWMTRL_NM;s
         } else {
             return 0;
             // throw new Error('unable to get');
@@ -162,7 +222,7 @@ export default function ItemDetailScreen({ route }) {
                             <Text style={{ width: '20%' }}>0kcal</Text>
                         </View>
 
-                        <NutritionTable />
+                        <NutritionTable nutrient={nutrient} />
                     </View>
                 </View>
                 <View style={styles.divide} />
