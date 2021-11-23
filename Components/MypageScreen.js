@@ -115,14 +115,14 @@ function MypageScreen({ navigation }) {
         </TouchableOpacity>
     );
 
-    return (props)(
+    return (baseProps)(
         <View style={styles.container}>
             <View style={styles.profileBox}>
                 <View style={{ width: 70, height: 70, backgroundColor: '#eee', borderRadius: 35, alignItems: 'center', justifyContent: 'center' }}>
                     <Ionicons name="person" size={50} color="#ccc" />
                 </View>
                 <View style={{ marginLeft: 20 }}>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{props.id}</Text>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{baseProps.id}</Text>
                     {/* <Text style={{ color: '#888' }}>20대</Text> */}
                     <Text style={{ color: '#888' }}>
                         알레르기 <Text style={{ color: '#83580B' }}>{checkedInputs.length}</Text>개 선택
