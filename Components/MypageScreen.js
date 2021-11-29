@@ -12,11 +12,9 @@ import AccountScreen from './AccountScreen';
 import userData from './LogInScreen';
 
 import { getDatabase, ref, set, child, get } from "firebase/database"; //9버전
-<<<<<<< HEAD
+
 import { render } from 'react-dom';
-=======
-import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
->>>>>>> main
+
 
 var myAllergys = [];
 
@@ -122,7 +120,6 @@ function MypageScreen({ navigation }) {
         </TouchableOpacity>
     );
 
-<<<<<<< HEAD
     // function LoginState(props){
     //     id=props.name;
     //     console.log(id);
