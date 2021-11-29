@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Popup from './Popup';
 import NutritionTable from './NutritionTable';
 import AllergysList from './AllergysList';
+// import isChecked from './CategoryScreen';
+// import * as a from './FavoritesData';
+import { getDatabase, ref, set, child, get, push } from "firebase/database"; //9버전
 
 export default function ItemDetailScreen({ route }) {
-    //api 연결
-    const { prdlstReportNo } = route.params; //품목보고번호
+    //api 연결  
+    const prdlstReportNo = route.params.prdlstReportNo; //품목보고번호
+    // module.exports = prdlstReportNo;
+
 
     const [data, setData] = useState([]);
 
@@ -15,7 +20,12 @@ export default function ItemDetailScreen({ route }) {
         let isComponentMounted = true
         if (isComponentMounted) {
             getRawmt();
+
+            if (route.params.favorite) { //좋아요 아이콘 체크, 현재 즐겨찾기에서 들어갔을 때만 정상 실행
+                setIsChecked(route.params.favorite);
+            }
         }
+
         return () => {
             isComponentMounted = false
         }
@@ -42,8 +52,8 @@ export default function ItemDetailScreen({ route }) {
         if (response.status === 200) {
             const responseJson = await response.json();
             setData(responseJson.list[0]);
-            console.log('==check1==');
-            console.log(responseJson.list[0]);
+            // console.log('==check1==');
+            // console.log(responseJson.list[0]);
             if (responseJson.list[0]['nutrient']) {
                 var afterStr = responseJson.list[0]['nutrient'].split(',|(');
                 for (var i = 0; i < afterStr.length; i++) {
@@ -64,8 +74,8 @@ export default function ItemDetailScreen({ route }) {
     };
 
     const getFoodAdtvInfoList = async () => {
-        console.log(data.rawmtrl);
-        var rawmtrl = data.rawmtrl.split(",");
+        // console.log(data.rawmtrl);
+        // var rawmtrl = data.rawmtrl.split(",");
         for (var i = 0; i < rawmtrl.length; i++) {
             // const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
@@ -97,8 +107,8 @@ export default function ItemDetailScreen({ route }) {
 
             if (response.status === 200) {
                 const responseJson = await response.json();
-                console.log(rawmtrl[i]);
-                console.log(responseJson);
+                // console.log(rawmtrl[i]);
+                // console.log(responseJson);
                 // setNutrient(responseJson.body.items[0]); //카테고리에서 오류남
                 // console.log(nutrient);
                 // return responseJson.C002.row[0].RAWMTRL_NM;s
@@ -168,77 +178,141 @@ export default function ItemDetailScreen({ route }) {
 
     const allergys = [data.allergy]; //알레르기 리스트
 
+    const [isChecked, setIsChecked] = useState(false);
+
+    const db = getDatabase();
+
+    function favorite() {
+        setIsChecked(!isChecked);
+
+        if (!isChecked) {
+            set(ref(db, 'favorites/' + 'me/' + prdlstReportNo), { //임시 아이디
+                itemNum: prdlstReportNo
+            }).then(
+                console.log("전송 성공")
+            ).catch((error) => {
+                console.log("전송 실패")
+            });
+        } else {
+            set(ref(db, 'favorites/' + 'me/' + prdlstReportNo), { //임시 아이디
+                itemNum: null
+            }).then(
+                console.log("전송 성공")
+            ).catch((error) => {
+                console.log("전송 실패")
+            });
+        }
+
+    }
+
+    // const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    // function handleBackPress() {
+    //     console.log("TQW1E");
+    //     return false;
+    // }
+
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                <View style={styles.box1}>
-                    {/* <View style={styles.image} /> */}
-                    <Image style={styles.image} source={{ uri: data.imgurl1 }} />
-                    <Text style={styles.itemManufacturing}>{data.manufacture}</Text>
-                    <Text style={styles.itemName}>{data.prdlstNm}</Text>
-                    {/* <Text style={styles.itemPrice}>0원</Text> */}
-                </View>
-                <View style={styles.divide} />
-
-
-                <View style={styles.box2}>
-                    <Text style={styles.title}>식품첨가물</Text>
-
-                    <Popup visible={modalVisible} setModalVisible={() => setModalVisible} item={item}></Popup>
-
-                    <View style={styles.listBox}>
-                        {itemsList}
-                    </View>
-                    <Text style={{ fontSize: 13, color: '#888', marginTop: 10 }}>
-                        ※ 상품에 표시된 순서대로 기재되어 있습니다. {"\n"}
-                        ※ 각 상품마다 함량과 배합방식에 따라 다르게 적용될 수 있습니다.
-                    </Text>
-                </View>
-                <View style={styles.divide} />
-
-
-                <View style={styles.box2}>
-                    <Text style={styles.title}>원재료</Text>
-                    <Text style={styles.materials}>
-                        {data.rawmtrl}
-                    </Text>
-                </View>
-                <View style={styles.divide} />
-
-
-                <View style={styles.box2}>
-                    <Text style={styles.title}>영양정보</Text>
-
-                    <View style={styles.nutritionBox}>
-                        <View style={styles.total}>
-                            <Text style={{ width: '30%' }}>총 내용량</Text>
-                            <Text style={{ width: '50%' }}>0g</Text>
-                            <Text style={{ width: '20%' }}>0kcal</Text>
-                        </View>
-                        <View style={{ width: '100%', height: 1, backgroundColor: '#eee' }} />
-                        <View style={styles.total}>
-                            <Text style={{ width: '30%' }}>1회 제공량</Text>
-                            <Text style={{ width: '50%' }}>0g</Text>
-                            <Text style={{ width: '20%' }}>0kcal</Text>
-                        </View>
-
-                        <NutritionTable nutrient={nutrient} />
-                    </View>
-                </View>
-                <View style={styles.divide} />
-
-
-                <View style={styles.box2}>
-                    <Text style={styles.title}>알레르기</Text>
-                    <AllergysList data={allergys} />
-                </View>
-
+        <View>
+            <View style={styles.header}>
+                <TouchableOpacity
+                    onPress={() => { }} >
+                    <AntDesign name="arrowleft" size={23} color="white" />
+                </TouchableOpacity>
+                {/* <Text style={{ color: 'white', fontSize: 22 }}>제목</Text> */}
+                <TouchableOpacity
+                    style={{}}
+                    onPress={() => favorite()}>
+                    {isChecked ? (
+                        <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
+                    ) : (
+                        <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
+                    )}
+                </TouchableOpacity>
             </View>
-        </ScrollView>
+
+
+            <ScrollView>
+                <View style={styles.container}>
+                    <View style={styles.box1}>
+                        {/* <View style={styles.image} /> */}
+                        <Image style={styles.image} source={{ uri: data.imgurl1 }} />
+                        <Text style={styles.itemManufacturing}>{data.manufacture}</Text>
+                        <Text style={styles.itemName}>{data.prdlstNm}</Text>
+                        {/* <Text style={styles.itemPrice}>0원</Text> */}
+                    </View>
+                    <View style={styles.divide} />
+
+
+                    <View style={styles.box2}>
+                        <Text style={styles.title}>식품첨가물</Text>
+
+                        <Popup visible={modalVisible} setModalVisible={() => setModalVisible} item={item}></Popup>
+
+                        <View style={styles.listBox}>
+                            {itemsList}
+                        </View>
+                        <Text style={{ fontSize: 13, color: '#888', marginTop: 10 }}>
+                            ※ 상품에 표시된 순서대로 기재되어 있습니다. {"\n"}
+                            ※ 각 상품마다 함량과 배합방식에 따라 다르게 적용될 수 있습니다.
+                        </Text>
+                    </View>
+                    <View style={styles.divide} />
+
+
+                    <View style={styles.box2}>
+                        <Text style={styles.title}>원재료</Text>
+                        <Text style={styles.materials}>
+                            {data.rawmtrl}
+                        </Text>
+                    </View>
+                    <View style={styles.divide} />
+
+
+                    <View style={styles.box2}>
+                        <Text style={styles.title}>영양정보</Text>
+
+                        <View style={styles.nutritionBox}>
+                            <View style={styles.total}>
+                                <Text style={{ width: '30%' }}>총 내용량</Text>
+                                <Text style={{ width: '50%' }}>0g</Text>
+                                <Text style={{ width: '20%' }}>0kcal</Text>
+                            </View>
+                            <View style={{ width: '100%', height: 1, backgroundColor: '#eee' }} />
+                            <View style={styles.total}>
+                                <Text style={{ width: '30%' }}>1회 제공량</Text>
+                                <Text style={{ width: '50%' }}>0g</Text>
+                                <Text style={{ width: '20%' }}>0kcal</Text>
+                            </View>
+
+                            <NutritionTable nutrient={nutrient} />
+                        </View>
+                    </View>
+                    <View style={styles.divide} />
+
+
+                    <View style={styles.box2}>
+                        <Text style={styles.title}>알레르기</Text>
+                        <AllergysList data={allergys} />
+                    </View>
+
+                </View>
+            </ScrollView>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    header: {
+        width: '100%',
+        height: '10%',
+        flexDirection: 'row', //가로배치
+        justifyContent: 'flex-start', //flexDirection의 수평한 정렬
+        alignItems: 'center', //flexDirection의 수직한 정렬
+        backgroundColor: '#D9B650',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        paddingTop: 20
+    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
