@@ -9,7 +9,10 @@ import SettingScreen from './SettingScreen';
 import AllergysList from './AllergysList';
 import AccountScreen from './AccountScreen';
 
+import userData from './LogInScreen';
+
 import { getDatabase, ref, set, child, get } from "firebase/database"; //9버전
+import { render } from 'react-dom';
 
 var myAllergys = [];
 
@@ -114,6 +117,21 @@ function MypageScreen({ navigation }) {
         </TouchableOpacity>
     );
 
+    // function LoginState(props){
+    //     id=props.name;
+    //     console.log(id);
+    // }
+
+    // console.log(userData);
+
+    // if(userData[0][id] !== null){
+        var id = userData[0]['id'];
+    // }
+    // else{
+        // var id = "로그인 해주세요";
+    // }
+    // var id = userData[0]['id'];
+
     return (
         <View style={styles.container}>
             <View style={styles.profileBox}>
@@ -121,7 +139,8 @@ function MypageScreen({ navigation }) {
                     <Ionicons name="person" size={50} color="#ccc" />
                 </View>
                 <View style={{ marginLeft: 20 }}>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>아이디</Text>
+                    {/* userData[0]['id']?.id */}
+                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{id}</Text>
                     {/* <Text style={{ color: '#888' }}>20대</Text> */}
                     <Text style={{ color: '#888' }}>
                         알레르기 <Text style={{ color: '#83580B' }}>{checkedInputs.length}</Text>개 선택

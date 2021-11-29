@@ -4,6 +4,7 @@ import LinearGradient from "react-native-linear-gradient";
 import MatterialIcons from "react-native-vector-icons/MaterialIcons"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignInScreen from './SignInScreen';
+import userData from './LogInScreen';
 
 const SplashScreen = ({navigation}) => {
     return(

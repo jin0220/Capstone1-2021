@@ -13,7 +13,8 @@ export default function App({navigation}) {
   const [scanned, setScanned] = useState(false);
   var PrdlstNum;
   var PrdlstName;
-  var Flag;
+  var Flag1;
+  var Flag2;
   
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function App({navigation}) {
     if(response.status === 200){
       const responseJson = await response.json();
       // PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
-      Flag = responseJson.C005['total_count'];
+      Flag1 = responseJson.C005['total_count'];
       // Code = responseJson.C005.RESULT['CODE'];
       console.log('===barcode===');
       // console.log(responseJson);
@@ -64,7 +65,7 @@ export default function App({navigation}) {
       // PrdlsName = responseJson//.C005.row[0]['PRDLST_NM'];
       // console.log(responseJson.C005.row[0]);
       // console.log(responseJson.C005['total_count']);
-      if(Flag !== '0'){
+      if(Flag1 !== '0'){
         PrdlstNum = responseJson.C005.row[0]['PRDLST_REPORT_NO'];
         getRawmt(PrdlstNum);
       } else{
@@ -100,24 +101,54 @@ export default function App({navigation}) {
     );
 
     if (response.status === 200) {
-      console.log('===haccp===');
+      // console.log('===haccp===');
       const responseJson = await response.json();
-      // console.log(responseJson.list[0]['prdlstNm']);
-      PrdlstName = responseJson.list[0]['prdlstNm'];
-      // console.log('==check1==');
+      // console.log("check!!!!!!!!")
+      // console.log(responseJson['totalCount']);
+      Flag2 = responseJson['totalCount'];
       
+      // console.log('==check1==');
+      console.log('===haccp===');
+
+      if(Flag2 === '0'){
+        console.log('missing');
+        navigation.navigate('NoSearch');
+
+      }else{
       // console.log(PrdlstName);
+      PrdlstName = responseJson.list[0]['prdlstNm'];
       getIngredient(PrdlstName);
+
+
+      
       const raw_mt = responseJson.list[0]['rawmtrl'];
-      var mt = raw_mt.split(',');
+      var mt = raw_mt.split(/[\,\(\)\%]/);
+
       var mta = [];
 
       for(var i =0; i<mt.length; i++){
         mta.push(mt[i]);
       }
-      console.log('######');
+      mta = mta.filter(item => item);
       console.log(mta);
-      console.log('#####');
+
+
+
+
+      const nut_ri = responseJson.list[0]['nutrient'];
+      var ri = nut_ri.split(/[\(\)\g\%\,]/);
+
+      var ent =[];
+
+      for(var i=0; i<ri.length; i++){
+        ent.push(ri[i]);
+      }
+
+      ent = ent.filter(item => item);
+      console.log(ent);
+
+      
+
 
 
 
@@ -125,7 +156,7 @@ export default function App({navigation}) {
 
       navigation.navigate('ItemDetailScreen', {prdlstReportNo: PrdlstNum, name: PrdlstName});
       
-
+    }
 
     } else {
       return 0;

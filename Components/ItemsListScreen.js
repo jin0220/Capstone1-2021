@@ -1,11 +1,16 @@
+import { compare } from 'compare-versions';
+import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
+import { SearchBar } from 'react-native-screens';
 
 export default function ItemsListScreen({ navigation, route }) {
     const { title } = route.params;
 
     const [dataInput, setDataInput] = useState([]);
     const [page, setPage] = useState(1);
+    const [data, setData] = useState([]);
+    //const [state, setValue] = useState([]);
 
     useEffect(() => {
         getRawmt();
@@ -30,10 +35,58 @@ export default function ItemsListScreen({ navigation, route }) {
             },
         );
 
+        
+
         if (response.status === 200) {
             const responseJson = await response.json();
 
-            setDataInput([...dataInput, ...responseJson.list]);
+            // const listItem = () => {
+            //     setDataInput([
+            //         ...dataInput,
+            //         {
+            //             prdlstNm: responseJson.list[0]['prdlstNm'],
+            //             manufacture: responseJson.list[0]['manufacture']
+            //         }
+            //     ]);
+                
+            // };
+
+
+            
+            for(var i=0; i<20; i++){
+                var kind = responseJson.list[i]['prdkind'];
+                var filter = '과자';
+                var first = true;
+                if(kind.indexOf(filter) !== -1){
+                    
+                    // updatedState[i] = responseJson.list[i]['prdlstNm'];
+                    // setDataInput({
+                    //     ...dataInput,
+                    //     ...updatedState,
+                    // });
+                    
+                    setDataInput([...dataInput, responseJson.list[i]]);
+                    setData(data.concat(dataInput));
+
+                    console.log(data);
+                    // console.log(kind);
+                    // setDataInput([...dataInput, responseJson.list[i]]);
+                    }
+                    // this.setDataInput({setValue:copy});
+                    
+                    
+                    // array.push(responseJson.list[i]['prdlstNm']);
+                   
+
+                    // this.setDataInput([...dataInput, responseJson.list[i]]);
+                    
+                else{
+                    console.log('error');
+                }
+                
+            }
+
+
 
             return true;
         } else {

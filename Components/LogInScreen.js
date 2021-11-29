@@ -10,7 +10,11 @@ import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 
 import { getDatabase, ref, onValue } from "firebase/database"; //9버전
 
-const LogInScreen = () => {
+import MypageScreen from './MypageScreen';
+
+
+
+const LogInScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
         id: '',
@@ -73,9 +77,18 @@ const LogInScreen = () => {
         const db = getDatabase();
         const SignUpRef = ref(db, 'users/' + data.id);
         onValue(SignUpRef, (id) => {
-            const data = id.val();
-            console.log(data);
-            if(data === null){
+            const datas = id.val();
+
+            // console.log(datas['password']);
+            // //console.log('비번'+ data.password);
+            // console.log('$$$$$1111$$');
+            // //console.log('아이디'+data.id);
+            // //console.log(data[data.id]);
+            // console.log('아이디');
+            // console.log(datas);
+            // console.log(data.id); // 내가 입력한 데이터
+            // console.log(datas['id']); // 디비에서 가져오는 데이터
+            if (data.id !== datas['id']){
                 Alert.alert(
                     "로그인 오류!",
                     "아이디 또는 비밀번호를 다시 확인해주세요.",
@@ -87,12 +100,37 @@ const LogInScreen = () => {
                     ]
                 )
             }
-            else{
-
+            else if(data.password !== datas['password']){
+                Alert.alert(
+                    "로그인 오류!",
+                    "아이디 또는 비밀번호를 다시 확인해주세요.",
+                    [
+                        {
+                            text: "알겠습니다",
+                            style: 'default'
+                        }
+                    ]
+                )
             }
-        })
-    }
+            else {
+                // <MypageScreen name={datas['id']} />
+                // navigation.navigate('MypageScreen');
+                
+                // navigation.navigate('MypageScreen');
+                // console.log('log sucess')
+                // console.log(data.id)
 
+                let userData=[{
+                     id: data.id,
+                }];
+                module.exports = userData;
+                console.log('login');
+                navigation.navigate('MypageScreen');
+            }
+        });
+        
+    }
+    
 
     return(
         <View style={styles.container}>

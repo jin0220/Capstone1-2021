@@ -15,6 +15,7 @@ import BarCodeScanner from './BarCodeScanner';
 import NoSearch from './NoSearch';
 import ItemDetailScreen from './ItemDetailScreen';
 import CommentMessage from './CommentMessage';
+import MypageScreen from './MypageScreen';
 
 function sliderTouch(index) {
     alert(index);
@@ -37,6 +38,7 @@ function MainScreen({ navigation }) {
                 circleLoop
                 resizeMethod={'resize'}
                 resizeMode={'cover'}
+                
 
                 paginationBoxStyle={{
                     position: "absolute",
@@ -58,12 +60,13 @@ function MainScreen({ navigation }) {
                     backgroundColor: "rgba(128, 128, 128, 0.92)"
                 }}
 
-                ImageComponentStyle={{ borderRadius: 15, width: '97%', marginTop: 0 }}
+                ImageComponentStyle={{ borderRadius: 15, width: '97%', marginTop: 10 }}
                 imageLoadingColor="#D9B650"
 
             />
-
-            <View style={styles.categoryContainer}>
+            {/* 카테고리 수정 생각 중 */}
+                
+            {/* <View style={styles.categoryContainer}>
                 <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('CardListScreen', { title: 'test1' })}>
                     <View style={styles.categoryIcon}>
                         <FontAwesome5 name="bread-slice" size={35} color="white" />
@@ -103,7 +106,7 @@ function MainScreen({ navigation }) {
                     </View>
                     <Text style={styles.categoryBtnTxt}>test6</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
 
             <View style={styles.cardsWrapper}>
                 <Text style={{
@@ -111,12 +114,24 @@ function MainScreen({ navigation }) {
                     fontSize: 18,
                     fontWeight: 'bold',
                     color: '#333',
-                }}>인기 많은 영양 콘텐츠</Text>
-                {/* <TouchableOpacity onPress={() => navigation.navigate('CardItemDetails')}> */}
+                }}> 추천 영양 콘텐츠</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('CardItemDetails')}>
+                <View style={styles.card}>
+                    <View style={styles.cardImgWrapper}>
+                        <Image source={require('../Img/card1.png')} resizeMode='cover' style={styles.cardImg}/>
+                    </View>
+                    <View style={styles.cardInfo}>
+                        <Text style={styles.cardTitle}>오늘 하루, 아삭아삭 하셨나요?</Text>
+                        <Text style={styles.cardDetails}>건강한 밥상</Text>
+                    </View>
+                </View>
+                </TouchableOpacity>
+
+                {/* <TouchableOpacity onPress={() => navigation.navigate('details')}> */}
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
                         <Image
-                            source={{ uri: "https://source.unsplash.com/collection/190727/1024x768" }}
+                            source={{ uri: "https://source.unsplash.com/collection/190727/1024x768"}}
                             resizeMode="cover"
                             style={styles.cardImg}
                         />
@@ -128,7 +143,20 @@ function MainScreen({ navigation }) {
                 </View>
                 {/* </TouchableOpacity> */}
 
-                {/* <TouchableOpacity onPress={() => navigation.navigate('details')}> */}
+                <View style={styles.card}>
+                    <View style={styles.cardImgWrapper}>
+                        <Image
+                            source={{ uri: "https://source.unsplash.com/collection/190727/1024x768"}}
+                            resizeMode="cover"
+                            style={styles.cardImg}
+                        />
+                    </View>
+                    <View style={styles.cardInfo}>
+                        <Text style={styles.cardTitle}>test</Text>
+                        <Text style={styles.cardDetails}>test</Text>
+                    </View>
+                </View>
+
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
                         <Image
@@ -142,7 +170,6 @@ function MainScreen({ navigation }) {
                         <Text style={styles.cardDetails}>test</Text>
                     </View>
                 </View>
-                {/* </TouchableOpacity> */}
 
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
@@ -177,12 +204,12 @@ export default function App({navigation}) {
                 },
             }}>
             <Stack.Screen
-                name="Main"
+                name="영냠사"
                 component={MainScreen}
                 options={{
                     headerStyle: {
                         backgroundColor: '#D9B650',
-                        color: 'white',
+                        color: '#fff',
                     },
                     headerLeft: () => (
                         <View>
@@ -297,6 +324,17 @@ export default function App({navigation}) {
                 })}
 
             />
+            <Stack.Screen
+                name="MypageScreen"
+                component={MypageScreen}
+                options={({route})=>({
+                    backgroundColor: '#D9B650',
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerShown: false,
+                })}
+
+            />
         </Stack.Navigator>
     );
 }
@@ -362,7 +400,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 0,
     },
     cardInfo: {
-        flex: 2,
+        flex: 1.2,
         padding: 10,
         borderColor: '#ccc',
         borderWidth: 1,
@@ -372,7 +410,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     cardTitle: {
+        paddingTop: 15,
         fontWeight: 'bold',
+        paddingBottom: 5
     },
     cardDetails: {
         fontSize: 12,
