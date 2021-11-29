@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, TextInput, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ItemsListScreen from './ItemsListScreen';
@@ -44,12 +44,7 @@ function CategoryScreen({ navigation }) {
 
 const Stack = createNativeStackNavigator();
 
-export default function App({ navigation }) {
-    const [isChecked, setIsChecked] = useState(false);
-    function a() {
-        setIsChecked(!isChecked);
-        // navigation.navigate('Detail');
-    }
+export default function App(props) {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -84,15 +79,16 @@ export default function App({ navigation }) {
                 name="Detail"
                 component={ItemDetailScreen}
                 options={{
-                    headerRight: () => (
-                        <TouchableOpacity onPress={() => a()}>
-                            {isChecked ? (
-                                <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
-                            ) : (
-                                <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
-                            )}
-                        </TouchableOpacity>
-                    ),
+                    // headerRight: () => (
+                    // <TouchableOpacity onPress={() => setIsChecked(!isChecked)}>
+                    //     {isChecked ? (
+                    //         <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
+                    //     ) : (
+                    //         <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
+                    //     )}
+                    // </TouchableOpacity>
+                    // ),
+                    headerShown: false,
                 }} />
         </Stack.Navigator>
     );

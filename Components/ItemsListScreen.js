@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react
 import { SearchBar } from 'react-native-screens';
 
 export default function ItemsListScreen({ navigation, route }) {
-    const { title } = route.params;
+    const title = route.params.title;
 
     const [dataInput, setDataInput] = useState([]);
     const [page, setPage] = useState(1);
@@ -87,6 +87,18 @@ export default function ItemsListScreen({ navigation, route }) {
             }
 
 
+
+            // if (responseJson.list[0].prdkind == '과자') {
+            //     console.log(responseJson.list[0]);
+            setDataInput([...dataInput, ...responseJson.list]);
+            // }
+
+            // for (var i = 0; i < 20; i++) {
+
+            // if (responseJson.list.prdkind.indexOf('김치') != -1)
+            console.log(dataInput);
+            // setDataInput([...dataInput, responseJson.list[i]]);
+            // }
 
             return true;
         } else {
