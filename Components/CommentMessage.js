@@ -87,7 +87,7 @@ const CommentMessage = () => {
     return(
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.text_header}>의견 감사합니다!</Text>
+                <Text style={styles.text_header}>귀중한 시간을 내주셔서 감사합니다!</Text>
             </View>
             
             <View style={styles.footer}>
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     text_header:{
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 30,
+        fontSize: 24,
     },
     text_footer:{
         color: 'gray',

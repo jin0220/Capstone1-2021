@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Dimensions, CheckBox } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, Dimensions, CheckBox, AsyncStorage } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -10,24 +10,29 @@ import AllergysList from './AllergysList';
 import AccountScreen from './AccountScreen';
 
 import { getDatabase, ref, set, child, get } from "firebase/database"; //9버전
-import { baseProps } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
+
+import { render } from 'react-dom';
+
+
 
 var myAllergys = [];
 
 function MypageScreen({ navigation }) {
+    const [id, setId] = useState();
+
     useEffect(() => {
-        dataLoad();
+        AsyncStorage.getItem('id', (err, result) => {
+            setId(result);
+            dataLoad(result);
+        });
     }, []);
 
-    function dataLoad() { // 파이어베이스에 저장된 알레르기 데이터 가져오기
-        const userId = 'me';
+    function dataLoad(id) { // 파이어베이스에 저장된 알레르기 데이터 가져오기
         const dbRef = ref(getDatabase());
-        get(child(dbRef, `allergys/${userId}`)).then((snapshot) => {
+        get(child(dbRef, `allergys/${id}`)).then((snapshot) => {
             if (snapshot.exists()) {
                 myAllergys = snapshot.val().myAllergys;
                 load(myAllergys);
-            } else {
-                console.log("No data available");
             }
         }).catch((error) => {
             console.error(error);
@@ -58,7 +63,7 @@ function MypageScreen({ navigation }) {
     function allergyCreate() { //사용자에 대한 알레르기 추가
         //9버전
         const db = getDatabase();
-        set(ref(db, 'allergys/' + 'me'), { //임시 아이디
+        set(ref(db, `allergys/${id}`), { //임시 아이디
             myAllergys: myAllergys
         }).then(
             console.log("전송 성공")
@@ -116,14 +121,31 @@ function MypageScreen({ navigation }) {
         </TouchableOpacity>
     );
 
-    return (baseProps)(
+    // function LoginState(props){
+    //     id=props.name;
+    //     console.log(id);
+    // }
+
+    // console.log(userData);
+
+    // if(userData[0][id] !== null){
+    // var id = userData[0]['id'];
+    // var id = AsyncStorage.getItem('id');
+    // }
+    // else{
+    // var id = "로그인 해주세요";
+    // }
+    // var id = userData[0]['id'];
+
+    return (
+
         <View style={styles.container}>
             <View style={styles.profileBox}>
                 <View style={{ width: 70, height: 70, backgroundColor: '#eee', borderRadius: 35, alignItems: 'center', justifyContent: 'center' }}>
                     <Ionicons name="person" size={50} color="#ccc" />
                 </View>
                 <View style={{ marginLeft: 20 }}>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{baseProps.id}</Text>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{id}</Text>
                     {/* <Text style={{ color: '#888' }}>20대</Text> */}
                     <Text style={{ color: '#888' }}>
                         알레르기 <Text style={{ color: '#83580B' }}>{checkedInputs.length}</Text>개 선택

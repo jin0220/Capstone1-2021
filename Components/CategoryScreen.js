@@ -3,32 +3,34 @@ import { View, Text, Button, StyleSheet, TextInput, ScrollView, TouchableOpacity
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ItemsListScreen from './ItemsListScreen';
 import ItemDetailScreen from './ItemDetailScreen';
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
 function CategoryScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <FlatList
                 data={[
-                    { key: '과자/간식' },
-                    { key: '유제품' },
-                    { key: '음료/커피/차' },
-                    { key: '주류' },
-                    { key: '냉장/냉동/반찬' },
-                    { key: '통조림/간편식' },
-                    { key: '소스/오일/분말' },
-                    { key: '건강식품' },
-                    { key: '유아식품' },
-                    { key: '친환경 전문점' },
-                    { key: '프랜차이즈' },
-                    { key: '편의점' },
-                    { key: '펫푸드' },
+                    { key: '과자 / 간식', name: 'popcorn' },
+                    { key: '유제품', name: 'cheese' },
+                    { key: '음료 / 커피 / 차', name: 'coffee' },
+                    { key: '주류', name: 'glass-mug-variant' },
+                    { key: '냉장 / 냉동 / 반찬', name: 'bowl-mix-outline'},
+                    { key: '통조림 / 간편식', name: 'clock-fast' },
+                    { key: '소스 / 오일 / 분말', name: 'bottle-wine-outline' },
+                    { key: '건강식품', name: 'arm-flex-outline' },
+                    { key: '유아식품', name: 'baby-face-outline'},
+                    { key: '친환경 전문점', name: 'leaf' },
+                    { key: '프랜차이즈', name: 'food' },
+                    { key: '편의점', name: 'store-24-hour'},
+                    { key: '펫푸드', name: 'dog'},
                 ]}
                 renderItem={({ item }) =>
                     <View style={styles.categoryListBox}>
                         <TouchableOpacity style={styles.categoryList} onPress={() => navigation.navigate('Items', { title: item.key })}>
                             <View style={styles.box}>
-                                <View style={styles.categoryicon} />
+                                <View style={styles.categoryicon}>
+                                    <MaterialCommunityIcons name={item.name} size={30} color='#D9B650'/>
+                                </View>
                                 <Text style={styles.categoryName}>{item.key}</Text>
                             </View>
                             <AntDesign name="right" size={18} color="#888" />
@@ -121,7 +123,6 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         marginRight: 10,
-        backgroundColor: '#ddd'
     },
     categoryName: {
         fontSize: 17,

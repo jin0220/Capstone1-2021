@@ -70,6 +70,7 @@ const SignInScreen = () => {
         //9버전
         const db = getDatabase();
         set(ref(db, 'users/' + data.id), {
+            id: data.id,
             name: data.name,
             password: data.password
         }).then(
