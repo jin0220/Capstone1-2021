@@ -34,6 +34,7 @@ function MypageScreen({ navigation }) {
     }
 
     const [checkedInputs, setCheckedInputs] = useState([]);
+
     function load(data) { //저장된 알레르기로 초기화
         setCheckedInputs(data);
     }
@@ -215,15 +216,16 @@ export default function App({ navigation }) {
                 name="ItemDetail"
                 component={ItemDetailScreen}
                 options={{
-                    headerRight: () => (
-                        <TouchableOpacity onPress={() => setIsChecked(!isChecked)}>
-                            {isChecked ? (
-                                <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
-                            ) : (
-                                <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
-                            )}
-                        </TouchableOpacity>
-                    ),
+                    // headerRight: () => (
+                    //     <TouchableOpacity onPress={() => setIsChecked(!isChecked)}>
+                    //         {isChecked ? (
+                    //             <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
+                    //         ) : (
+                    //             <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
+                    //         )}
+                    //     </TouchableOpacity>
+                    // ),
+                    headerShown: false
                 }} />
             <Stack.Screen name="Setting" component={SettingScreen} options={{ title: '설정' }} />
             <Stack.Screen

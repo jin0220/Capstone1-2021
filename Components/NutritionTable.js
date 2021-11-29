@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TouchableH
 
 export default function nutritionTable(props) {
     const data = props.nutrient;
-    console.log('data');
-    console.log(data);
+    // console.log('data');
+    // console.log(data);
     return (
         <View style={styles.nutritionTable}>
             <View style={styles.nutritionRows}>
