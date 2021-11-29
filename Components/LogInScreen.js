@@ -2,6 +2,8 @@ import * as React from 'react';
 import { View, Text, Button, StyleSheet, TextInput, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome, FontAwesome5, Ionicons, Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 
+import MyPageScreen from './MypageScreen';
+
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
@@ -88,7 +90,7 @@ const LogInScreen = () => {
                 )
             }
             else{
-
+                return <MyPageScreen id= 'data.id' />
             }
         })
     }
