@@ -38,7 +38,7 @@ function MainScreen({ navigation }) {
                 circleLoop
                 resizeMethod={'resize'}
                 resizeMode={'cover'}
-                
+
 
                 paginationBoxStyle={{
                     position: "absolute",
@@ -65,7 +65,7 @@ function MainScreen({ navigation }) {
 
             />
             {/* 카테고리 수정 생각 중 */}
-                
+
             {/* <View style={styles.categoryContainer}>
                 <TouchableOpacity style={styles.categoryBtn} onPress={() => navigation.navigate('CardListScreen', { title: 'test1' })}>
                     <View style={styles.categoryIcon}>
@@ -116,22 +116,22 @@ function MainScreen({ navigation }) {
                     color: '#333',
                 }}> 추천 영양 콘텐츠</Text>
                 <TouchableOpacity onPress={() => navigation.navigate('CardItemDetails')}>
-                <View style={styles.card}>
-                    <View style={styles.cardImgWrapper}>
-                        <Image source={require('../Img/card1.png')} resizeMode='cover' style={styles.cardImg}/>
+                    <View style={styles.card}>
+                        <View style={styles.cardImgWrapper}>
+                            <Image source={require('../Img/card1.png')} resizeMode='cover' style={styles.cardImg} />
+                        </View>
+                        <View style={styles.cardInfo}>
+                            <Text style={styles.cardTitle}>오늘 하루, 아삭아삭 하셨나요?</Text>
+                            <Text style={styles.cardDetails}>건강한 밥상</Text>
+                        </View>
                     </View>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>오늘 하루, 아삭아삭 하셨나요?</Text>
-                        <Text style={styles.cardDetails}>건강한 밥상</Text>
-                    </View>
-                </View>
                 </TouchableOpacity>
 
                 {/* <TouchableOpacity onPress={() => navigation.navigate('details')}> */}
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
                         <Image
-                            source={{ uri: "https://source.unsplash.com/collection/190727/1024x768"}}
+                            source={{ uri: "https://source.unsplash.com/collection/190727/1024x768" }}
                             resizeMode="cover"
                             style={styles.cardImg}
                         />
@@ -146,7 +146,7 @@ function MainScreen({ navigation }) {
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
                         <Image
-                            source={{ uri: "https://source.unsplash.com/collection/190727/1024x768"}}
+                            source={{ uri: "https://source.unsplash.com/collection/190727/1024x768" }}
                             resizeMode="cover"
                             style={styles.cardImg}
                         />
@@ -193,7 +193,7 @@ function MainScreen({ navigation }) {
 
 const Stack = createNativeStackNavigator();
 
-export default function App({navigation}) {
+export default function App({ navigation }) {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -256,67 +256,67 @@ export default function App({navigation}) {
             <Stack.Screen
                 name="SplashScreen"
                 component={SplashScreen}
-                options={({route}) => ({
+                options={({ route }) => ({
                     headerBackTitleVisible: false,
                     headerTitle: false,
                     headerShown: false,
                 })}
             />
-            <Stack.Screen 
-                name="SignInScreen" 
+            <Stack.Screen
+                name="SignInScreen"
                 component={SignInScreen}
-                options={({route}) => ({
-                        backgroundColor: '#D9B650',
-                        headerBackTitleVisible: false,
-                        headerTitle: false,
-                        headerShown: false,
+                options={({ route }) => ({
+                    backgroundColor: '#D9B650',
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerShown: false,
                 })}
             />
-            <Stack.Screen 
-                name="LogInScreen" 
+            <Stack.Screen
+                name="LogInScreen"
                 component={LogInScreen}
-                options={({route}) => ({
-                        backgroundColor: '#D9B650',
-                        headerBackTitleVisible: false,
-                        headerTitle: false,
-                        headerShown: false,
+                options={({ route }) => ({
+                    backgroundColor: '#D9B650',
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerShown: false,
                 })}
             />
             <Stack.Screen
                 name="BarCodeScanner"
                 component={BarCodeScanner}
-                options={({route}) => ({
+                options={({ route }) => ({
                     backgroundColor: '#D9B650',
                     headerBackTitleVisible: false,
                     headerTitle: false,
                     headerShown: false,
-            })}
+                })}
             />
             <Stack.Screen
                 name="NoSearch"
                 component={NoSearch}
-                options={({route}) => ({
+                options={({ route }) => ({
                     backgroundColor: '#D9B650',
                     headerBackTitleVisible: false,
                     headerTitle: false,
                     headerShown: false,
-            })}
+                })}
             />
             <Stack.Screen
                 name="ItemDetailScreen"
                 component={ItemDetailScreen}
-                options={({route}) => ({
+                options={({ route }) => ({
                     title: route.params.name,
                     backgroundColor: '#D9B650',
                     headerBackTitleVisible: false,
                     headerTitle: false,
-                    headerShown: true,
-            })}
+                    headerShown: false,
+                })}
             />
             <Stack.Screen
                 name="CommentMessage"
                 component={CommentMessage}
-                options={({route})=>({
+                options={({ route }) => ({
                     backgroundColor: '#D9B650',
                     headerBackTitleVisible: false,
                     headerTitle: false,
@@ -327,7 +327,7 @@ export default function App({navigation}) {
             <Stack.Screen
                 name="MypageScreen"
                 component={MypageScreen}
-                options={({route})=>({
+                options={({ route }) => ({
                     backgroundColor: '#D9B650',
                     headerBackTitleVisible: false,
                     headerTitle: false,

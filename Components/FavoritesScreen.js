@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList, AsyncStorage } from 'react-native';
 import { getDatabase, ref, onValue } from "firebase/database";
 
 export default function ItemsListScreen({ navigation }) {
     var dbKey = [];
-    (() => {
-        const userId = 'me';
-        const dbRef = ref(getDatabase(), `favorites/${userId}`);
+
+    function dataLoad(id) {
+        const dbRef = ref(getDatabase(), `favorites/${id}`);
         onValue(dbRef, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
                 const childKey = childSnapshot.key;
                 dbKey.push(childKey);
             });
         });
-    })();
+    }
 
     const [dataInput, setDataInput] = useState([]);
     const [page, setPage] = useState(0);
 
     useEffect(() => {
-        if (dbKey.length > page)
-            getRawmt(dbKey[page]);
+        AsyncStorage.getItem('id', (err, result) => {
+            dataLoad(result);
+            if (dbKey.length > page) {
+                getRawmt(dbKey[page]);
+                console.log(dbKey[page]);
+            }
+        });
     }, [page]);
 
     const getRawmt = async (num) => {
-        console.log('num');
-        console.log(num);
         const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
         var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; /*URL*/
