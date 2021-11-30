@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler, AsyncStorage } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Popup from './Popup';
 import NutritionTable from './NutritionTable';
@@ -11,10 +11,9 @@ import { getDatabase, ref, set, child, get, push } from "firebase/database"; //9
 export default function ItemDetailScreen({ route }) {
     //api 연결  
     const prdlstReportNo = route.params.prdlstReportNo; //품목보고번호
-    // module.exports = prdlstReportNo;
-
 
     const [data, setData] = useState([]);
+    const [id, setId] = useState();
 
     useEffect(() => {
         let isComponentMounted = true
@@ -24,6 +23,9 @@ export default function ItemDetailScreen({ route }) {
             if (route.params.favorite) { //좋아요 아이콘 체크, 현재 즐겨찾기에서 들어갔을 때만 정상 실행
                 setIsChecked(route.params.favorite);
             }
+            AsyncStorage.getItem('id', (err, result) => {
+                setId(result);
+            });
         }
 
         return () => {
@@ -54,35 +56,62 @@ export default function ItemDetailScreen({ route }) {
             setData(responseJson.list[0]);
             // console.log('==check1==');
             // console.log(responseJson.list[0]);
+
+            const raw_mt = responseJson.list[0]['rawmtrl'];
+            var mt = raw_mt.split(/[\,\(\)\%]/);
+
+            var mta = [];
+
+            for (var i = 0; i < mt.length; i++) {
+                mta.push(mt[i]);
+            }
+            mta = mta.filter(item => item);
+            console.log(mta);
+
+            getFoodAdtvInfoList(mta);
+
+            const list = ['나트륨', '단백질', '당류', '지방', '탄수화물', '트랜스지방', '포화지방', '콜레스테롤'];
+
             if (responseJson.list[0]['nutrient']) {
-                var afterStr = responseJson.list[0]['nutrient'].split(',|(');
-                for (var i = 0; i < afterStr.length; i++) {
-                    // console.log(afterStr[i]);
+                const nut_ri = responseJson.list[0]['nutrient'];
+                // console.log(nut_ri);
+                var ri = nut_ri.split(/[\(\)\g\%\,]/);
+                // var ri = nut_ri;
+                // for (var i = 0; i < list.length; i++) {
+                //     ri = ri.split(list[i]);
+                // }
+
+                console.log(ri);
+                var ent = [];
+
+                for (var i = 0; i < ri.length; i++) {
+                    ent.push(ri[i]);
                 }
+
+                ent = ent.filter(item => item);
+                console.log(ent);
             } else {
                 console.log("없음");
             }
-            getFoodAdtvInfoList();
-            getIngredient();
+            // getFoodAdtvInfoList();
+            // getIngredient();
         } else {
             return 0;
             // throw new Error('unable to get');
         }
-
-        console.log(data.rawmtrl);
         return true;
     };
 
-    const getFoodAdtvInfoList = async () => {
+    const getFoodAdtvInfoList = async (mta) => {
         // console.log(data.rawmtrl);
         // var rawmtrl = data.rawmtrl.split(",");
-        for (var i = 0; i < rawmtrl.length; i++) {
+        for (var i = 0; i < mta.length; i++) {
             // const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
             // var url = 'http://apis.data.go.kr/1471000/FoodAdtvInfoService01/getFoodAdtvInfoList01'; /*URL*/
             // var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
             // // queryParams += '&' + encodeURIComponent('prdlst_cd') + '=' + encodeURIComponent(prdlstReportNo); /**/
-            // queryParams += '&' + encodeURIComponent('pc_kor_nm') + '=' + encodeURIComponent(rawmtrl[i]); /**/
+            // queryParams += '&' + encodeURIComponent('pc_kor_nm') + '=' + encodeURIComponent(mta[i]); /**/
             // // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
             // // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3'); /**/
             // queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /**/
@@ -93,7 +122,7 @@ export default function ItemDetailScreen({ route }) {
                 'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/I2838/json/1/5/WORD='
 
                 +
-                rawmtrl[i],
+                mta[i],
                 {
                     method: 'GET',
                 },
@@ -107,8 +136,30 @@ export default function ItemDetailScreen({ route }) {
 
             if (response.status === 200) {
                 const responseJson = await response.json();
-                // console.log(rawmtrl[i]);
-                // console.log(responseJson);
+                // console.log(mta[i]);
+                // if (responseJson.body.totalCount > 0) { // && responseJson.body.items[]['PC_KOR_NM']
+                //     for (var j = 0; j < responseJson.body.items.length; j++) {
+                //         // console.log(responseJson.body.items[j]['PC_KOR_NM']);
+                //         if (responseJson.body.items[j]['PC_KOR_NM'] == mta[i]) {
+                //             // console.log(responseJson.body.items[j]['PC_KOR_NM']);
+                //         }
+                //     }
+                //     console.log(responseJson);
+                // }
+                if (responseJson['I2838']['total_count'] != 0) {
+                    console.log(mta[i]);
+                    console.log(responseJson.I2838.total_count);
+                    // console.log(responseJson.I2838.row[0].WORD);
+                    // for (var j = 0; j < responseJson.I2838.row.length; j++) {
+                    //     if (responseJson.I2838.row[j].WORD == mta[i]) {
+                    //         console.log(responseJson.I2838.row[j].WORD);
+                    //     }
+                    // }
+
+                    console.log(mta[i]);
+                    console.log(responseJson);
+                }
+
                 // setNutrient(responseJson.body.items[0]); //카테고리에서 오류남
                 // console.log(nutrient);
                 // return responseJson.C002.row[0].RAWMTRL_NM;s
@@ -186,7 +237,7 @@ export default function ItemDetailScreen({ route }) {
         setIsChecked(!isChecked);
 
         if (!isChecked) {
-            set(ref(db, 'favorites/' + 'me/' + prdlstReportNo), { //임시 아이디
+            set(ref(db, `favorites/${id}/` + prdlstReportNo), {
                 itemNum: prdlstReportNo
             }).then(
                 console.log("전송 성공")
@@ -194,7 +245,7 @@ export default function ItemDetailScreen({ route }) {
                 console.log("전송 실패")
             });
         } else {
-            set(ref(db, 'favorites/' + 'me/' + prdlstReportNo), { //임시 아이디
+            set(ref(db, `favorites/${id}/` + prdlstReportNo), {
                 itemNum: null
             }).then(
                 console.log("전송 성공")
