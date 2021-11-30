@@ -16,6 +16,7 @@ import NoSearch from './NoSearch';
 import ItemDetailScreen from './ItemDetailScreen';
 import CommentMessage from './CommentMessage';
 import MypageScreen from './MypageScreen';
+import SearchScreen from './SearchScreen';
 
 function sliderTouch(index) {
     alert(index);
@@ -332,6 +333,17 @@ export default function App({navigation}) {
                     headerBackTitleVisible: false,
                     headerTitle: false,
                     headerShown: false,
+                })}
+
+            />
+            <Stack.Screen
+                name="SearchScreen"
+                component={SearchScreen}
+                options={({route})=>({
+                    backgroundColor: '#D9B650',
+                    headerBackTitleVisible: true,
+                    headerTitle: true,
+                    headerShown: true,
                 })}
 
             />

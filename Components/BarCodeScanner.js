@@ -136,7 +136,7 @@ export default function App({navigation}) {
 
 
       const nut_ri = responseJson.list[0]['nutrient'];
-      var ri = nut_ri.split(/[\(\)\g\%\,]/);
+      var ri = nut_ri.split(/[\(\)\,]/);
 
       var ent =[];
 
