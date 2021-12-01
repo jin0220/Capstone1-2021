@@ -71,7 +71,7 @@ export default function App(props) {
                 name="Items"
                 component={ItemsListScreen}
                 options={({ route }) => ({
-                    title: route.params.title,
+                   
                     headerTitleAlign: 'center'
                 })}
             />

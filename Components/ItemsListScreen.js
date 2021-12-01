@@ -5,7 +5,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react
 import { SearchBar } from 'react-native-screens';
 
 export default function ItemsListScreen({ navigation, route }) {
-    const title = route.params.title;
+    // const title = route.params.title;
 
     const [dataInput, setDataInput] = useState([]);
     const [page, setPage] = useState(1);

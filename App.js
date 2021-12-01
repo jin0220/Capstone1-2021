@@ -3,13 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MainScreen from './Components/MainScreen';
-import CategoryScreen from './Components/CategoryScreen';
+import ItemsListScreen from './Components/ItemsListScreen';
 import SearchScreen from './Components/SearchScreen';
 import MypageScreen from './Components/MypageScreen';
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+// import ItemsListScreen from './Components/ItemsListScreen';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB_LXYdFtcpCDsupM_bCXuj4DOFJY5hkSU",
@@ -42,7 +43,7 @@ export default function App() {
                 ? 'home'
                 : 'home';
             }
-            else if (route.name === 'Category') {
+            else if (route.name === 'Items') {
               iconName = focused ? 'ios-list' : 'ios-list';
             }
             else if (route.name === 'Search') {
@@ -63,7 +64,7 @@ export default function App() {
         })}
       >
         <Tab.Screen name="Home" component={MainScreen} />
-        <Tab.Screen name="Category" component={CategoryScreen} />
+        <Tab.Screen name="Items" component={ItemsListScreen} />
         <Tab.Screen name="Search" component={SearchScreen} />
         <Tab.Screen name="Mypage" component={MypageScreen} />
       </Tab.Navigator>
