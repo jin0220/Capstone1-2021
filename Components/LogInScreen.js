@@ -179,7 +179,7 @@ const LogInScreen = ({ navigation }) => {
                             }
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => signUp()}>
+                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => signUp()}>
                         <View style={styles.button}>
                             <Text style={styles.textSign}>로그인하기</Text>
                         </View>

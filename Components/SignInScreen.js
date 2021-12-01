@@ -87,90 +87,90 @@ const SignInScreen = () => {
             </View>
             <View style={styles.footer}>
                 <ScrollView>
-                <Text style={styles.text_footer}>이름</Text>
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="user-o"
-                        color="#D9B650"
-                        size={20}
-                    />
-                    <TextInput
-                        placeholder="이름을 입력해주세요"
-                        style={styles.textInput}
-                        value={data.name}
-                        autoCapitalize="none"
-                        onChangeText={(val) => textInputChange1(val)}
-                    />
-                    {data.check_textInputChange1 ?
-                        <Feather
-                            name="check-circle"
-                            color="gray"
+                    <Text style={styles.text_footer}>이름</Text>
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="user-o"
+                            color="#D9B650"
                             size={20}
                         />
-                        : null
-                    }
-                </View>
-
-                <Text style={[styles.text_footer, { marginTop: 30 }]}>아이디</Text>
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="user-o"
-                        color="#D9B650"
-                        size={20}
-                    />
-                    <TextInput
-                        placeholder="아이디를 입력해주세요"
-                        style={styles.textInput}
-                        value={data.id}
-                        autoCapitalize="none"
-                        onChangeText={(val) => textInputChange2(val)}
-                    />
-                    {data.check_textInputChange2 ?
-                        <Feather
-                            name="check-circle"
-                            color="gray"
-                            size={20}
+                        <TextInput
+                            placeholder="이름을 입력해주세요"
+                            style={styles.textInput}
+                            value={data.name}
+                            autoCapitalize="none"
+                            onChangeText={(val) => textInputChange1(val)}
                         />
-                        : null}
-                </View>
-
-                <Text style={[styles.text_footer, { marginTop: 30 }]}>비밀번호</Text>
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="lock"
-                        color="#D9B650"
-                        size={20}
-                    />
-                    <TextInput
-                        placeholder="비밀번호를 입력해주세요"
-                        secureTextEntry={data.secureTextEntry ? true : false}
-                        style={styles.textInput} value={data.password} autoCapitalize="none"
-                        onChangeText={(val) => handlePasswordChange(val)}
-                    />
-                    <TouchableOpacity
-                        onPress={updateSecureTextEntry}
-                    >
-                        {data.secureTextEntry ?
+                        {data.check_textInputChange1 ?
                             <Feather
-                                name="eye-off"
+                                name="check-circle"
                                 color="gray"
                                 size={20}
                             />
-                            :
+                            : null
+                        }
+                    </View>
+
+                    <Text style={[styles.text_footer, { marginTop: 30 }]}>아이디</Text>
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="user-o"
+                            color="#D9B650"
+                            size={20}
+                        />
+                        <TextInput
+                            placeholder="아이디를 입력해주세요"
+                            style={styles.textInput}
+                            value={data.id}
+                            autoCapitalize="none"
+                            onChangeText={(val) => textInputChange2(val)}
+                        />
+                        {data.check_textInputChange2 ?
                             <Feather
-                                name="eye"
-                                color="#D9B650"
+                                name="check-circle"
+                                color="gray"
                                 size={20}
                             />
-                        }
-                    </TouchableOpacity>
-                </View>
-                
-                <TouchableOpacity onPress={() => signIn()}>
-                    <View style={styles.button}>
-                        <Text style={styles.textSign}>가입하기</Text>
+                            : null}
                     </View>
-                </TouchableOpacity>
+
+                    <Text style={[styles.text_footer, { marginTop: 30 }]}>비밀번호</Text>
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="lock"
+                            color="#D9B650"
+                            size={20}
+                        />
+                        <TextInput
+                            placeholder="비밀번호를 입력해주세요"
+                            secureTextEntry={data.secureTextEntry ? true : false}
+                            style={styles.textInput} value={data.password} autoCapitalize="none"
+                            onChangeText={(val) => handlePasswordChange(val)}
+                        />
+                        <TouchableOpacity
+                            onPress={updateSecureTextEntry}
+                        >
+                            {data.secureTextEntry ?
+                                <Feather
+                                    name="eye-off"
+                                    color="gray"
+                                    size={20}
+                                />
+                                :
+                                <Feather
+                                    name="eye"
+                                    color="#D9B650"
+                                    size={20}
+                                />
+                            }
+                        </TouchableOpacity>
+                    </View>
+
+                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => signIn()}>
+                        <View style={styles.button}>
+                            <Text style={styles.textSign}>가입하기</Text>
+                        </View>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
         </View>
