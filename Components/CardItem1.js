@@ -46,22 +46,21 @@ const CardItemDetails = () => {
           특히 당근, 옥수수, 고구마, 해조류 등의 채소에 풍부한 불용성 섬유소는 포만감을 제공할 뿐 만 아니라 장내 유익한 세균을 증식시켜 장 운동을 촉진하여 변비예방에 도움이 됩니다. {'\n\n'}
           뿐만 아니라 장 속에 남아있는 발암물질을 흡착하는 기능이 뛰어나 대장을 빨리 통과할 수 있도록 몸 밖으로 배출시키도록 도와주므로 대장암을 예방하는데 효과적입니다.
         </Text>
-        <View style={[styles.section]}>
+        <View style={[styles.sectionContent]}>
           <Image source={require('../Img/cd11.jpeg')} style={{width: 300, height: 150, resizeMode: 'contain'}} />
         </View>
         <Text style={[styles.sectionContent, {paddingTop: 20}]}>
           섬유소의 하루 권장 섭취량은 일반 성인 기준으로 <Text style={{fontWeight: 'bold'}}>약 20~25g</Text>입니다. {'\n\n'} 
-          이는 현미, 보리, 팥 등의 잡곡밥과 양상추, 치커리, 새싹 등 다양한 채소를 함께 섞은 
-          <Text style={{fontWeight: 'bold'}}>샐러드 또는 나물 반찬 2~3 작은 접시</Text>정도 섭취할 때 하루에 먹어야 할 섬유소를 충분히 섭취할 수 있습니다. 
+          이는 현미, 보리, 팥 등의 잡곡밥과 양상추, 치커리, 새싹 등 다양한 채소를 함께 섞은<Text style={{fontWeight: 'bold'}}> 샐러드 또는 나물 반찬 2~3 작은 접시</Text>정도 섭취할 때 하루에 먹어야 할 섬유소를 충분히 섭취할 수 있습니다. 
         </Text>
-        <View style={[styles.section, {paddingTop: 50}]}>
+        <View style={[styles.sectionContent, {paddingTop: 50}]}>
           <Image source={require('../Img/cd12.jpeg')} style={{width: 350, height: 350, resizeMode: 'contain'}} />
         </View>
         <Text style={[styles.sectionContent, {paddingTop: 50}]}>
           섬유소는 당뇨, 동맥경화, 비만, 대장암 등을 예방하는데 도움을 주어 매일 적정량 섭취를 권장하지만 성장기의 어린이나 노약자의 경우는 주의가 필요합니다.{'\n\n'} 
           무턱대고 채소만 과량으로 먹어 섬유소를 과하게 섭취하면 철분, 칼슘, 마그네슘, 아연 같은 무기질과 비타민의 흡수를 저하시킬 수 있습니다. {'\n\n'} 
           성장기의 어린이는 다양한 영양소를 풍부하게 섭취해야 하는 시기이므로 각종 영양소와 비타민, 무기질의 흡수를 저하시키는 섬유소를 과도하게 섭취하지 않도록 유의해야 합니다. {'\n\n'}
-          또한 섬유소는 물과 결합하여 배설되기 때문에 설사나 탈수 등의 증상이 올 수도 있습니다. {'\n\n'}
+          또한 섬유소는 물과 결합하여 배설되기 때문에 설사나 탈수 등의 증상이 올 수도 있습니다.
         </Text>
       </View>
       
