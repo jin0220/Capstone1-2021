@@ -79,15 +79,13 @@ export default function App(props) {
         <Stack.Navigator
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: '#D9B650'
+                    backgroundColor: '#D9B650',
+                    color: '#fff',
                 },
-                headerTitleStyle: {
-                    color: 'white'
-                },
-                headerTintColor: 'white',
+                headerTitleAlign: 'center'
             }}
         >
-            <Stack.Screen name="카테고리" component={CategoryScreen} />
+            <Stack.Screen name="제품 리스트" component={CategoryScreen} />
             <Stack.Screen
                 name="Detail"
                 component={ItemDetailScreen}

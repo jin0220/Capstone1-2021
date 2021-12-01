@@ -201,16 +201,13 @@ function MypageScreen({ navigation }) {
 const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
-    const [isChecked, setIsChecked] = useState(false);
     return (
         <Stack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#D9B650'
+                backgroundColor: '#D9B650',
+                color: '#fff',
             },
-            headerTitleStyle: {
-                color: 'white'
-            },
-            headerTintColor: 'white',
+            headerTitleAlign: 'center'
         }}>
             <Stack.Screen
                 name="마이페이지"

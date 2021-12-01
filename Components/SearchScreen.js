@@ -69,10 +69,8 @@ function SearchScreen({ navigation }) {
                         key={index}
                         activeOpacity={0.8}
                         onPress={() => setSearchIndex(index)}>
-                        <Text
-                            style={[
-                                styles.searchText,
-                            ]}>
+                        <Text style={styles.searchText}>
+
                             {item}
                         </Text>
                     </TouchableOpacity>
@@ -135,8 +133,8 @@ export default function App() {
                 options={{
                     headerStyle: {
                         backgroundColor: '#D9B650',
-
-                    }
+                    },
+                    headerTitleAlign: 'center'
                 }} />
             <Stack.Screen
                 name="Detail"
