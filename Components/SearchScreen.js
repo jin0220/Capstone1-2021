@@ -69,11 +69,8 @@ function SearchScreen({ navigation }) {
                         key={index}
                         activeOpacity={0.8}
                         onPress={() => setSearchIndex(index)}>
-                        <Text
-                            style={[
-                                styles.searchText,
-                                searchIndex == index && styles.searchTextSelected,
-                            ]}>
+                        <Text style={styles.searchText}>
+
                             {item}
                         </Text>
                     </TouchableOpacity>
@@ -136,8 +133,8 @@ export default function App() {
                 options={{
                     headerStyle: {
                         backgroundColor: '#D9B650',
-
-                    }
+                    },
+                    headerTitleAlign: 'center'
                 }} />
             <Stack.Screen
                 name="Detail"
@@ -175,15 +172,6 @@ const styles = StyleSheet.create({
         // fontWeight: 'bold',
         flex: 1,
     },
-    // sortBtn:{
-    //     marginLeft: 10,
-    //     height: 50,
-    //     width: 50,
-    //     backgroundColor: '#D9B650',
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    //     borderRadius: 10,
-    // },
     searchResult: {
         flexDirection: 'row',
         marginTop: 20,
@@ -196,12 +184,6 @@ const styles = StyleSheet.create({
         color: 'grey',
         fontWeight: 'bold',
     },
-    searchTextSelected: {
-        color: '#D9B650',
-        paddingBottom: 5,
-        borderBottomWidth: 2,
-        borderColor: 'tomato',
-    },
     ItemsListBox: {
         paddingLeft: 0,
         paddingRight: 15,
@@ -210,7 +192,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         justifyContent: 'center',
         height: 80,
-
     },
     ItemsList: {
         width: '100%',

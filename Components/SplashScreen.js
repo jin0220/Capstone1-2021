@@ -1,19 +1,19 @@
 import React from "react";
-import {View, Text, StyleSheet, Button, Dimensions, Image, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Button, Dimensions, Image, TouchableOpacity } from 'react-native';
 import LinearGradient from "react-native-linear-gradient";
 import MatterialIcons from "react-native-vector-icons/MaterialIcons"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SignInScreen from './SignInScreen';
 import userData from './LogInScreen';
 
-const SplashScreen = ({navigation}) => {
-    return(
+const SplashScreen = ({ navigation }) => {
+    return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image
-                source={require('../Img/ingredients.png')}
-                style={styles.logo}
-                resizeMode='stretch'
+                    source={require('../Img/ingredients.png')}
+                    style={styles.logo}
+                    resizeMode='stretch'
                 />
             </View>
             <View style={styles.footer}>
@@ -34,9 +34,9 @@ const SplashScreen = ({navigation}) => {
                         </View>
                     </TouchableOpacity>
                 </View>
-                
+
             </View>
-            
+
         </View>
     );
 }
@@ -45,49 +45,49 @@ const Stack = createNativeStackNavigator();
 
 export default SplashScreen;
 
-const {height} = Dimensions.get("screen");
+const { height } = Dimensions.get("screen");
 const height_logo = height * 0.28;
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-        backgroundColor: '#D9B650',   
+        backgroundColor: '#D9B650',
     },
-    header:{
+    header: {
         flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    footer:{
+    footer: {
         flex: 1,
         backgroundColor: '#fff',
         borderTopRightRadius: 30,
         borderTopLeftRadius: 30,
-        paddingHorizontal: 30,
         paddingVertical: 50,
+        alignItems: 'center'
     },
-    logo:{
+    logo: {
         width: height_logo,
         height: height_logo,
     },
-    title:{
+    title: {
         color: '#05375a',
         fontSize: 30,
         fontWeight: 'bold',
     },
-    text:{
+    text: {
         color: 'gray',
         marginTop: 5,
     },
-    button:{
-        alignItems:'flex-end',
+    button: {
+        alignItems: 'flex-end',
         marginTop: 50,
         backgroundColor: '#D9B650',
         width: 300,
         height: 40,
         borderRadius: 50,
     },
-    signIn:{
+    signIn: {
         width: 300,
         height: 40,
         justifyContent: 'center',
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         flexDirection: 'row',
     },
-    textSign:{
+    textSign: {
         color: 'white',
         fontWeight: 'bold',
     }
