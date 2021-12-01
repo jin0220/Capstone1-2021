@@ -17,20 +17,20 @@ const SplashScreen = ({navigation}) => {
                 />
             </View>
             <View style={styles.footer}>
-                <Text style={styles.title}>footer</Text>
-                <Text style={styles.text}>footer</Text>
+                <Text style={styles.title}>🕵🏻‍♀️영냠사 시작하기🕵🏻‍♂️</Text>
+                <Text style={styles.text}>영냠사와 함께 맛과 영양을 동시에 챙기세요!</Text>
                 <View style={styles.button}>
                     <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
 
                         <View style={styles.signIn}>
-                            <Text style={styles.textSign}>시작하기</Text>
+                            <Text style={styles.textSign}>회원가입</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.button} marginTop={20}>
                     <TouchableOpacity onPress={() => navigation.navigate('LogInScreen')} >
                         <View style={styles.signIn}>
-                            <Text style={styles.textSign}>로그인하기</Text>
+                            <Text style={styles.textSign}>로그인</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
