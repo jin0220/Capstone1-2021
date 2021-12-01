@@ -1,45 +1,75 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, TextInput, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ItemsListScreen from './ItemsListScreen';
 import ItemDetailScreen from './ItemDetailScreen';
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 
 function CategoryScreen({ navigation }) {
+
+    const [dataInput, setDataInput] = useState([]);
+    const [page, setPage] = useState(1);
+
+    useEffect(() => {
+        getRawmt();
+    }, [page]);
+
+    const getRawmt = async () => {
+
+        const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
+
+        var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; /*URL*/
+        var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
+        // queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent('19790532001117'); /**/
+        // queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent('초코에 몽'); /**/
+        queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /**/
+        queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent(page); /*데이터 페이지*/
+        queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('20'); /*데이터 받아오는 개수*/
+
+        const response = await fetch(
+            url + queryParams,
+            {
+                method: 'GET',
+            },
+        );
+
+
+
+        if (response.status === 200) {
+            const responseJson = await response.json();
+            setDataInput([...dataInput, ...responseJson.list]);
+
+            return true;
+        } else {
+            return 0;
+            // throw new Error('unable to get');
+        }
+    };
+
     return (
         <View style={styles.container}>
             <FlatList
-                data={[
-                    { key: '과자 / 간식', name: 'popcorn' },
-                    { key: '유제품', name: 'cheese' },
-                    { key: '음료 / 커피 / 차', name: 'coffee' },
-                    { key: '주류', name: 'glass-mug-variant' },
-                    { key: '냉장 / 냉동 / 반찬', name: 'bowl-mix-outline'},
-                    { key: '통조림 / 간편식', name: 'clock-fast' },
-                    { key: '소스 / 오일 / 분말', name: 'bottle-wine-outline' },
-                    { key: '건강식품', name: 'arm-flex-outline' },
-                    { key: '유아식품', name: 'baby-face-outline'},
-                    { key: '친환경 전문점', name: 'leaf' },
-                    { key: '프랜차이즈', name: 'food' },
-                    { key: '편의점', name: 'store-24-hour'},
-                    { key: '펫푸드', name: 'dog'},
-                ]}
+                data={dataInput}
+                keyExtractor={(item, index) => 'key' + index}
+                onEndReached={() => setPage(page + 1)}
                 renderItem={({ item }) =>
-                    <View style={styles.categoryListBox}>
-                        <TouchableOpacity style={styles.categoryList} onPress={() => navigation.navigate('Items', { title: item.key })}>
-                            <View style={styles.box}>
-                                <View style={styles.categoryicon}>
-                                    <MaterialCommunityIcons name={item.name} size={30} color='#D9B650'/>
-                                </View>
-                                <Text style={styles.categoryName}>{item.key}</Text>
+                    <View style={styles.ItemsListBox}>
+                        <TouchableOpacity
+                            style={styles.ItemsList}
+                            onPress={() => navigation.navigate('Detail', { prdlstReportNo: item.prdlstReportNo })}
+                        >
+                            <View style={styles.imageBox}>
+                                <Image style={{ width: 40, height: 40 }} source={{ uri: item.imgurl1 }} />
                             </View>
-                            <AntDesign name="right" size={18} color="#888" />
+                            <View style={styles.box}>
+                                <Text style={styles.itemManufacturing}>{item.manufacture}</Text>
+                                <Text style={styles.itemName}>{item.prdlstNm}</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 }
             />
         </View>
     );
+
 }
 
 const Stack = createNativeStackNavigator();
@@ -55,39 +85,13 @@ export default function App(props) {
                     color: 'white'
                 },
                 headerTintColor: 'white',
-                // headerBackImage: () => {
-                //     const style = {
-                //         marginRight: 5,
-                //         marginLeft: Platform.OS === 'ios' ? 11 : 0,
-                //     };
-                //     return (
-                //         <AntDesign name="left" size={20} color="white" style={style} />
-                //     );
-                // },
             }}
         >
             <Stack.Screen name="카테고리" component={CategoryScreen} />
             <Stack.Screen
-                name="Items"
-                component={ItemsListScreen}
-                options={({ route }) => ({
-                   
-                    headerTitleAlign: 'center'
-                })}
-            />
-            <Stack.Screen
                 name="Detail"
                 component={ItemDetailScreen}
                 options={{
-                    // headerRight: () => (
-                    // <TouchableOpacity onPress={() => setIsChecked(!isChecked)}>
-                    //     {isChecked ? (
-                    //         <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
-                    //     ) : (
-                    //         <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
-                    //     )}
-                    // </TouchableOpacity>
-                    // ),
                     headerShown: false,
                 }} />
         </Stack.Navigator>
@@ -97,34 +101,41 @@ export default function App(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    categoryListBox: {
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingVertical: 10,
-        marginHorizontal: 15,
-        marginVertical: 5,
-        justifyContent: 'center',
-        height: 55,
         backgroundColor: '#fff',
     },
-    categoryList: {
+    ItemsListBox: {
+        paddingLeft: 20,
+        paddingRight: 15,
+        paddingVertical: 10,
+        borderBottomColor: '#ddd',
+        borderBottomWidth: 1,
+        justifyContent: 'center',
+        height: 80,
+
+    },
+    ItemsList: {
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between', //요소들 사이에 동일한 간격을 둔다.
-        width: '100%',
-        height: 50,
+    },
+    imageBox: {
+        width: 60,
+        height: 60,
+        marginRight: 10,
+        borderWidth: 1,
+        borderRadius: 20,
+        borderColor: '#ddd',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     box: {
-        flexDirection: 'row',
-        alignItems: 'center',
+        marginLeft: 10,
     },
-    categoryicon: {
-        width: 30,
-        height: 30,
-        marginRight: 10,
+    itemManufacturing: {
+        color: '#888'
     },
-    categoryName: {
-        fontSize: 17,
+    itemName: {
+        fontSize: 16
     },
 });

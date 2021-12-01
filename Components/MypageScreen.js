@@ -5,7 +5,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import FavoritesScreen from './FavoritesScreen';
 import ItemDetailScreen from './ItemDetailScreen';
-import SettingScreen from './SettingScreen';
 import AllergysList from './AllergysList';
 import AccountScreen from './AccountScreen';
 
@@ -22,8 +21,13 @@ function MypageScreen({ navigation }) {
 
     useEffect(() => {
         AsyncStorage.getItem('id', (err, result) => {
-            setId(result);
-            dataLoad(result);
+            if (err) {
+                setId("로그인 해주세요.");
+
+            } else {
+                setId(result);
+                dataLoad(result);
+            }
         });
     }, []);
 
@@ -57,7 +61,8 @@ function MypageScreen({ navigation }) {
     const store = () => {
         setModalVisible(!modalVisible);
         myAllergys = checkedInputs; //저장되면 저장된 값으로 변경
-        allergyCreate();
+        if (id != "로그인 해주세요.")
+            allergyCreate();
     }
 
     function allergyCreate() { //사용자에 대한 알레르기 추가
@@ -121,22 +126,6 @@ function MypageScreen({ navigation }) {
         </TouchableOpacity>
     );
 
-    // function LoginState(props){
-    //     id=props.name;
-    //     console.log(id);
-    // }
-
-    // console.log(userData);
-
-    // if(userData[0][id] !== null){
-    // var id = userData[0]['id'];
-    // var id = AsyncStorage.getItem('id');
-    // }
-    // else{
-    // var id = "로그인 해주세요";
-    // }
-    // var id = userData[0]['id'];
-
     return (
 
         <View style={styles.container}>
@@ -146,7 +135,6 @@ function MypageScreen({ navigation }) {
                 </View>
                 <View style={{ marginLeft: 20 }}>
                     <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{id}</Text>
-                    {/* <Text style={{ color: '#888' }}>20대</Text> */}
                     <Text style={{ color: '#888' }}>
                         알레르기 <Text style={{ color: '#83580B' }}>{checkedInputs.length}</Text>개 선택
                     </Text>
@@ -226,31 +214,14 @@ export default function App({ navigation }) {
         }}>
             <Stack.Screen
                 name="마이페이지"
-                component={MypageScreen}
-                options={{
-                    headerRight: () => (
-                        <TouchableOpacity onPress={() => navigation.navigate('Setting')}>
-                            <Ionicons name="settings-sharp" size={24} color="white" />
-                        </TouchableOpacity>
-                    ),
-                }} />
+                component={MypageScreen} />
             <Stack.Screen name="Favorites" component={FavoritesScreen} options={{ title: '즐겨찾기' }} />
             <Stack.Screen
                 name="ItemDetail"
                 component={ItemDetailScreen}
                 options={{
-                    // headerRight: () => (
-                    //     <TouchableOpacity onPress={() => setIsChecked(!isChecked)}>
-                    //         {isChecked ? (
-                    //             <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
-                    //         ) : (
-                    //             <AntDesign name="hearto" size={24} color="white" style={{ marginRight: 5 }} />
-                    //         )}
-                    //     </TouchableOpacity>
-                    // ),
                     headerShown: false
                 }} />
-            <Stack.Screen name="Setting" component={SettingScreen} options={{ title: '설정' }} />
             <Stack.Screen
                 name="Account"
                 component={AccountScreen}

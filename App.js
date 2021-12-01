@@ -3,14 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MainScreen from './Components/MainScreen';
-import ItemsListScreen from './Components/ItemsListScreen';
+import CategoryScreen from './Components/CategoryScreen';
 import SearchScreen from './Components/SearchScreen';
 import MypageScreen from './Components/MypageScreen';
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-// import ItemsListScreen from './Components/ItemsListScreen';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB_LXYdFtcpCDsupM_bCXuj4DOFJY5hkSU",
@@ -64,7 +63,7 @@ export default function App() {
         })}
       >
         <Tab.Screen name="Home" component={MainScreen} />
-        <Tab.Screen name="Items" component={ItemsListScreen} />
+        <Tab.Screen name="Items" component={CategoryScreen} />
         <Tab.Screen name="Search" component={SearchScreen} />
         <Tab.Screen name="Mypage" component={MypageScreen} />
       </Tab.Navigator>
