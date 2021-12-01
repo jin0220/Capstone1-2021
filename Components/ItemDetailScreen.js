@@ -23,7 +23,12 @@ export default function ItemDetailScreen({ navigation, route }) {
                 setIsChecked(route.params.favorite);
             }
             AsyncStorage.getItem('id', (err, result) => {
-                setId(result);
+                if (err) {
+                    setId("정보없음");
+                } else {
+                    setId(result);
+                }
+
             });
         }
 
@@ -289,7 +294,7 @@ export default function ItemDetailScreen({ navigation, route }) {
                 {/* <Text style={{ color: 'white', fontSize: 22 }}>제목</Text> */}
                 <TouchableOpacity
                     style={{}}
-                    onPress={() => favorite()}>
+                    onPress={() => id == '정보없음' ? null : favorite()}>
                     {isChecked ? (
                         <AntDesign name="heart" size={24} color="white" style={{ marginRight: 5 }} />
                     ) : (

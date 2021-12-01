@@ -42,7 +42,7 @@ export default function App() {
                 ? 'home'
                 : 'home';
             }
-            else if (route.name === 'Category') {
+            else if (route.name === 'Items') {
               iconName = focused ? 'ios-list' : 'ios-list';
             }
             else if (route.name === 'Search') {
@@ -63,7 +63,7 @@ export default function App() {
         })}
       >
         <Tab.Screen name="Home" component={MainScreen} />
-        <Tab.Screen name="Category" component={CategoryScreen} />
+        <Tab.Screen name="Items" component={CategoryScreen} />
         <Tab.Screen name="Search" component={SearchScreen} />
         <Tab.Screen name="Mypage" component={MypageScreen} />
       </Tab.Navigator>
