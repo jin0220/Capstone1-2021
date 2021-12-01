@@ -201,8 +201,9 @@ export default function App({ navigation }) {
                 headerShown: true,
                 headerStyle: {
                     backgroundColor: '#D9B650',
-                    color: 'white',
+                    color: '#fff',
                 },
+                headerTitleAlign: 'center'
             }}>
             <Stack.Screen
                 name="영냠사"
@@ -339,7 +340,7 @@ export default function App({ navigation }) {
             <Stack.Screen
                 name="SearchScreen"
                 component={SearchScreen}
-                options={({route})=>({
+                options={({ route }) => ({
                     backgroundColor: '#D9B650',
                     headerBackTitleVisible: true,
                     headerTitle: true,
