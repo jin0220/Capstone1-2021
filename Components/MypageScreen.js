@@ -201,7 +201,6 @@ function MypageScreen({ navigation }) {
 const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
-    const [isChecked, setIsChecked] = useState(false);
     return (
         <Stack.Navigator screenOptions={{
             headerStyle: {
