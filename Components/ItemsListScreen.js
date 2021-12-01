@@ -35,33 +35,11 @@ export default function ItemsListScreen({ navigation, route }) {
             },
         );
 
-        
+
 
         if (response.status === 200) {
             const responseJson = await response.json();
-
-            // const listItem = () => {
-            //     setDataInput([
-            //         ...dataInput,
-            //         {
-            //             prdlstNm: responseJson.list[0]['prdlstNm'],
-            //             manufacture: responseJson.list[0]['manufacture']
-            //         }
-            //     ]);
-                
-            // };
-
-            // if (responseJson.list[0].prdkind == '과자') {
-            //     console.log(responseJson.list[0]);
             setDataInput([...dataInput, ...responseJson.list]);
-            // }
-
-            // for (var i = 0; i < 20; i++) {
-
-            // if (responseJson.list.prdkind.indexOf('김치') != -1)
-            console.log(dataInput);
-            // setDataInput([...dataInput, responseJson.list[i]]);
-            // }
 
             return true;
         } else {
