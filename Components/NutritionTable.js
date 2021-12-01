@@ -3,8 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TouchableH
 
 export default function nutritionTable(props) {
     const data = props.nutrient;
-    // console.log('data');
-    // console.log(data);
+    function graph(percent) {
+        return {
+            backgroundColor: '#f5dd7b',
+            width: percent,
+            height: 17,
+            borderRadius: 7
+        }
+    }
     return (
         <View style={styles.nutritionTable}>
             <View style={styles.nutritionRows}>
@@ -12,13 +18,13 @@ export default function nutritionTable(props) {
                     <Text style={{}}>나트륨</Text>
                 </View>
                 <View style={styles.col2}>
-                    <Text style={{}}>{data.NUTR_CONT6}mg</Text>
+                    <Text style={{}}>{data[0].volume}</Text>
                 </View>
                 <View style={styles.col3}>
-                    <View style={{ backgroundColor: '#ddd', width: '15%', height: 17, borderRadius: 7 }} />
+                    <View style={graph(data[0].percent)} />
                 </View>
                 <View style={styles.col4}>
-                    <Text style={{}}>0%</Text>
+                    <Text style={{}}>{data[0].percent}</Text>
                 </View>
             </View>
 
@@ -29,13 +35,13 @@ export default function nutritionTable(props) {
                         <Text style={{}}>탄수화물</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>{data.NUTR_CONT2}g</Text>
+                        <Text style={{}}>{data[1].volume}</Text>
                     </View>
                     <View style={styles.col3}>
-                        <View style={{ backgroundColor: '#ddd', width: '100%', height: 17, borderRadius: 7 }} />
+                        <View style={graph(data[1].percent)} />
                     </View>
                     <View style={styles.col4}>
-                        <Text style={{}}>0%</Text>
+                        <Text style={{}}>{data[1].percent}</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
@@ -43,13 +49,13 @@ export default function nutritionTable(props) {
                         <Text style={{}}>당류</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>{data.NUTR_CONT5}g</Text>
+                        <Text style={{}}>{data[2].volume}</Text>
                     </View>
                     <View style={styles.col3}>
-                        <View style={{ backgroundColor: '#ddd', width: '70%', height: 17, borderRadius: 7 }} />
+                        <View style={graph(data[2].percent)} />
                     </View>
                     <View style={styles.col4}>
-                        <Text style={{}}>0%</Text>
+                        <Text style={{}}>{data[2].percent == '0%' ? '' : data[2].percent}</Text>
                     </View>
                 </View>
             </View>
@@ -61,13 +67,13 @@ export default function nutritionTable(props) {
                         <Text style={{}}>지방</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>{data.NUTR_CONT4}g</Text>
+                        <Text style={{}}>{data[3].volume}</Text>
                     </View>
                     <View style={styles.col3}>
-                        <View style={{ backgroundColor: '#ddd', width: '30%', height: 17, borderRadius: 7 }} />
+                        <View style={graph(data[3].percent)} />
                     </View>
                     <View style={styles.col4}>
-                        <Text style={{}}>0%</Text>
+                        <Text style={{}}>{data[3].percent}</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', borderBottomColor: '#e9e9e9', borderBottomWidth: 1 }}>
@@ -75,7 +81,7 @@ export default function nutritionTable(props) {
                         <Text style={{}}>트랜스지방</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>{data.NUTR_CONT9}g</Text>
+                        <Text style={{}}>{data[4].volume}g</Text>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
@@ -83,13 +89,13 @@ export default function nutritionTable(props) {
                         <Text style={{}}>포화지방</Text>
                     </View>
                     <View style={styles.col2}>
-                        <Text style={{}}>{data.NUTR_CONT8}g</Text>
+                        <Text style={{}}>{data[5].volume}</Text>
                     </View>
                     <View style={styles.col3}>
-                        <View style={{ backgroundColor: '#ddd', width: '10%', height: 17, borderRadius: 7 }} />
+                        <View style={graph(data[5].percent)} />
                     </View>
                     <View style={styles.col4}>
-                        <Text style={{}}>0%</Text>
+                        <Text style={{}}>{data[5].percent}</Text>
                     </View>
                 </View>
             </View>
@@ -99,13 +105,13 @@ export default function nutritionTable(props) {
                     <Text style={{}}>콜레스테롤</Text>
                 </View>
                 <View style={styles.col2}>
-                    <Text style={{}}>{data.NUTR_CONT7}mg</Text>
+                    <Text style={{}}>{data[6].volume}</Text>
                 </View>
                 <View style={styles.col3}>
-                    <View style={{ backgroundColor: '#ddd', width: '20%', height: 17, borderRadius: 7 }} />
+                    <View style={graph(data[6].percent)} />
                 </View>
                 <View style={styles.col4}>
-                    <Text style={{}}>0%</Text>
+                    <Text style={{}}>{data[6].percent}</Text>
                 </View>
             </View>
 
@@ -114,13 +120,13 @@ export default function nutritionTable(props) {
                     <Text style={{}}>단백질</Text>
                 </View>
                 <View style={styles.col2}>
-                    <Text style={{}}>{data.NUTR_CONT3}g</Text>
+                    <Text style={{}}>{data[7].volume}</Text>
                 </View>
                 <View style={styles.col3}>
-                    <View style={{ backgroundColor: '#ddd', width: '50%', height: 17, borderRadius: 7 }} />
+                    <View style={graph(data[7].percent)} />
                 </View>
                 <View style={styles.col4}>
-                    <Text style={{}}>0%</Text>
+                    <Text style={{}}>{data[7].percent}</Text>
                 </View>
             </View>
 
@@ -149,7 +155,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         backgroundColor: '#eee',
-        width: '30%'
+        width: '27%'
     },
     col1_1: {
         flexDirection: 'row',
@@ -157,27 +163,28 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingVertical: 5,
         backgroundColor: '#eee',
-        width: '30%'
+        width: '27%'
     },
     col2: {
         flexDirection: 'row',
-        paddingHorizontal: 10,
+        paddingLeft: 10,
+        paddingRight: 5,
         paddingVertical: 5,
-        width: '15%'
+        width: '19%',
         //width: '50%'
     },
     col3: { //그래프
         flexDirection: 'row',
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
         paddingVertical: 5,
-        width: '40%',
-        alignItems: 'center'
+        width: '39%',
+        alignItems: 'center',
     },
     col4: {
         flexDirection: 'row',
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
         paddingVertical: 5,
-        width: '15%'
+        width: '15%',
         //width: '20%
     },
 });

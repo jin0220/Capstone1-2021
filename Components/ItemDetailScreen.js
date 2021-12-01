@@ -4,11 +4,10 @@ import { AntDesign } from '@expo/vector-icons';
 import Popup from './Popup';
 import NutritionTable from './NutritionTable';
 import AllergysList from './AllergysList';
-// import isChecked from './CategoryScreen';
-// import * as a from './FavoritesData';
-import { getDatabase, ref, set, child, get, push } from "firebase/database"; //9버전
+import { getDatabase, ref, set } from "firebase/database"; //9버전
+import { NavigationContainer } from '@react-navigation/native';
 
-export default function ItemDetailScreen({ route }) {
+export default function ItemDetailScreen({ navigation, route }) {
     //api 연결  
     const prdlstReportNo = route.params.prdlstReportNo; //품목보고번호
 
@@ -33,16 +32,16 @@ export default function ItemDetailScreen({ route }) {
         }
     }, []);
 
+    var listData = [];
+    const [nutrient, setNutrient] = useState();
+
     const getRawmt = async () => {
         const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
         var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; /*URL*/
         var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
         queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent(prdlstReportNo); /**/
-        // queryParams += '&' + encodeURIComponent('prdlstNm') + '=' + encodeURIComponent('초코에 몽'); /**/
         queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /**/
-        // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent(page); /*데이터 페이지*/
-        // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('20'); /*데이터 받아오는 개수*/
 
         const response = await fetch(
             url + queryParams,
@@ -54,9 +53,8 @@ export default function ItemDetailScreen({ route }) {
         if (response.status === 200) {
             const responseJson = await response.json();
             setData(responseJson.list[0]);
-            // console.log('==check1==');
-            // console.log(responseJson.list[0]);
 
+            //원재료 데이터
             const raw_mt = responseJson.list[0]['rawmtrl'];
             var mt = raw_mt.split(/[\,\(\)\%]/);
 
@@ -70,31 +68,76 @@ export default function ItemDetailScreen({ route }) {
 
             getFoodAdtvInfoList(mta);
 
-            const list = ['나트륨', '단백질', '당류', '지방', '탄수화물', '트랜스지방', '포화지방', '콜레스테롤'];
+            //영양성분표 데이터
+            const list = ['나트륨', '탄수화물', '당류', '지방', '트랜스지방', '포화지방', '콜레스테롤', '단백질', '열량']; //, '1회 제공량' '열량',
 
             if (responseJson.list[0]['nutrient']) {
-                const nut_ri = responseJson.list[0]['nutrient'];
+                // const nut_ri = responseJson.list[0]['nutrient'];
+                const nut_ri = responseJson.list[0]['nutrient'].replace(/(\s*)/g, "");
+
                 // console.log(nut_ri);
-                var ri = nut_ri.split(/[\(\)\g\%\,]/);
-                // var ri = nut_ri;
-                // for (var i = 0; i < list.length; i++) {
-                //     ri = ri.split(list[i]);
-                // }
 
-                console.log(ri);
-                var ent = [];
+                for (var i = 0; i < list.length; i++) {
+                    var target = list[i];
+                    var target_num = nut_ri.indexOf(target);
+                    var result;
+                    if (list[i] == '트랜스지방') {
+                        result = nut_ri.substring(target_num, (nut_ri.substring(target_num).indexOf("g") + target_num));
+                    }
+                    else if (list[i] == '당류' || list[i] == '열량') {
+                        result = nut_ri.substring(target_num, (nut_ri.substring(target_num).indexOf(",") + target_num));
+                        if (list[i] == '당류' && result.substring(target).indexOf("%") > 0) {
+                            result = nut_ri.substring(target_num, (nut_ri.substring(target_num).indexOf("%") + target_num + 1));
+                        }
+                    }
+                    else {
+                        result = nut_ri.substring(target_num, (nut_ri.substring(target_num).indexOf("%") + target_num + 1));
+                    }
 
-                for (var i = 0; i < ri.length; i++) {
-                    ent.push(ri[i]);
+                    // console.log(result);
+
+                    var v;
+                    var p;
+
+                    if (list[i] == '당류' || list[i] == '지방') {
+                        v = result.substring(2, (nut_ri.substring(target_num).indexOf("g") + 1));
+                    }
+                    else if (list[i] == '열량') {
+                        if (nut_ri.substring(target_num).indexOf("열량") > -1)
+                            v = result.substring(2, (nut_ri.substring(target_num).indexOf("l") + 1));
+                        else
+                            continue;
+                    }
+                    else if (list[i] == '나트륨' || list[i] == '단백질') {
+                        v = result.substring(3, (nut_ri.substring(target_num).indexOf("g") + 1));
+                    }
+                    else if (list[i] == '탄수화물' || list[i] == '포화지방') {
+                        v = result.substring(4, (nut_ri.substring(target_num).indexOf("g") + 1));
+                    }
+                    else {
+                        v = result.substring(5, (nut_ri.substring(target_num).indexOf("g") + 1));
+                    }
+
+                    if (result.substring(target).indexOf("(") > -1)
+                        p = result.substring(nut_ri.substring(target_num).indexOf("(") + 1, (nut_ri.substring(target_num).indexOf("(") + nut_ri.substring(target_num).indexOf("%")));
+                    else
+                        p = result.substring(nut_ri.substring(target_num).indexOf("g") + 1, (nut_ri.substring(target_num).indexOf("g") + 1 + nut_ri.substring(target_num).indexOf("%")));
+
+                    if (p == "") {
+                        p = '0%';
+                    }
+
+                    listData.push({
+                        name: list[i],
+                        volume: v,
+                        percent: p
+                    });
                 }
-
-                ent = ent.filter(item => item);
-                console.log(ent);
+                setNutrient(listData);
+                // console.log(listData);
             } else {
                 console.log("없음");
             }
-            // getFoodAdtvInfoList();
-            // getIngredient();
         } else {
             return 0;
             // throw new Error('unable to get');
@@ -102,89 +145,57 @@ export default function ItemDetailScreen({ route }) {
         return true;
     };
 
+    var temp = [];
+    const [items, setItems] = useState([]);
+
     const getFoodAdtvInfoList = async (mta) => {
-        // console.log(data.rawmtrl);
-        // var rawmtrl = data.rawmtrl.split(",");
         for (var i = 0; i < mta.length; i++) {
-            // const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
-
-            // var url = 'http://apis.data.go.kr/1471000/FoodAdtvInfoService01/getFoodAdtvInfoList01'; /*URL*/
-            // var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
-            // // queryParams += '&' + encodeURIComponent('prdlst_cd') + '=' + encodeURIComponent(prdlstReportNo); /**/
-            // queryParams += '&' + encodeURIComponent('pc_kor_nm') + '=' + encodeURIComponent(mta[i]); /**/
-            // // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-            // // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3'); /**/
-            // queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /**/
-            // // console.log(data.prdlstNm);
-            // // console.log(data.manufacture);
-
             const response = await fetch(
-                'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/I2838/json/1/5/WORD='
-
-                +
-                mta[i],
+                'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/I2838/json/1/5/WORD=' + mta[i],
                 {
                     method: 'GET',
                 },
             );
-            // const response = await fetch(
-            //     url + queryParams,
-            //     {
-            //         method: 'GET',
-            //     },
-            // );
 
             if (response.status === 200) {
                 const responseJson = await response.json();
-                // console.log(mta[i]);
-                // if (responseJson.body.totalCount > 0) { // && responseJson.body.items[]['PC_KOR_NM']
-                //     for (var j = 0; j < responseJson.body.items.length; j++) {
-                //         // console.log(responseJson.body.items[j]['PC_KOR_NM']);
-                //         if (responseJson.body.items[j]['PC_KOR_NM'] == mta[i]) {
-                //             // console.log(responseJson.body.items[j]['PC_KOR_NM']);
-                //         }
-                //     }
-                //     console.log(responseJson);
-                // }
-                if (responseJson['I2838']['total_count'] != 0) {
-                    console.log(mta[i]);
-                    console.log(responseJson.I2838.total_count);
-                    // console.log(responseJson.I2838.row[0].WORD);
-                    // for (var j = 0; j < responseJson.I2838.row.length; j++) {
+                if (responseJson.I2838.total_count != 0) {
+                    // console.log(mta[i]);
+                    // console.log(responseJson.I2838.total_count);
+                    temp.push(mta[i]);
+                    // for (var j = 0; j < responseJson.I2838.total_count; j++) {
                     //     if (responseJson.I2838.row[j].WORD == mta[i]) {
                     //         console.log(responseJson.I2838.row[j].WORD);
                     //     }
                     // }
 
-                    console.log(mta[i]);
-                    console.log(responseJson);
-                }
+                    // console.log(mta[i]);
 
-                // setNutrient(responseJson.body.items[0]); //카테고리에서 오류남
-                // console.log(nutrient);
-                // return responseJson.C002.row[0].RAWMTRL_NM;s
+                }
             } else {
                 return 0;
                 // throw new Error('unable to get');
             }
         }
+        // console.log(temp);
+        setItems(temp);
+        return true;
     };
 
-    const [nutrient, setNutrient] = useState([]);
 
     const getIngredient = async () => {
-        const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
+        // const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
-        var url = 'http://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1';
-        var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /* Service Key*/
-        queryParams += '&' + encodeURIComponent('desc_kor') + '=' + encodeURIComponent(data.prdlstNm); /*식품이름*/
-        // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* */
-        // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3'); /* */
-        // queryParams += '&' + encodeURIComponent('bgn_year') + '=' + encodeURIComponent('2017'); /* */
-        // queryParams += '&' + encodeURIComponent('animal_plant') + '=' + encodeURIComponent(data.manufacture); /*가공업체*/
-        queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /* */
-        // console.log(data.prdlstNm);
-        // console.log(data.manufacture);
+        // var url = 'http://apis.data.go.kr/1471000/FoodAdtvInfoService01/getFoodAdtvInfoList01'; /*URL*/
+        // var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
+        // // queryParams += '&' + encodeURIComponent('prdlst_cd') + '=' + encodeURIComponent(prdlstReportNo); /**/
+        // queryParams += '&' + encodeURIComponent('pc_kor_nm') + '=' + encodeURIComponent(mta[i]); /**/
+        // // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
+        // // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3'); /**/
+        // queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /**/
+        // // console.log(data.prdlstNm);
+        // // console.log(data.manufacture);
+
         const response = await fetch(
             url + queryParams,
             {
@@ -194,11 +205,17 @@ export default function ItemDetailScreen({ route }) {
 
         if (response.status === 200) {
             const responseJson = await response.json();
-            // console.log('==check2==');
-            // console.log(responseJson.body);
-            // setNutrient(responseJson.body.items[0]); //카테고리에서 오류남
-            // console.log(nutrient);
-            // return responseJson.C002.row[0].RAWMTRL_NM;s
+            // console.log(mta[i]);
+            // console.log(responseJson.I2838.total_count);
+            // if (responseJson.body.totalCount > 0) { // && responseJson.body.items[]['PC_KOR_NM']
+            //     for (var j = 0; j < responseJson.body.items.length; j++) {
+            //         // console.log(responseJson.body.items[j]['PC_KOR_NM']);
+            //         if (responseJson.body.items[j]['PC_KOR_NM'] == mta[i]) {
+            //             // console.log(responseJson.body.items[j]['PC_KOR_NM']);
+            //         }
+            //     }
+            //     console.log(responseJson);
+            // }
         } else {
             return 0;
             // throw new Error('unable to get');
@@ -214,7 +231,7 @@ export default function ItemDetailScreen({ route }) {
         setItem(item); //모달창에 아이템 전달
     }
 
-    const items = ["식품첨가물1", "식품첨가물2", "식품첨가물3", "식품첨가물4", "식품첨가물5", "식품첨가물6"];
+    // const items = ["식품첨가물1", "식품첨가물2", "식품첨가물3", "식품첨가물4", "식품첨가물5", "식품첨가물6"];
     const itemsList = items.map(item =>
         // <View style={styles.listItem} key={item}>
         <TouchableOpacity style={styles.listItem} key={item} onPress={() => fuc(item)}>
@@ -266,7 +283,7 @@ export default function ItemDetailScreen({ route }) {
         <View>
             <View style={styles.header}>
                 <TouchableOpacity
-                    onPress={() => { }} >
+                    onPress={() => navigation.goBack()} >
                     <AntDesign name="arrowleft" size={23} color="white" />
                 </TouchableOpacity>
                 {/* <Text style={{ color: 'white', fontSize: 22 }}>제목</Text> */}
@@ -326,16 +343,19 @@ export default function ItemDetailScreen({ route }) {
                             <View style={styles.total}>
                                 <Text style={{ width: '30%' }}>총 내용량</Text>
                                 <Text style={{ width: '50%' }}>0g</Text>
-                                <Text style={{ width: '20%' }}>0kcal</Text>
+                                {/* {nutrient[9] ? nutrient[9].percent : '0g'} */}
+                                <Text style={{ width: '20%' }}>{nutrient && nutrient.length == 9 ? nutrient[8].volume : '0kcal'}</Text>
+                                {/*  */}
                             </View>
                             <View style={{ width: '100%', height: 1, backgroundColor: '#eee' }} />
                             <View style={styles.total}>
                                 <Text style={{ width: '30%' }}>1회 제공량</Text>
                                 <Text style={{ width: '50%' }}>0g</Text>
-                                <Text style={{ width: '20%' }}>0kcal</Text>
+                                <Text style={{ width: '20%' }}>{nutrient && nutrient.length == 9 ? nutrient[8].volume : '0kcal'}</Text>
                             </View>
-
-                            <NutritionTable nutrient={nutrient} />
+                            {nutrient &&
+                                <NutritionTable nutrient={nutrient} />
+                            }
                         </View>
                     </View>
                     <View style={styles.divide} />
@@ -367,6 +387,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        paddingBottom: '20%'
     },
     divide: {
         width: '100%',
