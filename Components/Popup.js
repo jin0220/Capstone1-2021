@@ -18,6 +18,27 @@ export default function Popup(props) {
             props.setModalVisible(false);
         }
     };
+
+    function isEmptyObj(obj) {
+        if (obj.constructor === Object
+            && Object.keys(obj).length === 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    var name = props.item.name;
+    var groupName = props.item.group;
+    if (isEmptyObj(props.item)) {
+        console.log('props.item');
+        console.log(props.item);
+    } else {
+
+    }
+    console.log(name);
+    console.log(groupName);
+    // console.log(group[props.item.group].description);
     // function useOutsideAlerter(ref) {
     //     useEffect(() => {
     //         function handleClickOutside(e) {
@@ -55,12 +76,13 @@ export default function Popup(props) {
             {/* <View style={styles.modalBackground} onTouchEnd={handleClickOutside} > */}
             <View style={styles.modalBackground}>
                 <View style={styles.modal} ref={modalEl}>
-                    <Text style={styles.itemName}>{props.item.name}</Text>
+                    <Text style={styles.itemName}>{name}</Text>
 
                     <View style={styles.box}>
                         <Text style={styles.title}>주용도</Text>
-                        <Text style={styles.subTitle}>{props.item.group}</Text>
-                        {/* <Text>{group[props.item.group].description}</Text> */}
+
+                        <Text style={styles.subTitle}>{groupName}</Text>
+                        <Text>{isEmptyObj(props.item) ? "" : group[props.item.group].description}</Text>
                     </View>
                     <View style={styles.divide} />
 

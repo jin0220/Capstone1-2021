@@ -35,6 +35,7 @@ export default function ItemDetailScreen({ navigation, route }) {
 
             });
         }
+        items = [];
 
         return () => {
             isComponentMounted = false
@@ -70,18 +71,17 @@ export default function ItemDetailScreen({ navigation, route }) {
             var mta = [{}];
 
             for (var i = 0; i < mt.length; i++) {
-               
                 for(var j=0; j< additive.length; j++){
                     if (mt[i] === additive[j].name){
                         items.push(additive[j]);
                     }
                 }
-                
+
             }
             // mta = mta.filter(item => item);
             console.log(items);
 
-            
+
 
             // getFoodAdtvInfoList(mta);
 
