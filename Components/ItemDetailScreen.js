@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, AsyncStorage } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Popup from './Popup';
 import NutritionTable from './NutritionTable';
 import AllergysList from './AllergysList';
 import { getDatabase, ref, set } from "firebase/database"; //9버전
-import { NavigationContainer } from '@react-navigation/native';
 import additive from '../Data/additive.json';
-import group from '../Data/group.json';
 
 var items = [];
 
@@ -68,28 +66,19 @@ export default function ItemDetailScreen({ navigation, route }) {
             const raw_mt = responseJson.list[0]['rawmtrl'];
             var mt = raw_mt.split(/[\,\(\)\%]/);
 
-            var mta = [{}];
-
             for (var i = 0; i < mt.length; i++) {
-                for(var j=0; j< additive.length; j++){
-                    if (mt[i] === additive[j].name){
+                for (var j = 0; j < additive.length; j++) {
+                    if (mt[i] === additive[j].name) {
                         items.push(additive[j]);
                     }
                 }
-
             }
-            // mta = mta.filter(item => item);
-            console.log(items);
-
-
-
-            // getFoodAdtvInfoList(mta);
+            // console.log(items);
 
             //영양성분표 데이터
             const list = ['나트륨', '탄수화물', '당류', '지방', '트랜스지방', '포화지방', '콜레스테롤', '단백질', '열량']; //, '1회 제공량' '열량',
 
             if (responseJson.list[0]['nutrient']) {
-                // const nut_ri = responseJson.list[0]['nutrient'];
                 const nut_ri = responseJson.list[0]['nutrient'].replace(/(\s*)/g, "");
 
                 // console.log(nut_ri);
@@ -162,97 +151,16 @@ export default function ItemDetailScreen({ navigation, route }) {
         return true;
     };
 
-    // var temp = [];
-    // const [items, setItems] = useState([]);
-
-    // const getFoodAdtvInfoList = async (mta) => {
-    //     for (var i = 0; i < mta.length; i++) {
-    //         const response = await fetch(
-    //             'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/I2838/json/1/5/WORD=' + mta[i],
-    //             {
-    //                 method: 'GET',
-    //             },
-    //         );
-
-    //         if (response.status === 200) {
-    //             const responseJson = await response.json();
-    //             if (responseJson.I2838.total_count != 0) {
-    //                 // console.log(mta[i]);
-    //                 // console.log(responseJson.I2838.total_count);
-    //                 temp.push(mta[i]);
-    //                 // for (var j = 0; j < responseJson.I2838.total_count; j++) {
-    //                 //     if (responseJson.I2838.row[j].WORD == mta[i]) {
-    //                 //         console.log(responseJson.I2838.row[j].WORD);
-    //                 //     }
-    //                 // }
-
-    //                 // console.log(mta[i]);
-
-    //             }
-    //         } else {
-    //             return 0;
-    //             // throw new Error('unable to get');
-    //         }
-    //     }
-    //     // console.log(temp);
-    //     setItems(temp);
-    //     return true;
-    // };
-
-
-    const getIngredient = async () => {
-        // const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
-
-        // var url = 'http://apis.data.go.kr/1471000/FoodAdtvInfoService01/getFoodAdtvInfoList01'; /*URL*/
-        // var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
-        // // queryParams += '&' + encodeURIComponent('prdlst_cd') + '=' + encodeURIComponent(prdlstReportNo); /**/
-        // queryParams += '&' + encodeURIComponent('pc_kor_nm') + '=' + encodeURIComponent(mta[i]); /**/
-        // // queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /**/
-        // // queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('3'); /**/
-        // queryParams += '&' + encodeURIComponent('type') + '=' + encodeURIComponent('json'); /**/
-        // // console.log(data.prdlstNm);
-        // // console.log(data.manufacture);
-
-        const response = await fetch(
-            url + queryParams,
-            {
-                method: 'GET',
-            },
-        );
-
-        if (response.status === 200) {
-            const responseJson = await response.json();
-            // console.log(mta[i]);
-            // console.log(responseJson.I2838.total_count);
-            // if (responseJson.body.totalCount > 0) { // && responseJson.body.items[]['PC_KOR_NM']
-            //     for (var j = 0; j < responseJson.body.items.length; j++) {
-            //         // console.log(responseJson.body.items[j]['PC_KOR_NM']);
-            //         if (responseJson.body.items[j]['PC_KOR_NM'] == mta[i]) {
-            //             // console.log(responseJson.body.items[j]['PC_KOR_NM']);
-            //         }
-            //     }
-            //     console.log(responseJson);
-            // }
-        } else {
-            return 0;
-            // throw new Error('unable to get');
-        }
-    };
-
     //모달창
     const [modalVisible, setModalVisible] = useState(false); //첫번째 원소 -> 현재 상태, 두번째 원소 -> setter 함수
     const [item, setItem] = useState({});
-    const [item2, setItem2] = useState("");
 
     function fuc(item) {
         setModalVisible(true);
         setItem(item); //모달창에 아이템 전달
-        // setItem2();
     }
 
-    // const items = ["식품첨가물1", "식품첨가물2", "식품첨가물3", "식품첨가물4", "식품첨가물5", "식품첨가물6"];
     const itemsList = items.map((item, index) =>
-        // <View style={styles.listItem} key={item}>
         <TouchableOpacity style={styles.listItem} key={index} onPress={() => fuc(item)}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={styles.rate} />
@@ -260,7 +168,6 @@ export default function ItemDetailScreen({ navigation, route }) {
             </View>
             <AntDesign name="right" size={18} color="#888" />
         </TouchableOpacity>
-        // </View>
     );
 
     const allergys = [data.allergy]; //알레르기 리스트
@@ -292,12 +199,6 @@ export default function ItemDetailScreen({ navigation, route }) {
 
     }
 
-    // const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-    // function handleBackPress() {
-    //     console.log("TQW1E");
-    //     return false;
-    // }
-
     return (
         <View>
             <View style={styles.header}>
@@ -321,11 +222,9 @@ export default function ItemDetailScreen({ navigation, route }) {
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.box1}>
-                        {/* <View style={styles.image} /> */}
                         <Image style={styles.image} source={{ uri: data.imgurl1 }} />
                         <Text style={styles.itemManufacturing}>{data.manufacture}</Text>
                         <Text style={styles.itemName}>{data.prdlstNm}</Text>
-                        {/* <Text style={styles.itemPrice}>0원</Text> */}
                     </View>
                     <View style={styles.divide} />
 
@@ -362,9 +261,7 @@ export default function ItemDetailScreen({ navigation, route }) {
                             <View style={styles.total}>
                                 <Text style={{ width: '30%' }}>총 내용량</Text>
                                 <Text style={{ width: '50%' }}>0g</Text>
-                                {/* {nutrient[9] ? nutrient[9].percent : '0g'} */}
                                 <Text style={{ width: '20%' }}>{nutrient && nutrient.length == 9 ? nutrient[8].volume : '0kcal'}</Text>
-                                {/*  */}
                             </View>
                             <View style={{ width: '100%', height: 1, backgroundColor: '#eee' }} />
                             <View style={styles.total}>
