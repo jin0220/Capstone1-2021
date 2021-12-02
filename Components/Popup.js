@@ -60,7 +60,7 @@ export default function Popup(props) {
                     <View style={styles.box}>
                         <Text style={styles.title}>주용도</Text>
                         <Text style={styles.subTitle}>{props.item.group}</Text>
-                        <Text>{group[props.item.group].description}</Text>
+                        {/* <Text>{group[props.item.group].description}</Text> */}
                     </View>
                     <View style={styles.divide} />
 
