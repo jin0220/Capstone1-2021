@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Dimensions,
     TouchableOpacity,
+    ScrollView,
 } from "react-native";
 import group from '../Data/group.json';
 
@@ -29,10 +30,11 @@ export default function Popup(props) {
             {/* <View style={styles.modalBackground} onTouchEnd={handleClickOutside} > */}
             <View style={styles.modalBackground}>
                 <View style={styles.modal} ref={modalEl}>
-                    <Text style={styles.itemName}>{name}</Text>
+                    <ScrollView>
+                    <Text style={[styles.itemName]}>{name}</Text>
 
                     <View style={styles.box}>
-                        <Text style={styles.title}>주용도</Text>
+                        <Text style={styles.title}>분류</Text>
 
                         <Text style={styles.subTitle}>{groupName}</Text>
                         <Text>{isEmptyObj(props.item) ? "" : group[props.item.group].description}</Text>
@@ -40,11 +42,11 @@ export default function Popup(props) {
                     <View style={styles.divide} />
 
                     <View style={styles.box}>
-                        <Text style={styles.title}>EWG 등급</Text>
-                        <Text style={styles.subTitle}>낮은 위험도</Text>
-                        <Text>건강에 부정적인 영향을 미칠 가능성이 없는 성분입니다.</Text>
+                        <Text style={styles.question}>{groupName}의 일일 허용치 기준은?</Text>
+                        {/* <Text style={styles.subTitle}>낮은 위험도</Text> */}
+                        <Text>{isEmptyObj(props.item) ? "" : group[props.item.group].answer}</Text>
                     </View>
-
+                    </ScrollView>
                     <TouchableOpacity style={styles.close} onPress={props.setModalVisible(!props.visible)}>
                         <Text>Close</Text>
                     </TouchableOpacity>
@@ -74,6 +76,8 @@ const styles = StyleSheet.create({
     itemName: {
         fontSize: 17,
         marginBottom: 20,
+        fontWeight: 'bold',
+        alignItems: 'center',
     },
     box: {
         padding: 20,
@@ -91,7 +95,12 @@ const styles = StyleSheet.create({
     subTitle: {
         marginBottom: 5,
     },
+    question: {
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
     close: {
-        marginTop: 100,
+        marginTop: 50,
+        width: "80%",      
     },
 });
