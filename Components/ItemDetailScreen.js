@@ -6,6 +6,10 @@ import NutritionTable from './NutritionTable';
 import AllergysList from './AllergysList';
 import { getDatabase, ref, set } from "firebase/database"; //9버전
 import { NavigationContainer } from '@react-navigation/native';
+import additive from '../Data/additive.json';
+import group from '../Data/group.json';
+
+var items = [];
 
 export default function ItemDetailScreen({ navigation, route }) {
     //api 연결  
@@ -63,15 +67,24 @@ export default function ItemDetailScreen({ navigation, route }) {
             const raw_mt = responseJson.list[0]['rawmtrl'];
             var mt = raw_mt.split(/[\,\(\)\%]/);
 
-            var mta = [];
+            var mta = [{}];
 
             for (var i = 0; i < mt.length; i++) {
-                mta.push(mt[i]);
+               
+                for(var j=0; j< additive.length; j++){
+                    if (mt[i] === additive[j].name){
+                        items.push(
+                            additive[j]);
+                    }
+                }
+                
             }
-            mta = mta.filter(item => item);
-            console.log(mta);
+            // mta = mta.filter(item => item);
+            console.log(items);
 
-            getFoodAdtvInfoList(mta);
+            
+
+            // getFoodAdtvInfoList(mta);
 
             //영양성분표 데이터
             const list = ['나트륨', '탄수화물', '당류', '지방', '트랜스지방', '포화지방', '콜레스테롤', '단백질', '열량']; //, '1회 제공량' '열량',
@@ -150,42 +163,42 @@ export default function ItemDetailScreen({ navigation, route }) {
         return true;
     };
 
-    var temp = [];
-    const [items, setItems] = useState([]);
+    // var temp = [];
+    // const [items, setItems] = useState([]);
 
-    const getFoodAdtvInfoList = async (mta) => {
-        for (var i = 0; i < mta.length; i++) {
-            const response = await fetch(
-                'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/I2838/json/1/5/WORD=' + mta[i],
-                {
-                    method: 'GET',
-                },
-            );
+    // const getFoodAdtvInfoList = async (mta) => {
+    //     for (var i = 0; i < mta.length; i++) {
+    //         const response = await fetch(
+    //             'http://openapi.foodsafetykorea.go.kr/api/' + '3e9c040903bd4eec95e1' + '/I2838/json/1/5/WORD=' + mta[i],
+    //             {
+    //                 method: 'GET',
+    //             },
+    //         );
 
-            if (response.status === 200) {
-                const responseJson = await response.json();
-                if (responseJson.I2838.total_count != 0) {
-                    // console.log(mta[i]);
-                    // console.log(responseJson.I2838.total_count);
-                    temp.push(mta[i]);
-                    // for (var j = 0; j < responseJson.I2838.total_count; j++) {
-                    //     if (responseJson.I2838.row[j].WORD == mta[i]) {
-                    //         console.log(responseJson.I2838.row[j].WORD);
-                    //     }
-                    // }
+    //         if (response.status === 200) {
+    //             const responseJson = await response.json();
+    //             if (responseJson.I2838.total_count != 0) {
+    //                 // console.log(mta[i]);
+    //                 // console.log(responseJson.I2838.total_count);
+    //                 temp.push(mta[i]);
+    //                 // for (var j = 0; j < responseJson.I2838.total_count; j++) {
+    //                 //     if (responseJson.I2838.row[j].WORD == mta[i]) {
+    //                 //         console.log(responseJson.I2838.row[j].WORD);
+    //                 //     }
+    //                 // }
 
-                    // console.log(mta[i]);
+    //                 // console.log(mta[i]);
 
-                }
-            } else {
-                return 0;
-                // throw new Error('unable to get');
-            }
-        }
-        // console.log(temp);
-        setItems(temp);
-        return true;
-    };
+    //             }
+    //         } else {
+    //             return 0;
+    //             // throw new Error('unable to get');
+    //         }
+    //     }
+    //     // console.log(temp);
+    //     setItems(temp);
+    //     return true;
+    // };
 
 
     const getIngredient = async () => {
@@ -229,20 +242,22 @@ export default function ItemDetailScreen({ navigation, route }) {
 
     //모달창
     const [modalVisible, setModalVisible] = useState(false); //첫번째 원소 -> 현재 상태, 두번째 원소 -> setter 함수
-    const [item, setItem] = useState("");
+    const [item, setItem] = useState({});
+    const [item2, setItem2] = useState("");
 
     function fuc(item) {
         setModalVisible(true);
         setItem(item); //모달창에 아이템 전달
+        // setItem2();
     }
 
     // const items = ["식품첨가물1", "식품첨가물2", "식품첨가물3", "식품첨가물4", "식품첨가물5", "식품첨가물6"];
-    const itemsList = items.map(item =>
+    const itemsList = items.map((item, index) =>
         // <View style={styles.listItem} key={item}>
-        <TouchableOpacity style={styles.listItem} key={item} onPress={() => fuc(item)}>
+        <TouchableOpacity style={styles.listItem} key={index} onPress={() => fuc(item)}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={styles.rate} />
-                <Text>{item}</Text>
+                <Text>{item.name}</Text>
             </View>
             <AntDesign name="right" size={18} color="#888" />
         </TouchableOpacity>
