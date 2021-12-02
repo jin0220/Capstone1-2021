@@ -71,11 +71,9 @@ export default function ItemDetailScreen({ navigation, route }) {
             var mta = [{}];
 
             for (var i = 0; i < mt.length; i++) {
-
-                for (var j = 0; j < additive.length; j++) {
-                    if (mt[i] === additive[j].name) {
-                        items.push(
-                            additive[j]);
+                for(var j=0; j< additive.length; j++){
+                    if (mt[i] === additive[j].name){
+                        items.push(additive[j]);
                     }
                 }
 

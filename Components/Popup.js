@@ -80,6 +80,7 @@ export default function Popup(props) {
 
                     <View style={styles.box}>
                         <Text style={styles.title}>주용도</Text>
+
                         <Text style={styles.subTitle}>{groupName}</Text>
                         <Text>{isEmptyObj(props.item) ? "" : group[props.item.group].description}</Text>
                     </View>
