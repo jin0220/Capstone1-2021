@@ -3,7 +3,7 @@ import { Text, View, Button, TouchableOpacity, StyleSheet, Image, SafeAreaView }
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { NavigationContainer } from '@react-navigation/native';
-import CardItemDetails from './CardItemDetails';
+import CardItemDetails from './CardItem1';
 
 const Card = ({ navigation }) => {
     return (

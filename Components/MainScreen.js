@@ -7,7 +7,8 @@ import { FontAwesome, FontAwesome5, Entypo, Iconicons, Feather, Ionicons, Materi
 import { createDrawerNavigation, DrawerConentScrollView, DraweItemList, DrawerItem } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import CardListScreen from './CardListScreen';
-import CardItemDetails from './CardItemDetails';
+import CardItemDetails1 from './CardItem1';
+import CardItemDetails2 from './CardItem2';
 import SplashScreen from './SplashScreen';
 import SignInScreen from './SignInScreen';
 import LogInScreen from './LogInScreen';
@@ -116,7 +117,7 @@ function MainScreen({ navigation }) {
                     fontWeight: 'bold',
                     color: '#333',
                 }}> 추천 영양 콘텐츠</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('CardItemDetails')}>
+                <TouchableOpacity onPress={() => navigation.navigate('CardItem1')}>
                     <View style={styles.card}>
                         <View style={styles.cardImgWrapper}>
                             <Image source={require('../Img/card1.png')} resizeMode='cover' style={styles.cardImg} />
@@ -128,21 +129,17 @@ function MainScreen({ navigation }) {
                     </View>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity onPress={() => navigation.navigate('details')}> */}
+                <TouchableOpacity onPress={() => navigation.navigate('CardItem2')}>
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
-                        <Image
-                            source={{ uri: "https://source.unsplash.com/collection/190727/1024x768" }}
-                            resizeMode="cover"
-                            style={styles.cardImg}
-                        />
+                    <Image source={require('../Img/card2.png')} resizeMode='cover' style={styles.cardImg} />
                     </View>
                     <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>test</Text>
-                        <Text style={styles.cardDetails}>test</Text>
+                        <Text style={styles.cardTitle}>식품첨가물의 종류 및 섭취를 줄이는 방법</Text>
+                        <Text style={styles.cardDetails}>알아두면 쓸모있는 식품첨가물</Text>
                     </View>
                 </View>
-                {/* </TouchableOpacity> */}
+                </TouchableOpacity>
 
                 <View style={styles.card}>
                     <View style={styles.cardImgWrapper}>
@@ -245,8 +242,19 @@ export default function App({ navigation }) {
                 })}
             />
             <Stack.Screen
-                name="CardItemDetails"
-                component={CardItemDetails}
+                name="CardItem1"
+                component={CardItemDetails1}
+                options={({ route }) => ({
+                    headerBackTitleVisible: false,
+                    headerTitle: false,
+                    headerTransparent: true,
+                    headerTintColor: '#fff',
+                    headerShown: false,
+                })}
+            />
+            <Stack.Screen
+                name="CardItem2"
+                component={CardItemDetails2}
                 options={({ route }) => ({
                     headerBackTitleVisible: false,
                     headerTitle: false,

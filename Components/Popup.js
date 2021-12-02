@@ -7,7 +7,7 @@ import {
     Dimensions,
     TouchableOpacity,
 } from "react-native";
-
+import group from '../Data/group.json';
 
 export default function Popup(props) {
     const modalEl = useRef();
@@ -55,12 +55,12 @@ export default function Popup(props) {
             {/* <View style={styles.modalBackground} onTouchEnd={handleClickOutside} > */}
             <View style={styles.modalBackground}>
                 <View style={styles.modal} ref={modalEl}>
-                    <Text style={styles.itemName}>{props.item}</Text>
+                    <Text style={styles.itemName}>{props.item.name}</Text>
 
                     <View style={styles.box}>
                         <Text style={styles.title}>주용도</Text>
-                        <Text style={styles.subTitle}>젤형성체</Text>
-                        <Text>젤을 형성하여 식품에 물성을 부여하는 식품첨가물입니다.</Text>
+                        <Text style={styles.subTitle}>{props.item.group}</Text>
+                        <Text>{group[props.item.group].description}</Text>
                     </View>
                     <View style={styles.divide} />
 
