@@ -4,7 +4,7 @@
     "slug": "Ingredient",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Icon2.png",
+    "icon": "./assets/1024.png",
     "splash": {
       "image": "./assets/Lodading.png",
       "resizeMode": "contain",
@@ -25,13 +25,13 @@
       "package": "com.deu.yeongnyamsa",
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/512.png",
         "backgroundColor": "#FFFFFF"
       },
       "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/Icon2.png"
     }
   }
 }
