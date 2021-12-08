@@ -6,9 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/app_icon.png",
     "splash": {
-      "image": "./assets/splash_2.png",
-      "resizeMode": "overlayed",
-      "backgroundColor": "#fde994"
+      "image": "./assets/Lodading.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
