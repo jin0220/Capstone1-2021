@@ -4,7 +4,7 @@
     "slug": "Ingredient",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/app_icon.png",
+    "icon": "./assets/Icon2.png",
     "splash": {
       "image": "./assets/Lodading.png",
       "resizeMode": "contain",
