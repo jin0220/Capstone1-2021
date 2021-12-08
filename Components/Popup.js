@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import {
     Text,
     View,
@@ -12,13 +12,6 @@ import group from '../Data/group.json';
 
 export default function Popup(props) {
     const modalEl = useRef();
-    // useOutsideAlerter(modalEl);
-    const handleClickOutside = ({ target }) => {
-        if (props.visible) {
-            console.log(!modalEl.current.contain(target));
-            props.setModalVisible(false);
-        }
-    };
 
     function isEmptyObj(obj) {
         if (obj.constructor === Object
@@ -31,49 +24,9 @@ export default function Popup(props) {
 
     var name = props.item.name;
     var groupName = props.item.group;
-    if (isEmptyObj(props.item)) {
-        console.log('props.item');
-        console.log(props.item);
-    } else {
-
-    }
-    console.log(name);
-    console.log(groupName);
-    // console.log(group[props.item.group].description);
-    // function useOutsideAlerter(ref) {
-    //     useEffect(() => {
-    //         function handleClickOutside(e) {
-    //             if (props.visible && !modalEl.current.contains(e.target)) {
-    //                 props.setModalVisible(false);
-    //             }
-    //         }
-    //         document.addEventListener('mousedown', handleClickOutside);
-    //         return () => {
-    //             document.removeEventListener('mousedown', handleClickOutside);
-    //         };
-    //     }, []);
-    // }
-
-    // window.addEventListener = jest.fn();
-    // window.removeEventListener = jest.fn();
-    // const window = useWindowDimensions();
-
-    // if (window.onclick()) {
-    //     console.log("클릭");
-    // }
-
-
-    // useEffect(() => {
-    //     console.log("클릭");
-    //     document.addEventListener('click', handleClickOutside, true);
-
-    //     return () => {
-    //         document.removeEventListener('click', handleClickOutside, true);
-    //     };
-    // }, []);
 
     return (
-        <Modal /*animationType="slide"*/ transparent={true} visible={props.visible}>
+        <Modal transparent={true} visible={props.visible}>
             {/* <View style={styles.modalBackground} onTouchEnd={handleClickOutside} > */}
             <View style={styles.modalBackground}>
                 <View style={styles.modal} ref={modalEl}>
@@ -127,7 +80,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     box: {
-        // backgroundColor: '#ddd',
         padding: 20,
     },
     divide: {
