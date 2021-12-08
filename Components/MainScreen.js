@@ -135,7 +135,7 @@ function MainScreen({ navigation }) {
                     <Image source={require('../Img/card2.png')} resizeMode='cover' style={styles.cardImg} />
                     </View>
                     <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>식품첨가물의 종류 및 섭취를 줄이는 방법</Text>
+                        <Text style={styles.cardTitle}>식품첨가물의 종류 및 {'\n'}섭취를 줄이는 방법</Text>
                         <Text style={styles.cardDetails}>알아두면 쓸모있는 식품첨가물</Text>
                     </View>
                 </View>
@@ -150,8 +150,8 @@ function MainScreen({ navigation }) {
                         />
                     </View>
                     <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>test</Text>
-                        <Text style={styles.cardDetails}>test</Text>
+                        <Text style={styles.cardTitle}>식품 알레르기,{'\n'}이렇게 확인하세요!</Text>
+                        <Text style={styles.cardDetails}>슬기로운 알레르기</Text>
                     </View>
                 </View>
 
@@ -164,8 +164,8 @@ function MainScreen({ navigation }) {
                         />
                     </View>
                     <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>test</Text>
-                        <Text style={styles.cardDetails}>test</Text>
+                        <Text style={styles.cardTitle}>식품 알레르기가 있다면?{'\n'}대체 식품 알아보기</Text>
+                        <Text style={styles.cardDetails}>슬기로운 알레르기</Text>
                     </View>
                 </View>
 
@@ -178,8 +178,8 @@ function MainScreen({ navigation }) {
                         />
                     </View>
                     <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>test</Text>
-                        <Text style={styles.cardDetails}>test</Text>
+                        <Text style={styles.cardTitle}>카페인 과다섭취 주의하세요!</Text>
+                        <Text style={styles.cardDetails}>카드뉴스</Text>
                     </View>
                 </View>
             </View>
