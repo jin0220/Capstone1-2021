@@ -43,13 +43,15 @@ export default function ItemDetailScreen({ navigation, route }) {
     var listData = [];
     const [nutrient, setNutrient] = useState();
 
+    // HACCP API 연동
     const getRawmt = async () => {
+        // API에 요청을 할 때 바코드 스캔 또는 제품 리스트 페이지에서 받은 품목보고번호를 함께 보내면서 해당 아이템에 대한 정보를 받아오게 구현
         const key = '6PsAAbQQMqw6BXq4X0X2Qv5nMMZgKAbGtiA1pBuujX1Cyic%2Bz3PN47Rir5uopLeWVy6AJxFT94YkJ%2BVE39XR3A%3D%3D';
 
         var url = 'http://apis.data.go.kr/B553748/CertImgListService/getCertImgListService'; /*URL*/
         var queryParams = '?' + encodeURIComponent('serviceKey') + '=' + key; /*Service Key*/
-        queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent(prdlstReportNo); /**/
-        queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /**/
+        queryParams += '&' + encodeURIComponent('prdlstReportNo') + '=' + encodeURIComponent(prdlstReportNo); /*픔목보고번호*/
+        queryParams += '&' + encodeURIComponent('returnType') + '=' + encodeURIComponent('json'); /*데이터 형태*/
 
         const response = await fetch(
             url + queryParams,
@@ -62,10 +64,12 @@ export default function ItemDetailScreen({ navigation, route }) {
             const responseJson = await response.json();
             setData(responseJson.list[0]);
 
-            //원재료 데이터
+            // 원재료 데이터
+            // 원재료에 대한 데이터가 한 문장 안에 모두 나와있기 때문에 식품첨가물에 대한 정보를 제공하기 위해 데이터를 사용하기 쉽게 처리한다.
             const raw_mt = responseJson.list[0]['rawmtrl'];
             var mt = raw_mt.split(/[\,\(\)\%]/);
 
+            //식품첨가물 리스트와 위에서 처리한 원재료 리스트를 대조해 해당 원재료가 식품첨가물이면 배열에 저장해 둔다.
             for (var i = 0; i < mt.length; i++) {
                 for (var j = 0; j < additive.length; j++) {
                     if (mt[i] === additive[j].name) {
@@ -73,15 +77,13 @@ export default function ItemDetailScreen({ navigation, route }) {
                     }
                 }
             }
-            // console.log(items);
 
-            //영양성분표 데이터
-            const list = ['나트륨', '탄수화물', '당류', '지방', '트랜스지방', '포화지방', '콜레스테롤', '단백질', '열량']; //, '1회 제공량' '열량',
+            // 영양성분표 데이터
+            // 영양성분에 대한 데이터가 한 문장 안에 모두 나와있기 때문에 데이터를 사용하기 쉽게 처리
+            const list = ['나트륨', '탄수화물', '당류', '지방', '트랜스지방', '포화지방', '콜레스테롤', '단백질', '열량'];
 
             if (responseJson.list[0]['nutrient']) {
                 const nut_ri = responseJson.list[0]['nutrient'].replace(/(\s*)/g, "");
-
-                // console.log(nut_ri);
 
                 for (var i = 0; i < list.length; i++) {
                     var target = list[i];
@@ -99,8 +101,6 @@ export default function ItemDetailScreen({ navigation, route }) {
                     else {
                         result = nut_ri.substring(target_num, (nut_ri.substring(target_num).indexOf("%") + target_num + 1));
                     }
-
-                    // console.log(result);
 
                     var v;
                     var p;
@@ -140,18 +140,16 @@ export default function ItemDetailScreen({ navigation, route }) {
                     });
                 }
                 setNutrient(listData);
-                // console.log(listData);
-            } else {
+            } else { // API에 요청한 결과 정보(영양정보)가 없는 경우
                 console.log("없음");
             }
         } else {
             return 0;
-            // throw new Error('unable to get');
         }
         return true;
     };
 
-    //모달창
+    //모달창, 식품첨가물에 대한 정보 제공
     const [modalVisible, setModalVisible] = useState(false); //첫번째 원소 -> 현재 상태, 두번째 원소 -> setter 함수
     const [item, setItem] = useState({});
 
@@ -160,6 +158,7 @@ export default function ItemDetailScreen({ navigation, route }) {
         setItem(item); //모달창에 아이템 전달
     }
 
+    // 식품첨가물 리스트
     const itemsList = items.map((item, index) =>
         <TouchableOpacity style={styles.listItem} key={index} onPress={() => fuc(item)}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -172,14 +171,15 @@ export default function ItemDetailScreen({ navigation, route }) {
 
     const allergys = [data.allergy]; //알레르기 리스트
 
-    const [isChecked, setIsChecked] = useState(false);
+    // 제품을 즐겨찾기에 추가
+    const [isChecked, setIsChecked] = useState(false); // 버튼이 눌렸는지 체크
 
     const db = getDatabase();
 
     function favorite() {
-        setIsChecked(!isChecked);
+        setIsChecked(!isChecked); // 버튼 클릭 시 토글
 
-        if (!isChecked) {
+        if (!isChecked) { // 즐겨찾기 버튼을 눌렀을 경우 서버에 데이터가 추가된다.
             set(ref(db, `favorites/${id}/` + prdlstReportNo), {
                 itemNum: prdlstReportNo
             }).then(
@@ -187,7 +187,7 @@ export default function ItemDetailScreen({ navigation, route }) {
             ).catch((error) => {
                 console.log("전송 실패")
             });
-        } else {
+        } else { // 즐겨찾기 버튼을 다시 눌러 즐겨찾기를 취소한 경우 서버에 저장된 데이터가 삭제된다.
             set(ref(db, `favorites/${id}/` + prdlstReportNo), {
                 itemNum: null
             }).then(
@@ -206,7 +206,6 @@ export default function ItemDetailScreen({ navigation, route }) {
                     onPress={() => navigation.goBack()} >
                     <AntDesign name="arrowleft" size={23} color="white" />
                 </TouchableOpacity>
-                {/* <Text style={{ color: 'white', fontSize: 22 }}>제목</Text> */}
                 <TouchableOpacity
                     style={{}}
                     onPress={() => id == '정보없음' ? null : favorite()}>
