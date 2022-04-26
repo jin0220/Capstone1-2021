@@ -81,7 +81,8 @@ export default function ItemDetailScreen({ navigation, route }) {
             if (responseJson.list[0]['nutrient']) {
                 const nut_ri = responseJson.list[0]['nutrient'].replace(/(\s*)/g, "");
 
-                // console.log(nut_ri);
+                console.log(nut_ri);
+                console.log(responseJson.list[0]['nutrient']);
 
                 for (var i = 0; i < list.length; i++) {
                     var target = list[i];
