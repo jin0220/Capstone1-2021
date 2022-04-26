@@ -79,10 +79,10 @@ export default function ItemDetailScreen({ navigation, route }) {
             const list = ['나트륨', '탄수화물', '당류', '지방', '트랜스지방', '포화지방', '콜레스테롤', '단백질', '열량']; //, '1회 제공량' '열량',
 
             if (responseJson.list[0]['nutrient']) {
-                const nut_ri = responseJson.list[0]['nutrient'].replace(/(\s*)/g, "");
+                const nut_ri = responseJson.list[0]['nutrient'].replace(/(\s*)/g, ""); // 공백 없애기
 
-                console.log(nut_ri);
-                console.log(responseJson.list[0]['nutrient']);
+                console.log(nut_ri); // 열량270.22kcal,나트륨115.5mg(6%),탄수화물44.3g(14%),당류17.6g(18%),지방8.4g(16%),트랜스지방0g,포화지방5.9g(39%),콜레스테롤4.9mg(2%),단백질4.3g(8%)
+                console.log(responseJson.list[0]['nutrient']); //열량 270.22 kcal, 나트륨 115.5mg(6%),탄수화물44.3g(14%), 당류17.6g(18%),지방 8.4g(16%),트랜스지방 0g,포화지방5.9g(39%), 콜레스테롤4.9mg(2%), 단백질 4.3g(8%) 
 
                 for (var i = 0; i < list.length; i++) {
                     var target = list[i];
